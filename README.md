@@ -12,8 +12,6 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
 
 ### Tech
 
-Dillinger uses a number of open source projects to work properly:
-
 * [ASP.NET] - MVC
 * [node.js] - evented I/O for the backend
 
