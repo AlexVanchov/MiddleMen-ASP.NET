@@ -23,6 +23,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0-preview1.19506.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0-preview1.19506.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.435" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.0.96" />
@@ -40,7 +45,6 @@
     <ProjectReference Include="..\..\Services\MiddleMan.Services.Mapping\MiddleMan.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\Services\MiddleMan.Services.Messaging\MiddleMan.Services.Messaging.csproj" />
     <ProjectReference Include="..\..\Services\MiddleMan.Services\MiddleMan.Services.csproj" />
-    <ProjectReference Include="..\MiddleMan.Web.Infrastructure\MiddleMan.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\MiddleMan.Web.ViewModels\MiddleMan.Web.ViewModels.csproj" />
   </ItemGroup>
 </Project>

@@ -18,4 +18,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Web\MiddleMan.Web.ViewModels\MiddleMan.Web.ViewModels.csproj" />
+  </ItemGroup>
+
 </Project>

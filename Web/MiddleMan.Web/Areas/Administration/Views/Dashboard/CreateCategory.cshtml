@@ -1,0 +1,25 @@
+﻿@using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
+@model CreateCategoryModel;
+@{
+    ViewData["Title"] = "CreateCategory";
+}
+
+<h1>CreateCategory</h1>
+
+<div class="container-fluid">
+    <form asp-controller="Dashboard" asp-action="CreateCategory" enctype="multipart/form-data" method="post">
+        <div class="row">
+            <div class="offset-2 col-8">
+                <div class="form-group">
+                    <label class="required">Name</label>
+                    <input name="Name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-around">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+

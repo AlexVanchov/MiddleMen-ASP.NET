@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{E389DEB6-5F90-444B-A054-12A10D39C76F}"
 EndProject
@@ -16,6 +16,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7A731632-6714-44E2-A9E4-069EBA9E666C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleMan.Services", "Services\MiddleMan.Services\MiddleMan.Services.csproj", "{8522212F-F01E-4E20-9975-FCF5E10D71DB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4B844ECB-E845-49A6-8B31-85E577933598} = {4B844ECB-E845-49A6-8B31-85E577933598}
+		{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7} = {13B7AACB-9C85-4409-8D4B-95A67D0DFFF7}
+		{415FD7FA-0453-4FE1-9A29-C6E1D8B45C3D} = {415FD7FA-0453-4FE1-9A29-C6E1D8B45C3D}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleMan.Services.Messaging", "Services\MiddleMan.Services.Messaging\MiddleMan.Services.Messaging.csproj", "{43FDC0C4-F250-45DE-93F8-3CA8A9247CC9}"
 EndProject
@@ -37,7 +42,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleMan.Services.Data.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleMan.Web.Tests", "Tests\MiddleMan.Web.Tests\MiddleMan.Web.Tests.csproj", "{3EE06C6E-C8F3-418A-A309-8AC81976A074}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiddleMan.Web.ViewModels", "Web\MiddleMan.Web.ViewModels\MiddleMan.Web.ViewModels.csproj", "{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleMan.Web.ViewModels", "Web\MiddleMan.Web.ViewModels\MiddleMan.Web.ViewModels.csproj", "{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{901AB2DA-6E52-4FB2-91F0-58EB0115F2F7} = {901AB2DA-6E52-4FB2-91F0-58EB0115F2F7}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
