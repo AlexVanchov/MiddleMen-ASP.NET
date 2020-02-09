@@ -27,8 +27,7 @@
         }
 
         [Fact(Skip = "Example test. Disabled for CI.")]
-        public async Task Account
-            PageRequiresAuthorization()
+        public async Task AccountPageRequiresAuthorization()
         {
             var client = this.server.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
             var response = await client.GetAsync("Identity/Account/Manage");
