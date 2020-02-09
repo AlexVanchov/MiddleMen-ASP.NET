@@ -5,12 +5,25 @@
     using MiddleMan.Web.ViewModels;
 
     using Microsoft.AspNetCore.Mvc;
+    using MiddleMan.Services.Interfaces;
+    using MiddleMan.Web.ViewModels.ViewModels;
+    using System.Collections.Generic;
 
     public class HomeController : BaseController
     {
+        private readonly ICategoryService categoryService;
+
+        public HomeController(ICategoryService categoryService)
+        {
+            this.categoryService = categoryService;
+        }
+
         public IActionResult Index()
         {
-            return this.View();
+            var categories = this.categoryService.GetAllCategoryViewModels();
+
+            var homeModel = new HomeViewModel(categories);
+            return this.View(homeModel);
         }
 
         public IActionResult Privacy()

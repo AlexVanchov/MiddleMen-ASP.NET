@@ -1,4 +1,6 @@
-﻿@using MiddleMan.Common
+﻿
+@using MiddleMan.Web.ViewModels.ViewModels
+@model HomeViewModel
 @{
     this.ViewData["Title"] = "Home Page";
 }
@@ -12,9 +14,10 @@
 
             <h1 class="my-4">Shop Name</h1>
             <div class="list-group">
-                <a href="#" class="list-group-item">Category 1</a>
-                <a href="#" class="list-group-item">Category 2</a>
-                <a href="#" class="list-group-item">Category 3</a>
+                @foreach (var category in Model.Categories)
+                {
+                    <a href="#" class="list-group-item">@category.Name</a>
+                }
             </div>
 
         </div>

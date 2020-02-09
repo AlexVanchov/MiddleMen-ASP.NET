@@ -13,6 +13,8 @@
         {
             this.CreatedOn = DateTime.UtcNow;
             this.IsDeleted = false;
+            this.Id = Guid.NewGuid().ToString();
+            this.ModifiedOn = DateTime.UtcNow;
         }
 
         [Key]

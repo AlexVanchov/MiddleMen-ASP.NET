@@ -6,14 +6,18 @@
     using Microsoft.AspNetCore.Mvc;
     using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
     using System.Threading.Tasks;
+    using MiddleMan.Services;
+    using MiddleMan.Services.Interfaces;
 
     public class DashboardController : AdministrationController
     {
         private readonly ISettingsService settingsService;
+        private readonly ICategoryService categoryService;
 
-        public DashboardController(ISettingsService settingsService)
+        public DashboardController(ISettingsService settingsService, ICategoryService categoryService)
         {
             this.settingsService = settingsService;
+            this.categoryService = categoryService;
         }
 
         public IActionResult Index()
@@ -21,7 +25,15 @@
             var viewModel = new IndexViewModel { SettingsCount = this.settingsService.GetCount(), };
             return this.View(viewModel);
         }
+
+        [HttpGet]
         public IActionResult CreateCategory()
+        {
+            return this.View();
+        }
+
+        [HttpGet]
+        public IActionResult EditCategories()
         {
             return this.View();
         }
@@ -35,7 +47,7 @@
                 return View(inputModel);
             }
 
-            //await categoryService.CreateCategoryAsync(inputModel);
+            await this.categoryService.CreateCategoryAsync(inputModel);
 
             //TempData["CreatedAd"] = SuccessfullyCreatedAdMessage;
 

@@ -54,3 +54,9 @@ body {
     height: 60px;
     line-height: 60px; /* Vertically center the text there */
 }
+
+
+
+.custom-edit-delete-btns {
+    margin-left: 69%;
+}

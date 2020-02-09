@@ -12,6 +12,7 @@
     using MiddleMan.Services.Mapping;
     using MiddleMan.Services.Messaging;
     using MiddleMan.Web.ViewModels;
+    using AutoMapper;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -20,6 +21,9 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using MiddleMan.Services;
+    using MiddleMan.Services.Interfaces;
+    using SellMe.Services.Utilities;
 
     public class Startup
     {
@@ -51,6 +55,8 @@
 
             services.AddSingleton(this.configuration);
 
+            services.AddAutoMapper(typeof(MiddleManProfile));
+
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -59,6 +65,8 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+
+            services.AddTransient<ICategoryService, CategoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
