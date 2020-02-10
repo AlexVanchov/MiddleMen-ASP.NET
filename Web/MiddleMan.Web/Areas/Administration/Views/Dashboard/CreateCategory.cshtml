@@ -4,10 +4,10 @@
     ViewData["Title"] = "CreateCategory";
 }
 
-<h1>CreateCategory</h1>
+<h1>Create Category</h1>
 
 <div class="container-fluid">
-    <form asp-controller="Dashboard" asp-action="CreateCategory" enctype="multipart/form-data" method="post">
+    @*<form asp-controller="Dashboard" asp-action="CreateCategory" enctype="multipart/form-data" method="post">
         <div class="row">
             <div class="offset-2 col-8">
                 <div class="form-group">
@@ -20,6 +20,15 @@
         <div class="row d-flex justify-content-around">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
+    </form>*@
+
+    <form class="form-inline" asp-controller="Dashboard" asp-action="CreateCategory" enctype="multipart/form-data" method="post">
+        
+        <div class="form-group mx-sm-3 mb-2">
+            <label name="Name" class="sr-only">Name</label>
+            <input type="text" class="form-control" placeholder="Category Name Here">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Create Category</button>
     </form>
 </div>
 

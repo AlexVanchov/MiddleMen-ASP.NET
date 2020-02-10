@@ -35,7 +35,11 @@
         [HttpGet]
         public IActionResult EditCategories()
         {
-            return this.View();
+            var categories = this.categoryService.GetAllCategoryViewModels();
+
+            var editModel = new AdminEditViewModel(categories);
+
+            return this.View(editModel);
         }
 
         [HttpPost]
