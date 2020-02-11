@@ -1,4 +1,4 @@
-﻿namespace MiddleMan.Web.ViewModels.Settings
+﻿namespace MiddleMan.Web.ViewModels.Sell
 {
     using MiddleMan.Data.Models;
     using MiddleMan.Services.Mapping;

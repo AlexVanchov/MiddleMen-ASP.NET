@@ -11,9 +11,9 @@ namespace MiddleMan.Data.Models
     {
         public Offer()
         {
+            this.Id = Guid.NewGuid().ToString();
             this.CreatedOn = DateTime.UtcNow;
             this.IsDeleted = false;
-            this.Id = Guid.NewGuid().ToString();
             this.ModifiedOn = DateTime.UtcNow;
         }
 
@@ -22,7 +22,7 @@ namespace MiddleMan.Data.Models
 
         [Required]
         [MinLength(2)]
-        [MaxLength(100)]
+        [MaxLength(50)]
         public string Name { get; set; }
 
         [Required]
@@ -36,6 +36,6 @@ namespace MiddleMan.Data.Models
         [ForeignKey("Category")]
         public string CategoryId { get; set; }
 
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

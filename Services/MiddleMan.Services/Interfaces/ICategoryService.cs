@@ -13,5 +13,7 @@
         Task CreateCategoryAsync(CreateCategoryModel inputModel);
 
         Task<List<CategoryViewModel>> GetAllCategoryViewModelsAsync();
+
+        Task<string> GetIdByNameAsync(string categoryTitle);
     }
 }

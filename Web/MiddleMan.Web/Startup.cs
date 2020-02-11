@@ -67,6 +67,7 @@
             services.AddTransient<ISettingsService, SettingsService>();
 
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IOfferService, OfferService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,7 +82,7 @@
 
                 if (env.IsDevelopment())
                 {
-                    dbContext.Database.Migrate();
+                    //dbContext.Database.Migrate();
                 }
 
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();

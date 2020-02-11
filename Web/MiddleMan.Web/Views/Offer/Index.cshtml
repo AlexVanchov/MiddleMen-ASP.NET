@@ -1,0 +1,52 @@
+﻿@using MiddleMan.Web.ViewModels.ViewModels
+@model CreateOfferViewModel
+@{
+    this.ViewData["Title"] = "Sell Digital Good";
+}
+
+<h1>@this.ViewData["Title"]</h1>
+
+
+<form class="form-horizontal" asp-controller="Offer" asp-action="CreateOffer" method="post">
+    <div class="form-group required">
+        <div class="controls col-md-8 ">
+            <input class="input-md  textinput textInput form-control" maxlength="50" name="Name" placeholder="Offer Name" style="margin-bottom: 10px" type="text" />
+        </div>
+    </div>
+    <div class="form-group col-md-8 required">
+        <label @*asp-for="CreateOfferModel.CategoryId"*@ class="required">Choose Category</label>
+        <select name="CategoryId" class="form-control">
+            <option selected="true" disabled="disabled">--Select--</option>"
+            @foreach (var category in Model.Categories)
+            {
+                <option value="@category.Name">@category.Name</option> // possible to replace name with value if not working
+            }
+            <vc:categories-dropdown>
+            </vc:categories-dropdown>
+        </select>
+        <span @*asp-validation-for="Category.CategoryId"*@ class="text-danger"></span>
+    </div>
+    <div class="form-group required">
+        <div class="controls col-md-8 ">
+            <input class="input-md textinput textInput form-control" maxlength="1000" name="Description" placeholder="Description" style="margin-bottom: 10px" type="text" />
+        </div>
+    </div>
+    <div class="form-group required">
+        <div class="controls col-md-8 ">
+            <input class="input-md textinput textInput form-control" name="Price" placeholder="Price(10$)" style="margin-bottom: 10px" type="number" />
+        </div>
+    </div>
+    <div class="form-group required">
+        <div class="controls col-md-8 ">
+            <input class="input-md textinput textInput form-control" maxlength="300" name="PicUrl" placeholder="Picture url(https://site.com/img.png etc)" style="margin-bottom: 10px" type="text" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="aab controls col-md-4 "></div>
+        <div class="controls col-md-8 ">
+            <input type="submit" value="Post Offer" class="btn btn-primary btn btn-info" />
+        </div>
+    </div>
+
+</form>

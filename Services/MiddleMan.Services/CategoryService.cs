@@ -35,17 +35,31 @@
 
         public async Task<List<CategoryViewModel>> GetAllCategoryViewModelsAsync()
         {
-            var categories = this.context
+            var categories = await this.context
                 .Categories
-                .ToList();
+                .ToListAsync();
 
             var allCategories = new List<CategoryViewModel>();
             foreach (var category in categories)
             {
-                allCategories.Add(new CategoryViewModel() { Name = category.Name });
+                allCategories.Add(new CategoryViewModel() { Name = category.Name, Id = category.Id });
             }
 
             return allCategories;
+        }
+
+        public async Task<string> GetIdByNameAsync(string categoryTitle)
+        {
+            var category = await this.context
+                .Categories
+                .FirstOrDefaultAsync(x => x.Name == categoryTitle);
+
+            if (category == null)
+            {
+                throw new ArgumentNullException("category is null");
+            }
+
+            return category.Id;
         }
     }
 }
