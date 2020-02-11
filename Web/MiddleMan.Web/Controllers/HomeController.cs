@@ -1,13 +1,13 @@
 ﻿namespace MiddleMan.Web.Controllers
 {
+    using System.Collections.Generic;
     using System.Diagnostics;
-
-    using MiddleMan.Web.ViewModels;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
     using MiddleMan.Services.Interfaces;
+    using MiddleMan.Web.ViewModels;
     using MiddleMan.Web.ViewModels.ViewModels;
-    using System.Collections.Generic;
 
     public class HomeController : BaseController
     {
@@ -18,9 +18,9 @@
             this.categoryService = categoryService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var categories = this.categoryService.GetAllCategoryViewModels();
+            var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
 
             var homeModel = new HomeViewModel(categories);
             return this.View(homeModel);

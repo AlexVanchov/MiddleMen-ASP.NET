@@ -33,9 +33,9 @@
         }
 
         [HttpGet]
-        public IActionResult EditCategories()
+        public async Task<IActionResult> EditCategories()
         {
-            var categories = this.categoryService.GetAllCategoryViewModels();
+            var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
 
             var editModel = new AdminEditViewModel(categories);
 

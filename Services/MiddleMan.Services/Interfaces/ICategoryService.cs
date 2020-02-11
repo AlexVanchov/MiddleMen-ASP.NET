@@ -12,6 +12,6 @@
     {
         Task CreateCategoryAsync(CreateCategoryModel inputModel);
 
-        List<CategoryViewModel> GetAllCategoryViewModels();
+        Task<List<CategoryViewModel>> GetAllCategoryViewModelsAsync();
     }
 }

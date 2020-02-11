@@ -33,7 +33,7 @@
             await this.context.SaveChangesAsync();
         }
 
-        public List<CategoryViewModel> GetAllCategoryViewModels()
+        public async Task<List<CategoryViewModel>> GetAllCategoryViewModelsAsync()
         {
             var categories = this.context
                 .Categories
