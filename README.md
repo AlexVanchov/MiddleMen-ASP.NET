@@ -15,13 +15,29 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
 * [ASP.NET] - MVC
 * [node.js] - evented I/O for the backend
 
-
-
 ### TODO:
 
- - Models
- - Views
- - Controllers
+ - Admin edit reordering
+ - Home page listingitems in category
+ - onclick item displaying
+ 
+ ## Objects relations:
+* BaseOnDeleteModel addon
+    * IsDeleted(bool)
+    * DeletedOn(nullable DateTime)
+* BaseOnCreateModel addon
+    * CreatedOn(DateTime)
+    * ModifiedOn(nullable DateTime)
+* Categoty : BaseOnDeleteModel, BaseOnCreateModel
+    * Id(hash-string)
+    * Name(string)
+* Offer : BaseOnDeleteModel, BaseOnCreateModel
+    * Id(hash-string)
+    * CategoryId(foreign key(Category))
+    * Name(string)
+    * Price(decimal)
+    * Description(string)
+    * picUrl(nullable string)
 
 License
 ----
