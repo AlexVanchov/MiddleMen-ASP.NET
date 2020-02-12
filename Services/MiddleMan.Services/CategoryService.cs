@@ -70,13 +70,6 @@
             return offersOutput;
         }
 
-        public async Task<string> GetCategoryNameByIdAsync(string id)
-        {
-            var category = await this.context.Categories.Where(x => x.Id == id).FirstOrDefaultAsync();
-
-            return category.Name;
-        }
-
         public async Task<string> GetIdByNameAsync(string categoryTitle)
         {
             var category = await this.context

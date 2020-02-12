@@ -15,14 +15,7 @@
             <div class="list-group">
                 @foreach (var category in Model.Categories)
                 {
-                    if (category.Name == Model.CategoryName)
-                    {
-                        <a href="/Home/Category?id=@category.Id" class="list-group-item bg-primary text-white">@category.Name</a>
-                    }
-                    else
-                    {
-                        <a href="/Home/Category?id=@category.Id" class="list-group-item">@category.Name</a>
-                    }
+                    <a href="/Home/Category?id=@category.Id" class="list-group-item">@category.Name</a>
                 }
             </div>
 
@@ -31,7 +24,7 @@
 
         <div class="col-lg-9">
 
-            <h1 class="my-4">@Model.CategoryName</h1>
+            <h1 class="my-4">Category Name</h1>
             @*<div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -71,14 +64,11 @@
                                 <a href="@offer.ClickUrl">@offer.Name</a>
                             </h5>
                             <h5>$@offer.Price</h5>
-                            <p class="card-text">
-                                @offer.Description @if (offer.ReadMore)
+                            <p class="card-text">@offer.Description @if (offer.ReadMore)
                             {
-                                <p style="text-align: right;">
-                                    <a href="@offer.ClickUrl">Read more...</a>
-                                </p>
+                                <a href="@offer.ClickUrl" style="font-size:26px">...</a>
                             }</p>
-                            </div>
+                        </div>
                         <div class="card-footer">
                             <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                         </div>

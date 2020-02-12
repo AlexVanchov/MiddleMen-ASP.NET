@@ -38,11 +38,9 @@
         {
             var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
             var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync(id);
-            var category = await this.categoryService.GetCategoryNameByIdAsync(id);
 
             var homeModel = new HomeSelectedCategoryViewModel(categories)
             {
-                CategoryName = category,
                 Offers = offers,
             };
 
