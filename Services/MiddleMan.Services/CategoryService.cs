@@ -11,6 +11,7 @@
     using MiddleMan.Services.Mapping;
     using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
     using MiddleMan.Web.ViewModels.ViewModels;
+    using MiddleMan.Web.ViewModels.ViewModels.Offer;
 
     public class CategoryService : ICategoryService
     {
@@ -46,6 +47,27 @@
             }
 
             return allCategories;
+        }
+
+        public async Task<List<OfferViewModel>> GetAllOffersFromCategoryViewModelsAsync(string id)
+        {
+            var offersOutput = new List<OfferViewModel>();
+            var offers = await this.context.Offers.Where(x => x.CategoryId == id).ToListAsync();
+
+            foreach (var offer in offers)
+            {
+                offersOutput.Add(new OfferViewModel()
+                {
+                    Name = offer.Name,
+                    Description = offer.Description.Length >= 65 ? offer.Description.Substring(0, 65) : offer.Description,
+                    Price = offer.Price,
+                    PicUrl = offer.PicUrl,
+                    ClickUrl = $"/Offer/Details?id={offer.Id}",
+                    ReadMore = offer.Description.Length >= 65 ? true : false,
+                });
+            }
+
+            return offersOutput;
         }
 
         public async Task<string> GetIdByNameAsync(string categoryTitle)

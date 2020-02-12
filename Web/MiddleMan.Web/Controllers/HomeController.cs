@@ -13,9 +13,12 @@
     {
         private readonly ICategoryService categoryService;
 
-        public HomeController(ICategoryService categoryService)
+        private readonly IOfferService offerService;
+
+        public HomeController(ICategoryService categoryService, IOfferService offerService)
         {
             this.categoryService = categoryService;
+            this.offerService = offerService;
         }
 
         public async Task<IActionResult> Index()
@@ -29,6 +32,19 @@
         public IActionResult Privacy()
         {
             return this.View();
+        }
+
+        public async Task<IActionResult> Category(string id)
+        {
+            var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
+            var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync(id);
+
+            var homeModel = new HomeSelectedCategoryViewModel(categories)
+            {
+                Offers = offers,
+            };
+
+            return this.View(homeModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
