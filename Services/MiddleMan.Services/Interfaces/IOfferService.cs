@@ -1,4 +1,5 @@
-﻿using MiddleMan.Web.ViewModels.InputModels;
+﻿using MiddleMan.Data.Models;
+using MiddleMan.Web.ViewModels.InputModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,5 +10,6 @@ namespace MiddleMan.Services.Interfaces
     public interface IOfferService
     {
         Task CreateOfferAsync(CreateOfferModel inputModel);  // TODO model
+        Task<Offer> GetOfferByIdAsync(string id);
     }
 }

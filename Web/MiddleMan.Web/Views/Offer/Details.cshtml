@@ -1,0 +1,70 @@
+﻿@using MiddleMan.Web.ViewModels.ViewModels.Offer
+@model DetailsViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-3">
+            <h1 class="my-4">MiddleMan</h1>
+            <div class="list-group">
+                @foreach (var category in Model.Categories)
+                {
+                    @if (category.Name == Model.CategoryName)
+                    {
+                        <a href="/Home/Category?id=@category.Id" class="list-group-item bg-primary text-white">@category.Name</a>
+                    }
+                    else
+                    {
+                        <a href="/Home/Category?id=@category.Id" class="list-group-item">@category.Name</a>
+                    }
+                }
+            </div>
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+            <a href="/Home/Category?id=@Model.CategoryId" style="height:30px; padding-top: 0px;" class="btn btn-primary hBack text-white"><img style="max-width:100%; max-height:80%; height:auto; width: auto;" src="https://pngimage.net/wp-content/uploads/2018/05/back-icon-png-white-6.png"/>Go back</a>
+            <div class="card mt-4">
+                <div style="height:400px; margin:auto">
+                    <img style="max-width:100%; max-height:100%; height:auto; width: auto;" class="card-img-top img-fluid" src="@Model.Offer.PicUrl" alt="">
+                </div>
+                    <div class="card-body">
+                    <h3 class="card-title">@Model.Offer.Name</h3>
+                    <h4>$@Model.Offer.Price</h4>
+                    <p class="card-text">@Model.Offer.Description</p>
+                    <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+                    4.0 stars
+                </div>
+            </div>
+            <!-- /.card -->
+
+            <div class="card card-outline-secondary my-4">
+                <div class="card-header">
+                    Product Reviews
+                </div>
+                <div class="card-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                    <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                    <hr>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                    <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                    <hr>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                    <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                    <hr>
+                    <a href="#" class="btn btn-success">Leave a Review</a>
+                </div>
+            </div>
+            <!-- /.card -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+
+</div>
+

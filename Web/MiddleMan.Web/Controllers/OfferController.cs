@@ -14,6 +14,7 @@
     using System.Collections.Generic;
     using MiddleMan.Web.ViewModels.InputModels;
     using System.Security.Claims;
+    using MiddleMan.Web.ViewModels.ViewModels.Offer;
 
     public class OfferController : BaseController
     {
@@ -44,6 +45,32 @@
             await this.offerService.CreateOfferAsync(inputModel);
 
             return this.Redirect("/");
+        }
+
+        public async Task<IActionResult> Details(string id)
+        {
+            var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
+            var offer = await this.offerService.GetOfferByIdAsync(id);
+            var category = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
+
+            var offerView = new OfferViewModelDetails()
+            {
+                CreatorId = offer.CreatorId,
+                Description = offer.Description,
+                Name = offer.Name,
+                PicUrl = offer.PicUrl,
+                Price = offer.Price,
+            };
+
+            var detailsModel = new DetailsViewModel(categories)
+            {
+                CategoryName = category,
+                Categories = categories,
+                Offer = offerView,
+                CategoryId = offer.CategoryId,
+            };
+
+            return this.View(detailsModel);
         }
     }
 }
