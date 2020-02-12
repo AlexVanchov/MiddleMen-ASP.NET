@@ -19,8 +19,13 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
 
  * Admin edit reordering
     * Make hidden form with name="categoryId" and name="orderNumber" with Submint btn which is on the page where the JavaSctipt will fill with the orderNumber
- * Home page listingitems in category
+ * Delete/Edit for creator of the offer
+ * Serach menu
+ * Comments(with coments for them), ratings, profiles
+ 
+ ### Done:
  * onclick item displaying
+ * Home page listingitems in category
  
  ## Objects relations:
 * BaseOnDeleteModel addon
