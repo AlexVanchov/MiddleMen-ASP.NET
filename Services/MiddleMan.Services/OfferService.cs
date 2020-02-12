@@ -4,6 +4,7 @@ using MiddleMan.Services.Interfaces;
 using MiddleMan.Web.ViewModels.InputModels;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,6 +29,7 @@ namespace MiddleMan.Services
                 Price = inputModel.Price,
                 PicUrl = inputModel.PicUrl,
                 CategoryId = inputModel.CategoryId,
+                CreatorId = inputModel.CreatorId,
             };
 
             await this.context.Offers.AddAsync(offer);

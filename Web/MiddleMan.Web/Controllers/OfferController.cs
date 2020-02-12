@@ -13,6 +13,7 @@
     using MiddleMan.Web.ViewModels.ViewModels;
     using System.Collections.Generic;
     using MiddleMan.Web.ViewModels.InputModels;
+    using System.Security.Claims;
 
     public class OfferController : BaseController
     {
@@ -38,6 +39,7 @@
         {
             var categoryId = await this.categoryService.GetIdByNameAsync(inputModel.CategoryId);
             inputModel.CategoryId = categoryId;
+            inputModel.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             await this.offerService.CreateOfferAsync(inputModel);
 

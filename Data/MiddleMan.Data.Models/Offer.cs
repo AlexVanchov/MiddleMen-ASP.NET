@@ -36,6 +36,8 @@ namespace MiddleMan.Data.Models
         [ForeignKey("Category")]
         public string CategoryId { get; set; }
 
+        public string CreatorId { get; set; }
+
         public virtual Category Category { get; set; }
     }
 }

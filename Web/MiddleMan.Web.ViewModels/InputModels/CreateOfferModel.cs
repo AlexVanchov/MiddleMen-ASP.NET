@@ -16,5 +16,7 @@ namespace MiddleMan.Web.ViewModels.InputModels
 
         public string CategoryId { get; set; }
 
+        public string CreatorId { get; set; }
+
     }
 }

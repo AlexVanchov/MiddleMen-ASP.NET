@@ -18,5 +18,6 @@
         Task<List<OfferViewModel>> GetAllOffersFromCategoryViewModelsAsync(string categoryName);
 
         Task<string> GetIdByNameAsync(string categoryTitle);
+        Task<string> GetCategoryNameByIdAsync(string id);
     }
 }
