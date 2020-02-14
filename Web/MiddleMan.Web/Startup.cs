@@ -24,6 +24,8 @@
     using MiddleMan.Services;
     using MiddleMan.Services.Interfaces;
     using SellMe.Services.Utilities;
+    using MiddleMan.Services.Services;
+    using CloudinaryDotNet;
 
     public class Startup
     {
@@ -40,6 +42,15 @@
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
+            Account cloudinaryCredentials = new Account(
+                this.configuration["Cloudinary:CloudName"],
+                this.configuration["Cloudinary:ApiKey"],
+                this.configuration["Cloudinary:ApiSecret"]);
+
+            Cloudinary cloudinaryUtility = new Cloudinary(cloudinaryCredentials);
+
+            services.AddSingleton(cloudinaryUtility);
+
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -49,6 +60,7 @@
                         options.CheckConsentNeeded = context => true;
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
+
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -61,11 +73,13 @@
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
+            // services.AddScoped<ICloudinaryService, CloudinaryService>();
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
 
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IOfferService, OfferService>();
         }
@@ -82,7 +96,7 @@
 
                 if (env.IsDevelopment())
                 {
-                    //dbContext.Database.Migrate();
+                    dbContext.Database.Migrate();
                 }
 
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();

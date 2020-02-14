@@ -30,7 +30,7 @@ namespace MiddleMan.Services
                 Description = inputModel.Description,
                 Price = inputModel.Price,
                 PicUrl = inputModel.PicUrl,
-                CategoryId = inputModel.CategoryId,
+                CategoryId = inputModel.CategotyName,
                 CreatorId = inputModel.CreatorId,
             };
 

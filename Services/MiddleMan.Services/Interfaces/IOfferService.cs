@@ -10,6 +10,7 @@ namespace MiddleMan.Services.Interfaces
     public interface IOfferService
     {
         Task CreateOfferAsync(CreateOfferModel inputModel);  // TODO model
+
         Task<Offer> GetOfferByIdAsync(string id);
     }
 }

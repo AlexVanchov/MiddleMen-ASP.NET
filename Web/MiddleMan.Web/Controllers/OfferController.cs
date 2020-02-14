@@ -15,6 +15,9 @@
     using MiddleMan.Web.ViewModels.InputModels;
     using System.Security.Claims;
     using MiddleMan.Web.ViewModels.ViewModels.Offer;
+    using MiddleMan.Services;
+    using MiddleMan.Common;
+    using Microsoft.AspNetCore.Http;
 
     public class OfferController : BaseController
     {
@@ -22,27 +25,42 @@
 
         private readonly ICategoryService categoryService;
 
-        public OfferController(IOfferService offerService, ICategoryService categoryService)
+        private readonly ICloudinaryService cloudinaryService;
+
+        public OfferController(IOfferService offerService, ICategoryService categoryService, ICloudinaryService cloudinaryService)
         {
-            this.offerService = offerService;  //todo rename sell to offer or revert
+            this.offerService = offerService;  // todo rename sell to offer or revert
             this.categoryService = categoryService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public async Task<IActionResult> Index()
         {
             var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
 
-            CreateOfferViewModel viewModel = new CreateOfferViewModel(categories);
+            CreateOfferSharedModel viewModel = new CreateOfferSharedModel();
+            viewModel.CreateOfferViewModel = new CreateOfferViewModel(categories);
             return this.View(viewModel);
         }
 
-        public async Task<IActionResult> CreateOffer(CreateOfferModel inputModel) // index post requsest for create
+        public async Task<IActionResult> CreateOffer(CreateOfferSharedModel inputModel) // index post requsest for create
         {
-            var categoryId = await this.categoryService.GetIdByNameAsync(inputModel.CategoryId);
-            inputModel.CategoryId = categoryId;
-            inputModel.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            // IFormFile postedPic = this.Request.Form["Photo"];
 
-            await this.offerService.CreateOfferAsync(inputModel);
+            var a = inputModel.CreateOfferModel;
+            var categoryId = await this.categoryService.GetIdByNameAsync(a.CategotyName);
+            a.CategotyName = categoryId;
+            a.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var photoUrl = await this.cloudinaryService.UploadPhotoAsync(
+                a.Photo,
+                $"{userId}-{a.Name}",
+                GlobalConstants.CloudFolderForRecipePhotos);
+            a.PicUrl = photoUrl;
+
+            await this.offerService.CreateOfferAsync(a);
 
             return this.Redirect("/");
         }

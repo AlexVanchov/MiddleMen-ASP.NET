@@ -1,4 +1,5 @@
-﻿using MiddleMan.Data.Models;
+﻿using Microsoft.AspNetCore.Http;
+using MiddleMan.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,5 +14,6 @@ namespace MiddleMan.Web.ViewModels.ViewModels
         }
 
         public ICollection<CategoryViewModel> Categories { get; set; }
+
     }
 }

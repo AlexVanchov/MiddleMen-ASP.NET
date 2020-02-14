@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MiddleMan.Web.ViewModels.InputModels
+﻿namespace MiddleMan.Web.ViewModels.InputModels
 {
+    using Microsoft.AspNetCore.Http;
+
     public class CreateOfferModel
     {
         public string Name { get; set; }
@@ -14,9 +12,10 @@ namespace MiddleMan.Web.ViewModels.InputModels
 
         public string PicUrl { get; set; }
 
-        public string CategoryId { get; set; }
+        public string CategotyName { get; set; }
 
         public string CreatorId { get; set; }
 
+        public IFormFile Photo { get; set; }
     }
 }

@@ -14,6 +14,7 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
 
 * [ASP.NET] - MVC
 * [node.js] - evented I/O for the backend
+* [Cloudinary] - Web cloud for the website
 
 ### TODO:
 
@@ -22,10 +23,14 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
  * Delete/Edit for creator of the offer
  * Serach menu
  * Comments(with coments for them), ratings, profiles
+ * Cloud out of limit error
+ * Validations
+ * Authorizations for admin pages
  
  ### Done:
  * onclick item displaying
  * Home page listingitems in category
+ * Cloudinary(Cloud)
  
  ## Objects relations:
 * BaseOnDeleteModel addon
@@ -55,3 +60,4 @@ MIT
 
    [node.js]: <http://nodejs.org>
    [ASP.NET]: <https://dotnet.microsoft.com/apps/aspnet>
+   [Cloudinary]: <https://cloudinary.com/documentation/dotnet_integration>
