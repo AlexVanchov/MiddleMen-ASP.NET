@@ -8,16 +8,19 @@
     using System.Threading.Tasks;
     using MiddleMan.Services;
     using MiddleMan.Services.Interfaces;
+    using MiddleMan.Web.ViewModels.ViewModels.Offer;
 
     public class DashboardController : AdministrationController
     {
         private readonly ISettingsService settingsService;
         private readonly ICategoryService categoryService;
+        private readonly IOfferService offerService;
 
-        public DashboardController(ISettingsService settingsService, ICategoryService categoryService)
+        public DashboardController(ISettingsService settingsService, ICategoryService categoryService, IOfferService offerService)
         {
             this.settingsService = settingsService;
             this.categoryService = categoryService;
+            this.offerService = offerService;
         }
 
         public IActionResult Index()
@@ -57,6 +60,59 @@
 
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> ForApprove()
+        {
+            var offers = await this.offerService.GetAllNotAprovedOffersAsync();
+
+            var aproveModel = new ApproveOffersViewModel();
+
+            foreach (var offer in offers)
+            {
+                aproveModel.Offers.Add(new OfferViewModelDetails()
+                {
+                    Name = offer.Name,
+                    CreatedOn = offer.CreatedOn,
+                    CreatorId = offer.CreatorId,
+                    Description = offer.Description.Length >= 65 ? offer.Description.Substring(0, 65) : offer.Description,
+                    PicUrl = offer.PicUrl,
+                    Price = offer.Price,
+                    Id = offer.Id,
+                });
+            }
+
+            return this.View(aproveModel);
+        }
+
+        public async Task<IActionResult> Approved()
+        {
+            var offers = await this.offerService.GetAllAprovedOffersAsync();
+
+            var aproveModel = new ApproveOffersViewModel();
+
+            foreach (var offer in offers)
+            {
+                aproveModel.Offers.Add(new OfferViewModelDetails()
+                {
+                    Name = offer.Name,
+                    CreatedOn = offer.CreatedOn,
+                    CreatorId = offer.CreatorId,
+                    Description = offer.Description.Length >= 65 ? offer.Description.Substring(0, 65) : offer.Description,
+                    PicUrl = offer.PicUrl,
+                    Price = offer.Price,
+                    Id = offer.Id,
+                });
+            }
+
+            return this.View(aproveModel);
+        }
+
+        public async Task<IActionResult> Approve(string id)
+        {
+            await this.offerService.ApproveOfferAsync(id);
+
+            return this.Redirect("/Administration/Dashboard/ForApprove");
         }
     }
 }

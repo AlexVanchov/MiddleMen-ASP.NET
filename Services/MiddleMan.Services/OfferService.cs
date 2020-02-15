@@ -38,10 +38,29 @@ namespace MiddleMan.Services
             await this.context.SaveChangesAsync();
         }
 
+        public async Task<List<Offer>> GetAllNotAprovedOffersAsync()
+        {
+            var offers = await this.context.Offers.Where(x => x.IsApproved == false).ToListAsync();
+            return offers;
+        }
+
+        public async Task<List<Offer>> GetAllAprovedOffersAsync()
+        {
+            var offers = await this.context.Offers.Where(x => x.IsApproved == true).ToListAsync();
+            return offers;
+        }
+
         public async Task<Offer> GetOfferByIdAsync(string id)
         {
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
             return offer;
+        }
+
+        public async Task ApproveOfferAsync(string id)
+        {
+            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
+            offer.IsApproved = true;
+            await this.context.SaveChangesAsync();
         }
     }
 }

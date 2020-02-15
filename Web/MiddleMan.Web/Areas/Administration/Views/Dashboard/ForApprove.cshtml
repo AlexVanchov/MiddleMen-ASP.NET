@@ -1,0 +1,64 @@
+﻿@using MiddleMan.Web.ViewModels.Administration.Dashboard
+@model ApproveOffersViewModel
+@{
+    ViewData["Title"] = "Approve";
+}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-3">
+
+            <h1 class="my-4">For Approve</h1>
+            <div class="list-group">
+                <a href="/Administration/Dashboard/ForApprove" class="list-group-item bg-primary text-white">For Approve</a>
+                <a href="/Administration/Dashboard/Approved" class="list-group-item">Approved</a>
+                <a href="/Administration/Dashboard/NotApproved" class="list-group-item">Not Approved</a>
+            </div>
+
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+
+            <div class="row">
+
+                @foreach (var offer in Model.Offers)
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <a style="height:150px; margin:auto" href="#"><img class="card-img-top" src="@offer.PicUrl" alt="" style="max-width:100%; max-height:100%; height:auto; width: auto;"></a>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="#">@offer.Name</a>
+                                </h5>
+                                <h5>$@offer.Price</h5>
+                                <p class="card-text" style="height: 75px;">@offer.Description
+
+                                <p class="" style="text-align:right;">
+                                    <a class="btn btn-success" href="/Administration/Dashboard/Approve?id=@offer.Id">Approve</a>
+                                </p>
+                                <p class="" style="text-align:right;">
+                                    <a class="btn btn-danger" href="/Administration/Dashboard/Decline?id=@offer.Id">Decline</a>
+                                </p>
+
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->
