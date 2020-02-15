@@ -17,11 +17,11 @@
                 {
                     @if (category.Name == Model.CategoryName)
                     {
-                        <a href="/Home/Category?id=@category.Id" class="list-group-item bg-primary text-white">@category.Name</a>
+                        <a href="/Home/Category?name=@category.Name" class="list-group-item bg-primary text-white">@category.Name</a>
                     }
                     else
                     {
-                        <a href="/Home/Category?id=@category.Id" class="list-group-item">@category.Name</a>
+                        <a href="/Home/Category?name=@category.Name" class="list-group-item">@category.Name</a>
                     }
                 }
             </div>

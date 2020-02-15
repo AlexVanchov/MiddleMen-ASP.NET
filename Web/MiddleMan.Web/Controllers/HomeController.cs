@@ -34,15 +34,16 @@
             return this.View();
         }
 
-        public async Task<IActionResult> Category(string id)
+        public async Task<IActionResult> Category(string name)
         {
             var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
-            var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync(id);
-            var category = await this.categoryService.GetCategoryNameByIdAsync(id);
+            var categoryId = await this.categoryService.GetCategoryIdByNameAsync(name);
+            var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync(categoryId);
+            // var category = await this.categoryService.GetCategoryNameByIdAsync(id);
 
             var homeModel = new HomeSelectedCategoryViewModel(categories)
             {
-                CategoryName = category,
+                CategoryName = name,
                 Offers = offers,
             };
 

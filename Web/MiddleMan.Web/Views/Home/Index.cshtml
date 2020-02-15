@@ -16,7 +16,7 @@
             <div class="list-group">
                 @foreach (var category in Model.Categories)
                 {
-                    <a href="/Home/Category?id=@category.Id" class="list-group-item">@category.Name</a>
+                    <a href="/Home/Category?name=@category.Name" class="list-group-item">@category.Name</a>
                 }
             </div>
 

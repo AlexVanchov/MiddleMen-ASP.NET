@@ -15,6 +15,9 @@ namespace MiddleMan.Data.Models
             this.CreatedOn = DateTime.UtcNow;
             this.IsDeleted = false;
             this.ModifiedOn = DateTime.UtcNow;
+            this.IsApproved = false;
+            this.IsDeclined = false;
+            this.IsFeatured = false;
         }
 
         [Key]
@@ -29,15 +32,27 @@ namespace MiddleMan.Data.Models
         [Range(0, 5000)]
         public double Price { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
         public string PicUrl { get; set; }
 
+        [Required]
         [ForeignKey("Category")]
         public string CategoryId { get; set; }
 
+        public virtual Category Category { get; set; }
+
+        [Required]
         public string CreatorId { get; set; }
 
-        public virtual Category Category { get; set; }
+        [Required]
+        public bool IsFeatured { get; set; }
+
+        [Required]
+        public bool IsApproved { get; set; }
+
+        [Required]
+        public bool IsDeclined { get; set; }
     }
 }

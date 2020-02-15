@@ -15,11 +15,11 @@
                 {
                     @if (category.Name == Model.CategoryName)
                     {
-                        <a href="/Home/Category?id=@category.Id" class="list-group-item bg-primary text-white">@category.Name</a>
+                        <a href="/Home/Category?name=@category.Name" class="list-group-item bg-primary text-white">@category.Name</a>
                     }
                     else
                     {
-                        <a href="/Home/Category?id=@category.Id" class="list-group-item">@category.Name</a>
+                        <a href="/Home/Category?name=@category.Name" class="list-group-item">@category.Name</a>
                     }
                 }
             </div>
@@ -27,7 +27,7 @@
         <!-- /.col-lg-3 -->
 
         <div class="col-lg-9">
-            <a href="/Home/Category?id=@Model.CategoryId" style="height:30px; padding-top: 0px;" class="btn btn-primary hBack text-white"><img style="max-width:100%; max-height:80%; height:auto; width: auto;" src="https://pngimage.net/wp-content/uploads/2018/05/back-icon-png-white-6.png"/>Go back</a>
+            <a href="/Home/Category?name=@Model.CategoryName" style="height:30px; padding-top: 0px;" class="btn btn-primary hBack text-white"><img style="max-width:100%; max-height:80%; height:auto; width: auto;" src="https://pngimage.net/wp-content/uploads/2018/05/back-icon-png-white-6.png"/>Go back</a>
             <div class="card mt-4">
                 <div style="height:400px; margin:auto">
                     <img style="max-width:100%; max-height:100%; height:auto; width: auto;" class="card-img-top img-fluid" src="@Model.Offer.PicUrl" alt="">
