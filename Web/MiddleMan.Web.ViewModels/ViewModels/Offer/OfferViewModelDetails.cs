@@ -22,6 +22,8 @@ namespace MiddleMan.Web.ViewModels.ViewModels.Offer
 
         public DateTime CreatedOn { get; set; }
 
+        public string CategoryName { get; set; }
+
 
         // todo comments
     }

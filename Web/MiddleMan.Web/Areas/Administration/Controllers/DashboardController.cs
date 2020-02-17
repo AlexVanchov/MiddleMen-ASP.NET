@@ -70,6 +70,7 @@
 
             foreach (var offer in offers)
             {
+                var categoryName = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
                 aproveModel.Offers.Add(new OfferViewModelDetails()
                 {
                     Name = offer.Name,
@@ -79,6 +80,7 @@
                     PicUrl = offer.PicUrl,
                     Price = offer.Price,
                     Id = offer.Id,
+                    CategoryName = categoryName,
                 });
             }
 
@@ -93,6 +95,7 @@
 
             foreach (var offer in offers)
             {
+                var categoryName = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
                 aproveModel.Offers.Add(new OfferViewModelDetails()
                 {
                     Name = offer.Name,
@@ -102,6 +105,7 @@
                     PicUrl = offer.PicUrl,
                     Price = offer.Price,
                     Id = offer.Id,
+                    CategoryName = categoryName,
                 });
             }
 
@@ -156,6 +160,7 @@
 
             foreach (var offer in offers)
             {
+                var categoryName = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
                 aproveModel.Offers.Add(new OfferViewModelDetails()
                 {
                     Name = offer.Name,
@@ -165,10 +170,37 @@
                     PicUrl = offer.PicUrl,
                     Price = offer.Price,
                     Id = offer.Id,
+                    CategoryName = categoryName,
                 });
             }
 
             return this.View(aproveModel);
+        }
+
+        public async Task<IActionResult> RemovedOffer(string id)
+        {
+            var offer = await this.offerService.GetOfferByIdAsync(id);
+            var category = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
+
+            var offerView = new OfferViewModelDetails()
+            {
+                CreatorId = offer.CreatorId,
+                Description = offer.Description,
+                Name = offer.Name,
+                PicUrl = offer.PicUrl,
+                Price = offer.Price,
+                CreatedOn = offer.CreatedOn,
+                Id = offer.Id,
+            };
+
+            var detailsModel = new DetailsOfferViewModel()
+            {
+                CategoryName = category,
+                Offer = offerView,
+                CategoryId = offer.CategoryId,
+            };
+
+            return this.View(detailsModel);
         }
     }
 }
