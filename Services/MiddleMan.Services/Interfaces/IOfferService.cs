@@ -21,5 +21,7 @@
         Task ApproveOfferAsync(string id);
 
         Task RemoveOffer(string id);
+
+        Task<List<Offer>> GetAllDeletedOffersAsync();
     }
 }

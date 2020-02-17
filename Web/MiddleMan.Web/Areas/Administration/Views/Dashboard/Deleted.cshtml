@@ -1,7 +1,7 @@
 ﻿@using MiddleMan.Web.ViewModels.Administration.Dashboard
 @model ApproveOffersViewModel
 @{
-    ViewData["Title"] = "Approve";
+    ViewData["Title"] = "Deleted";
 }
 
 <div class="container">
@@ -13,8 +13,8 @@
             <h1 class="my-4">For Approve</h1>
             <div class="list-group">
                 <a href="/Administration/Dashboard/ForApprove" class="list-group-item">For Approve</a>
-                <a href="/Administration/Dashboard/Approved" class="list-group-item bg-primary text-white">Approved</a>
-                <a href="/Administration/Dashboard/Deleted" class="list-group-item">Deleted</a>
+                <a href="/Administration/Dashboard/Approved" class="list-group-item">Approved</a>
+                <a href="/Administration/Dashboard/Deleted" class="list-group-item bg-primary text-white">Deleted</a>
             </div>
 
         </div>
@@ -34,22 +34,23 @@
                                     <a href="#">@offer.Name</a>
                                 </h5>
                                 <h5>$@offer.Price</h5>
-                                <p class="card-text" style="height: 75px;">@offer.Description
+                                <p class="card-text" style="height: 75px;">
+                                    @offer.Description
 
                                 @*<p class="" style="text-align:right;">
-                                    <a class="btn btn-success" href="/Administration/Dashboard/Approve?id=@offer.Id">Approve</a>
-                                </p>*@
-                                <p class="" style="text-align:right;">
-                                    <a class="btn btn-danger" href="/Administration/Dashboard/Remove?id=@offer.Id">Remove</a>
-                                </p>
+                                        <a class="btn btn-success" href="/Administration/Dashboard/Approve?id=@offer.Id">Approve</a>
+                                    </p>*@
+                            <p class="" style="text-align:right;">
+                                <a class="btn btn-primary" href="/Administration/Dashboard/RemovedOffer?id=@offer.Id">Preview</a>
+                            </p>
 
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                         </div>
                     </div>
-                }
+                </div>
+            }
 
             </div>
             <!-- /.row -->

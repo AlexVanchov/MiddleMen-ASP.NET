@@ -52,7 +52,7 @@
         public async Task<List<OfferViewModel>> GetAllOffersFromCategoryViewModelsAsync(string id)
         {
             var offersOutput = new List<OfferViewModel>();
-            var offers = await this.context.Offers.Where(x => x.CategoryId == id && x.IsApproved == true).ToListAsync();
+            var offers = await this.context.Offers.Where(x => x.CategoryId == id && x.IsApproved == true && x.IsDeclined == false).ToListAsync();
 
             foreach (var offer in offers)
             {

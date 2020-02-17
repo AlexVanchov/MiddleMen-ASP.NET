@@ -147,5 +147,28 @@
 
             return this.Redirect("/Administration/Dashboard/Approved");
         }
+
+        public async Task<IActionResult> Deleted()
+        {
+            var offers = await this.offerService.GetAllDeletedOffersAsync();
+
+            var aproveModel = new ApproveOffersViewModel();
+
+            foreach (var offer in offers)
+            {
+                aproveModel.Offers.Add(new OfferViewModelDetails()
+                {
+                    Name = offer.Name,
+                    CreatedOn = offer.CreatedOn,
+                    CreatorId = offer.CreatorId,
+                    Description = offer.Description.Length >= 65 ? offer.Description.Substring(0, 65) : offer.Description,
+                    PicUrl = offer.PicUrl,
+                    Price = offer.Price,
+                    Id = offer.Id,
+                });
+            }
+
+            return this.View(aproveModel);
+        }
     }
 }

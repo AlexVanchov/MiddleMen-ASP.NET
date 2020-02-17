@@ -40,13 +40,13 @@ namespace MiddleMan.Services
 
         public async Task<List<Offer>> GetAllNotAprovedOffersAsync()
         {
-            var offers = await this.context.Offers.Where(x => x.IsApproved == false && x.IsDeleted == false).ToListAsync();
+            var offers = await this.context.Offers.Where(x => x.IsApproved == false && x.IsDeclined == false).ToListAsync();
             return offers;
         }
 
         public async Task<List<Offer>> GetAllAprovedOffersAsync()
         {
-            var offers = await this.context.Offers.Where(x => x.IsApproved == true && x.IsDeleted == false).ToListAsync();
+            var offers = await this.context.Offers.Where(x => x.IsApproved == true && x.IsDeclined == false).ToListAsync();
             return offers;
         }
 
@@ -66,8 +66,15 @@ namespace MiddleMan.Services
         public async Task RemoveOffer(string id)
         {
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
-            offer.IsDeleted = true;
+            offer.IsDeclined = true;
+            //offer.DeletedOn = DateTime.UtcNow;
             await this.context.SaveChangesAsync();
+        }
+
+        public async Task<List<Offer>> GetAllDeletedOffersAsync()
+        {
+            var offers = await this.context.Offers.Where(x => x.IsDeclined == true).ToListAsync();
+            return offers;
         }
     }
 }
