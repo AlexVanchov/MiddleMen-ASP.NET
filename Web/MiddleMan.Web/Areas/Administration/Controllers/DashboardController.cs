@@ -81,6 +81,7 @@
                     Price = offer.Price,
                     Id = offer.Id,
                     CategoryName = categoryName,
+                    IsFeatured = offer.IsFeatured,
                 });
             }
 
@@ -106,6 +107,7 @@
                     Price = offer.Price,
                     Id = offer.Id,
                     CategoryName = categoryName,
+                    IsFeatured = offer.IsFeatured,
                 });
             }
 
@@ -133,6 +135,7 @@
                 Price = offer.Price,
                 CreatedOn = offer.CreatedOn,
                 Id = offer.Id,
+                IsFeatured = offer.IsFeatured,
             };
 
             var detailsModel = new DetailsOfferViewModel()
@@ -171,6 +174,7 @@
                     Price = offer.Price,
                     Id = offer.Id,
                     CategoryName = categoryName,
+                    IsFeatured = offer.IsFeatured,
                 });
             }
 
@@ -191,6 +195,7 @@
                 Price = offer.Price,
                 CreatedOn = offer.CreatedOn,
                 Id = offer.Id,
+                IsFeatured = offer.IsFeatured,
             };
 
             var detailsModel = new DetailsOfferViewModel()
@@ -201,6 +206,19 @@
             };
 
             return this.View(detailsModel);
+        }
+
+        public async Task<IActionResult> Boost(string id)
+        {
+            await this.offerService.FeatureItem(id);
+
+            return this.Redirect("/Administration/Dashboard/Approved");
+        }
+        public async Task<IActionResult> RemoveBoost(string id)
+        {
+            await this.offerService.RemoveFeatureOnItem(id);
+
+            return this.Redirect("/Administration/Dashboard/Approved");
         }
     }
 }

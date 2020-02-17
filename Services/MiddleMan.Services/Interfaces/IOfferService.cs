@@ -23,5 +23,12 @@
         Task RemoveOffer(string id);
 
         Task<List<Offer>> GetAllDeletedOffersAsync();
+
+        Task<List<Offer>> GetLatestOffers(int n);
+
+        Task FeatureItem(string id);
+
+        Task<List<Offer>> GetFeaturedOffers();
+        Task RemoveFeatureOnItem(string id);
     }
 }

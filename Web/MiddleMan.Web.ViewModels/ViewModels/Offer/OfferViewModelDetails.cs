@@ -24,6 +24,7 @@ namespace MiddleMan.Web.ViewModels.ViewModels.Offer
 
         public string CategoryName { get; set; }
 
+        public bool IsFeatured { get; set; }
 
         // todo comments
     }

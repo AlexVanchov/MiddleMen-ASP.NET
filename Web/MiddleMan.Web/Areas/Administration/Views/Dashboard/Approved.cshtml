@@ -41,9 +41,17 @@
                                 @*<p class="" style="text-align:right;">
             <a class="btn btn-success" href="/Administration/Dashboard/Approve?id=@offer.Id">Approve</a>
         </p>*@
-                            <p class="" style="text-align:right;">
-                                <a class="btn btn-danger" href="/Administration/Dashboard/Remove?id=@offer.Id">Remove</a>
-                            </p>
+                                <p class="" style="text-align:right;">
+                                    @if (!offer.IsFeatured)
+                                    {
+                                        <a class="btn btn-success" href="/Administration/Dashboard/Boost?id=@offer.Id">Boost</a>
+                                    }
+                                    @if (offer.IsFeatured)
+                                    {
+                                        <a class="btn btn-warning" href="/Administration/Dashboard/RemoveBoost?id=@offer.Id">Boost</a>
+                                    }
+                                    <a class="btn btn-danger" href="/Administration/Dashboard/Remove?id=@offer.Id">Remove</a>
+                                </p>
 
                             </div>
                             <div class="card-footer">

@@ -1,17 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MiddleMan.Data;
-using MiddleMan.Data.Models;
-using MiddleMan.Services.Interfaces;
-using MiddleMan.Web.ViewModels.InputModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MiddleMan.Services
+﻿namespace MiddleMan.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
+    using MiddleMan.Data;
+    using MiddleMan.Data.Models;
+    using MiddleMan.Services.Interfaces;
+    using MiddleMan.Web.ViewModels.InputModels;
+
     public class OfferService : IOfferService
     {
 
@@ -40,41 +41,87 @@ namespace MiddleMan.Services
 
         public async Task<List<Offer>> GetAllNotAprovedOffersAsync()
         {
-            var offers = await this.context.Offers.Where(x => x.IsApproved == false && x.IsDeclined == false).ToListAsync();
+            var offers = await this.context.Offers
+                .Where(x => x.IsApproved == false && x.IsDeclined == false)
+                .OrderByDescending(x => x.CreatedOn)
+                .ToListAsync();
             return offers;
         }
 
         public async Task<List<Offer>> GetAllAprovedOffersAsync()
         {
-            var offers = await this.context.Offers.Where(x => x.IsApproved == true && x.IsDeclined == false).ToListAsync();
+            var offers = await this.context.Offers
+                .Where(x => x.IsApproved == true && x.IsDeclined == false)
+                .OrderByDescending(x => x.CreatedOn)
+                .ToListAsync();
             return offers;
         }
 
         public async Task<Offer> GetOfferByIdAsync(string id)
         {
-            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
+            var offer = await this.context.Offers
+                .FirstOrDefaultAsync(x => x.Id == id);
             return offer;
         }
 
         public async Task ApproveOfferAsync(string id)
         {
-            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
+            var offer = await this.context.Offers
+                .FirstOrDefaultAsync(x => x.Id == id);
             offer.IsApproved = true;
             await this.context.SaveChangesAsync();
         }
 
         public async Task RemoveOffer(string id)
         {
-            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
+            var offer = await this.context.Offers
+                .FirstOrDefaultAsync(x => x.Id == id);
             offer.IsDeclined = true;
-            //offer.DeletedOn = DateTime.UtcNow;
+            // offer.DeletedOn = DateTime.UtcNow;
             await this.context.SaveChangesAsync();
         }
 
         public async Task<List<Offer>> GetAllDeletedOffersAsync()
         {
-            var offers = await this.context.Offers.Where(x => x.IsDeclined == true).ToListAsync();
+            var offers = await this.context.Offers
+                .Where(x => x.IsDeclined == true)
+                .OrderByDescending(x => x.CreatedOn)
+                .ToListAsync();
             return offers;
+        }
+
+        public async Task<List<Offer>> GetLatestOffers(int n)
+        {
+            var offers = await this.context.Offers
+                .Where(x => x.IsApproved == true && x.IsDeclined == false)
+                .OrderByDescending(x => x.CreatedOn)
+                .Take(n)
+                .ToListAsync();
+            return offers;
+        }
+
+        public async Task FeatureItem(string id)
+        {
+            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
+            offer.IsFeatured = true;
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task<List<Offer>> GetFeaturedOffers()
+        {
+            var offers = await this.context.Offers
+                .Where(x => x.IsApproved == true && x.IsDeclined == false && x.IsFeatured == true)
+                .OrderByDescending(x => x.CreatedOn)
+                .ToListAsync();
+
+            return offers;
+        }
+
+        public async Task RemoveFeatureOnItem(string id)
+        {
+            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
+            offer.IsFeatured = false;
+            await this.context.SaveChangesAsync();
         }
     }
 }

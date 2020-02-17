@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MiddleMan.Web.ViewModels.ViewModels.Offer
+﻿namespace MiddleMan.Web.ViewModels.ViewModels.Offer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
     public class OfferViewModel
     {
         public OfferViewModel()
@@ -22,5 +22,9 @@ namespace MiddleMan.Web.ViewModels.ViewModels.Offer
         public string ClickUrl { get; set; }
 
         public bool ReadMore { get; set; }
+
+        public string CategoryName { get; set; }
+
+        public bool IsFeatured { get; set; }
     }
 }

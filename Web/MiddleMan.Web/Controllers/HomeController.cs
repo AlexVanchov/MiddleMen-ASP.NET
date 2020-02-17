@@ -8,6 +8,7 @@
     using MiddleMan.Services.Interfaces;
     using MiddleMan.Web.ViewModels;
     using MiddleMan.Web.ViewModels.ViewModels;
+    using MiddleMan.Web.ViewModels.ViewModels.Offer;
 
     public class HomeController : BaseController
     {
@@ -24,8 +25,43 @@
         public async Task<IActionResult> Index()
         {
             var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
+            var latestOffers = await this.offerService.GetLatestOffers(9);
+            var latestOffersViewModel = new List<OfferViewModel>();
+            var featuredOffers = await this.offerService.GetFeaturedOffers();
+            var featuredOffersViewModel = new List<OfferViewModel>();
 
-            var homeModel = new HomeViewModel(categories);
+            foreach (var offer in latestOffers)
+            {
+                var categoryName = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
+                latestOffersViewModel.Add(new OfferViewModel()
+                {
+                    Name = offer.Name,
+                    Description = offer.Description.Length >= 65 ? offer.Description.Substring(0, 65) : offer.Description,
+                    Price = offer.Price,
+                    PicUrl = offer.PicUrl,
+                    ClickUrl = $"/Offer/Details?id={offer.Id}",
+                    ReadMore = offer.Description.Length >= 65 ? true : false,
+                    CategoryName = categoryName,
+                });
+            }
+
+            foreach (var offer in featuredOffers)
+            {
+                featuredOffersViewModel.Add(new OfferViewModel()
+                {
+                    Name = offer.Name,
+                    Price = offer.Price,
+                    PicUrl = offer.PicUrl,
+                    ClickUrl = $"/Offer/Details?id={offer.Id}",
+                });
+            }
+
+            var homeModel = new HomeViewModel(categories)
+            {
+                LatestOffers = latestOffersViewModel,
+                FeaturedOffers = featuredOffersViewModel,
+            };
+
             return this.View(homeModel);
         }
 
