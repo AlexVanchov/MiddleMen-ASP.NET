@@ -19,5 +19,7 @@
         Task<List<Offer>> GetAllAprovedOffersAsync();
 
         Task ApproveOfferAsync(string id);
+
+        Task RemoveOffer(string id);
     }
 }

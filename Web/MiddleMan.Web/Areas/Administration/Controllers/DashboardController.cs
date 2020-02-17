@@ -49,9 +49,9 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateCategory(CreateCategoryModel inputModel)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return View(inputModel);
+                return this.View(inputModel);
             }
 
             await this.categoryService.CreateCategoryAsync(inputModel);
@@ -59,7 +59,7 @@
             //TempData["CreatedAd"] = SuccessfullyCreatedAdMessage;
 
 
-            return RedirectToAction("Index");
+            return this.RedirectToAction("Index");
         }
 
         public async Task<IActionResult> ForApprove()
@@ -113,6 +113,39 @@
             await this.offerService.ApproveOfferAsync(id);
 
             return this.Redirect("/Administration/Dashboard/ForApprove");
+        }
+
+        public async Task<IActionResult> Remove(string id)
+        {
+            var offer = await this.offerService.GetOfferByIdAsync(id);
+            var category = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
+
+            var offerView = new OfferViewModelDetails()
+            {
+                CreatorId = offer.CreatorId,
+                Description = offer.Description,
+                Name = offer.Name,
+                PicUrl = offer.PicUrl,
+                Price = offer.Price,
+                CreatedOn = offer.CreatedOn,
+                Id = offer.Id,
+            };
+
+            var detailsModel = new DetailsOfferViewModel()
+            {
+                CategoryName = category,
+                Offer = offerView,
+                CategoryId = offer.CategoryId,
+            };
+
+            return this.View("Preview", detailsModel);
+        }
+
+        public async Task<IActionResult> RemoveConfirmed(string id)
+        {
+            await this.offerService.RemoveOffer(id);
+
+            return this.Redirect("/Administration/Dashboard/Approved");
         }
     }
 }

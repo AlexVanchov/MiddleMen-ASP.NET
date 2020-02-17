@@ -1,0 +1,37 @@
+﻿@using MiddleMan.Web.ViewModels.Administration.Dashboard
+@model DetailsOfferViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-lg-3">
+        </div>
+
+        <div class="col-lg-9">
+            <a href="/Administration/Dashboard/Approved" style="height:30px; padding-top: 0px;" class="btn btn-primary hBack text-white"><img style="max-width:100%; max-height:80%; height:auto; width: auto;" src="https://pngimage.net/wp-content/uploads/2018/05/back-icon-png-white-6.png" />Go back</a>
+            <div class="card mt-4">
+                <div style="height:400px; margin:auto">
+                    <img style="max-width:100%; max-height:100%; height:auto; width: auto;" class="card-img-top img-fluid" src="@Model.Offer.PicUrl" alt="">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">@Model.Offer.Name</h3>
+                    <h4>$@Model.Offer.Price</h4>
+
+                    <p style="text-align:center;">
+                    <a href="/Administration/Dashboard/RemoveConfirmed?id=@Model.Offer.Id" class="btn btn-danger text-white">Click To Confirm Delete</a>
+                    </p>
+
+                    <p class="card-text">@Model.Offer.Description</p>
+                    <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+                    4.0 stars
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

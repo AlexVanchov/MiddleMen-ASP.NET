@@ -78,6 +78,8 @@
                 Name = offer.Name,
                 PicUrl = offer.PicUrl,
                 Price = offer.Price,
+                CreatedOn = offer.CreatedOn,
+                Id = offer.Id,
             };
 
             var detailsModel = new DetailsViewModel(categories)
