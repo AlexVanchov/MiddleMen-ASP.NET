@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace MiddleMan.Web.ViewModels.ViewModels.Offer
+﻿namespace MiddleMan.Web.ViewModels.ViewModels.Offer
 {
+    using System;
+
     public class OfferViewModelDetails
     {
         public OfferViewModelDetails()

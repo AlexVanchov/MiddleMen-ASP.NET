@@ -41,7 +41,7 @@
                     }
                 </ol>
                 <div class="carousel-inner" role="listbox" style="background-color:darkgray;">
-                    
+
                     @for (int i = 0; i < Model.FeaturedOffers.Count; i++)
                     {
                         if (i == 0)
@@ -57,15 +57,15 @@
                         {
                             <div class="carousel-item" style="height:350px;">
                                 @*<img class="d-block img-fluid" src="@offer.PicUrl" alt="Slide">*@
-                                <a  href="@Model.FeaturedOffers[i].ClickUrl">
+                                <a href="@Model.FeaturedOffers[i].ClickUrl">
                                     <img class="d-block img-fluid" src="@Model.FeaturedOffers[i].PicUrl" alt="" style="margin:auto; max-width:100%; max-height:100%; height:auto; width: auto;">
                                 </a>
                             </div>
                         }
                     }
                     @*<div class="carousel-item">
-                        <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide">
-                    </div>*@
+                    <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide">
+                </div>*@
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -77,7 +77,9 @@
                 </a>
             </div>
 
+            <h2 class="my-4">Latest offers:</h2>
             <div class="row">
+
 
                 @foreach (var offer in Model.LatestOffers)
                 {

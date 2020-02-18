@@ -1,13 +1,13 @@
 ﻿namespace MiddleMan.Web.Areas.Administration.Controllers
 {
-    using MiddleMan.Services.Data;
-    using MiddleMan.Web.ViewModels.Administration.Dashboard;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
-    using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
-    using System.Threading.Tasks;
     using MiddleMan.Services;
+    using MiddleMan.Services.Data;
     using MiddleMan.Services.Interfaces;
+    using MiddleMan.Web.ViewModels.Administration.Dashboard;
+    using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
     using MiddleMan.Web.ViewModels.ViewModels.Offer;
 
     public class DashboardController : AdministrationController
@@ -214,6 +214,7 @@
 
             return this.Redirect("/Administration/Dashboard/Approved");
         }
+
         public async Task<IActionResult> RemoveBoost(string id)
         {
             await this.offerService.RemoveFeatureOnItem(id);

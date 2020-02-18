@@ -18,6 +18,7 @@
     using MiddleMan.Services;
     using MiddleMan.Common;
     using Microsoft.AspNetCore.Http;
+    using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
 
     public class OfferController : BaseController
     {
@@ -91,6 +92,12 @@
             };
 
             return this.View(detailsModel);
+        }
+
+        public async Task<IActionResult> AddReview(CreateReviewModel inputModel) // index post requsest for create
+        {
+            // TODO
+            return this.Redirect("/");
         }
     }
 }
