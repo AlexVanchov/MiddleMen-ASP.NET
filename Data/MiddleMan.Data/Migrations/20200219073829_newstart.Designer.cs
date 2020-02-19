@@ -10,8 +10,8 @@ using MiddleMan.Data;
 namespace MiddleMan.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200215132332_OfferValidationsAndIsApDecFeatured")]
-    partial class OfferValidationsAndIsApDecFeatured
+    [Migration("20200219073829_newstart")]
+    partial class newstart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -272,6 +272,44 @@ namespace MiddleMan.Data.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("MiddleMan.Data.Models.Comment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OfferId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("OfferId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("MiddleMan.Data.Models.Offer", b =>
                 {
                     b.Property<string>("Id")
@@ -409,6 +447,15 @@ namespace MiddleMan.Data.Migrations
                     b.HasOne("MiddleMan.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MiddleMan.Data.Models.Comment", b =>
+                {
+                    b.HasOne("MiddleMan.Data.Models.Offer", "Offer")
+                        .WithMany("Comments")
+                        .HasForeignKey("OfferId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
