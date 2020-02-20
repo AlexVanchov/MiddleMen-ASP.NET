@@ -55,7 +55,7 @@
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
                         <small class="text-muted">Posted by Anonymous on 3/1/17</small>
                         <hr>
-                        <form asp-controller="Offer" asp-action="AddReview" method="post">
+                        <form action="/Offer/AddReview?id=@Model.Offer.Id" method="post">
                             <div class="controls">
                                 <h4>Leave review</h4>
                                 <select name="Rating" class="form-control">

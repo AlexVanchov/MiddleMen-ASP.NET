@@ -11,6 +11,7 @@
     using MiddleMan.Data;
     using MiddleMan.Data.Models;
     using MiddleMan.Services.Interfaces;
+    using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
     using MiddleMan.Web.ViewModels.InputModels;
 
     public class OfferService : IOfferService
@@ -121,6 +122,28 @@
         {
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
             offer.IsFeatured = false;
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task AddReviewToOffer(CreateReviewModel inputModel)
+        {
+            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == inputModel.Id);
+            if (offer == null)
+                throw new ArgumentNullException("Invalid Data");
+            else if (int.Parse(inputModel.Rating) < 1 || int.Parse(inputModel.Rating) > 5)
+                throw new ArgumentNullException("Invalid Data");
+            else if (inputModel.Review == null)
+                throw new ArgumentNullException("Invalid Data");
+
+            var comment = new Comment()
+            {
+                Description = inputModel.Review,
+                OfferId = inputModel.Id,
+                RatingGiven = int.Parse(inputModel.Rating),
+                CreatorId = inputModel.CreatorId,
+            };
+
+            offer.Comments.Add(comment);
             await this.context.SaveChangesAsync();
         }
     }

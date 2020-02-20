@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
 
     using MiddleMan.Data.Models;
+    using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
     using MiddleMan.Web.ViewModels.InputModels;
 
     public interface IOfferService
@@ -29,6 +30,9 @@
         Task FeatureItem(string id);
 
         Task<List<Offer>> GetFeaturedOffers();
+
         Task RemoveFeatureOnItem(string id);
+
+        Task AddReviewToOffer(CreateReviewModel inputModel);
     }
 }

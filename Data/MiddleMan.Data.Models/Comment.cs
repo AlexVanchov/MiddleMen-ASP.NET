@@ -8,7 +8,7 @@
 
     using MiddleMan.Data.Common.Models;
 
-    public class Comment : BaseDeletableModel<int>
+    public class Comment : BaseDeletableModel<string>
     {
         public Comment()
         {
@@ -17,9 +17,6 @@
             this.IsDeleted = false;
             this.ModifiedOn = DateTime.UtcNow;
         }
-
-        [Key]
-        public string Id { get; set; }
 
         [Required]
         public string Description { get; set; }
@@ -32,5 +29,9 @@
 
         [Required]
         public string CreatorId { get; set; }
+
+        [Required]
+        [Range(0, 6)]
+        public int RatingGiven { get; set; }
     }
 }

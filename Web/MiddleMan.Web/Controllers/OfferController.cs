@@ -96,8 +96,17 @@
 
         public async Task<IActionResult> AddReview(CreateReviewModel inputModel) // index post requsest for create
         {
-            // TODO
-            return this.Redirect("/");
+            try
+            {
+                inputModel.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                await this.offerService.AddReviewToOffer(inputModel);
+            }
+            catch (Exception)
+            {
+                return this.Redirect("/");
+            }
+
+            return this.Redirect($"/Offer/Details?id={inputModel.Id}");
         }
     }
 }

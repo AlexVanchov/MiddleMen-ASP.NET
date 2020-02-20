@@ -6,6 +6,12 @@
 
     public class CreateReviewModel
     {
+        public string Rating { get; set; }
+
         public string Review { get; set; }
+
+        public string CreatorId { get; set; }
+
+        public string Id { get; set; }
     }
 }
