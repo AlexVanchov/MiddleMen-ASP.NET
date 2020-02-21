@@ -26,6 +26,12 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
  * Cloud out of limit error
  * Validations
  * Authorizations for admin pages
+ * Profile view
+ * Username on regis
+ * Object relations to update
+ * Identity pages customise
+ * Apply for seller
+ * Buy button
  
  ### Done:
  * onclick item displaying
@@ -49,6 +55,7 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
     * Price(decimal)
     * Description(string)
     * picUrl(nullable string)
+* Comment (IMPLEMENTATION NEEDED here + : BaseModel)
 
 License
 ----
