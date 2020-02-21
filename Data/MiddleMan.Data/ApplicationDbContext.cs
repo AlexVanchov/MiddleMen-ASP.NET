@@ -32,6 +32,8 @@
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<OfferUserRate> OfferUserRates { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -57,6 +59,8 @@
             base.OnModelCreating(builder);
 
             ConfigureUserIdentityRelations(builder);
+
+            ConfigureOfferUser(builder);
 
             EntityIndexesConfiguration.Configure(builder);
 
@@ -102,6 +106,16 @@
                 .HasForeignKey(e => e.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+        }
+
+        private static void ConfigureOfferUser(ModelBuilder builder)
+        {
+            builder.Entity<OfferUserRate>()
+                .HasKey(x => new
+                {
+                    x.OfferId,
+                    x.UserId,
+                });
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
