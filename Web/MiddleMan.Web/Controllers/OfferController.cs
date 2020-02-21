@@ -19,6 +19,7 @@
     using MiddleMan.Common;
     using Microsoft.AspNetCore.Http;
     using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
+    using MiddleMan.Web.ViewModels.ViewModels.Comment;
 
     public class OfferController : BaseController
     {
@@ -71,6 +72,10 @@
             var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
             var offer = await this.offerService.GetOfferByIdAsync(id);
             var category = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
+            var comments = await this.offerService.GetOfferComments(id);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var rated = await this.offerService.IsOfferRated(offer.Id, userId);
+
 
             var offerView = new OfferViewModelDetails()
             {
@@ -81,7 +86,19 @@
                 Price = offer.Price,
                 CreatedOn = offer.CreatedOn,
                 Id = offer.Id,
+                Rated = rated,
             };
+
+            foreach (var comment in comments)
+            {
+                offerView.Comments.Add(new CommentViewModel()
+                {
+                    CreatedOn = comment.CreatedOn.ToString("dd/M/yy"),
+                    CreatorName = this.User.FindFirstValue(ClaimTypes.Name),
+                    Description = comment.Description,
+                    RatingGiven = comment.RatingGiven,   // TODO allow nulls
+                });
+            }
 
             var detailsModel = new DetailsViewModel(categories)
             {

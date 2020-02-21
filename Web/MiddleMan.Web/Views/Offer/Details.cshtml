@@ -46,18 +46,21 @@
                         Product Reviews
                     </div>
                     <div class="card-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                        <hr>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                        <hr>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                        <hr>
+                        @foreach (var comment in Model.Offer.Comments)
+                        {
+                            <p>@comment.Description</p>
+                            <small class="text-muted">Posted by @comment.CreatorName on @comment.CreatedOn</small>
+                            if (comment.RatingGiven != null)
+                            {
+                                <small class="text-muted">Rated: @comment.RatingGiven</small>
+                            }
+                            <hr>
+                        }
                         <form action="/Offer/AddReview?id=@Model.Offer.Id" method="post">
                             <div class="controls">
                                 <h4>Leave review</h4>
+                                @if (!Model.Offer.Rated)
+                                {
                                 <select name="Rating" class="form-control">
                                     <option selected="true" disabled="disabled">--Rating(1-6)--</option>"
                                     <option value="1">1</option>
@@ -66,6 +69,7 @@
                                     <option value="4">4</option>
                                     <option value="5">5</option>
                                 </select>
+                                }
                                 <textarea rows="4" style="margin-bottom: 10px" class="input-md textinput textInput form-control" maxlength="1000" name="Review" placeholder="Review..." type="text"></textarea>
                             </div>
                             <input type="submit" value="Post Review" class="btn btn-success" />

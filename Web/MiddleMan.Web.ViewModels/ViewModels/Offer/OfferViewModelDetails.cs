@@ -1,11 +1,16 @@
 ﻿namespace MiddleMan.Web.ViewModels.ViewModels.Offer
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
+
+    using MiddleMan.Web.ViewModels.ViewModels.Comment;
 
     public class OfferViewModelDetails
     {
         public OfferViewModelDetails()
         {
+            this.Comments = new HashSet<CommentViewModel>();
         }
 
         public string Id { get; set; }
@@ -25,6 +30,10 @@
         public string CategoryName { get; set; }
 
         public bool IsFeatured { get; set; }
+
+        public bool Rated { get; set; }
+
+        public ICollection<CommentViewModel> Comments { get; set; }
 
         // todo comments
     }

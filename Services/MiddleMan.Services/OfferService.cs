@@ -146,5 +146,16 @@
             offer.Comments.Add(comment);
             await this.context.SaveChangesAsync();
         }
+
+        public async Task<List<Comment>> GetOfferComments(string id)
+        {
+            return await this.context.Comments.Where(x => x.OfferId == id).ToListAsync(); // TODO
+        }
+
+        public async Task<bool> IsOfferRated(string id, string userId)
+        {
+            return await this.context.Comments
+                .AnyAsync(x => x.CreatorId == userId && x.OfferId == id) ? true : false;
+        }
     }
 }

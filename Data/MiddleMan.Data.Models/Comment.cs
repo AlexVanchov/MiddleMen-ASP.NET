@@ -30,8 +30,7 @@
         [Required]
         public string CreatorId { get; set; }
 
-        [Required]
         [Range(0, 6)]
-        public int RatingGiven { get; set; }
+        public int? RatingGiven { get; set; }
     }
 }

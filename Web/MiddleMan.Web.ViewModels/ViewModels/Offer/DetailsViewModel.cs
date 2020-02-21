@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MiddleMan.Web.ViewModels.ViewModels.Offer
+﻿namespace MiddleMan.Web.ViewModels.ViewModels.Offer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
+    using MiddleMan.Web.ViewModels.ViewModels.Comment;
+
     public class DetailsViewModel : HomeViewModel
     {
         public DetailsViewModel(ICollection<CategoryViewModel> categories)

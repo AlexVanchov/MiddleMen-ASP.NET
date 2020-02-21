@@ -34,5 +34,9 @@
         Task RemoveFeatureOnItem(string id);
 
         Task AddReviewToOffer(CreateReviewModel inputModel);
+
+        Task<List<Comment>> GetOfferComments(string id);
+
+        Task<bool> IsOfferRated(string id, string userId);
     }
 }
