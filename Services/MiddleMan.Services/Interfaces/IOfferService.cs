@@ -11,7 +11,7 @@
 
     public interface IOfferService
     {
-        Task CreateOfferAsync(CreateOfferModel inputModel);  // TODO model
+        Task CreateOfferAsync(CreateOfferModel inputModel);
 
         Task<Offer> GetOfferByIdAsync(string id);
 
@@ -32,10 +32,6 @@
         Task<List<Offer>> GetFeaturedOffers();
 
         Task RemoveFeatureOnItem(string id);
-
-        Task AddReviewToOffer(CreateReviewModel inputModel);
-
-        Task<List<Comment>> GetOfferComments(string id);
 
         Task<bool> IsOfferRated(string id, string userId);
     }

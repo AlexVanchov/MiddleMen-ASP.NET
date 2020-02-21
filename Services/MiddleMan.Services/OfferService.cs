@@ -124,34 +124,7 @@
             offer.IsFeatured = false;
             await this.context.SaveChangesAsync();
         }
-
-        public async Task AddReviewToOffer(CreateReviewModel inputModel)
-        {
-            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == inputModel.Id);
-            if (offer == null)
-                throw new ArgumentNullException("Invalid Data");
-            else if (int.Parse(inputModel.Rating) < 1 || int.Parse(inputModel.Rating) > 5)
-                throw new ArgumentNullException("Invalid Data");
-            else if (inputModel.Review == null)
-                throw new ArgumentNullException("Invalid Data");
-
-            var comment = new Comment()
-            {
-                Description = inputModel.Review,
-                OfferId = inputModel.Id,
-                RatingGiven = int.Parse(inputModel.Rating),
-                CreatorId = inputModel.CreatorId,
-            };
-
-            offer.Comments.Add(comment);
-            await this.context.SaveChangesAsync();
-        }
-
-        public async Task<List<Comment>> GetOfferComments(string id)
-        {
-            return await this.context.Comments.Where(x => x.OfferId == id).ToListAsync(); // TODO
-        }
-
+        
         public async Task<bool> IsOfferRated(string id, string userId)
         {
             return await this.context.Comments

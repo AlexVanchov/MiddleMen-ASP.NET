@@ -29,11 +29,18 @@
 
         private readonly ICloudinaryService cloudinaryService;
 
-        public OfferController(IOfferService offerService, ICategoryService categoryService, ICloudinaryService cloudinaryService)
+        private readonly ICommentService commentService;
+
+        public OfferController(
+            IOfferService offerService,
+            ICategoryService categoryService,
+            ICloudinaryService cloudinaryService,
+            ICommentService commentService)
         {
             this.offerService = offerService;  // todo rename sell to offer or revert
             this.categoryService = categoryService;
             this.cloudinaryService = cloudinaryService;
+            this.commentService = commentService;
         }
 
         public async Task<IActionResult> Index()
@@ -72,7 +79,7 @@
             var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
             var offer = await this.offerService.GetOfferByIdAsync(id);
             var category = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
-            var comments = await this.offerService.GetOfferComments(id);
+            var comments = await this.commentService.GetOfferComments(id);
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var rated = await this.offerService.IsOfferRated(offer.Id, userId);
 
@@ -96,7 +103,7 @@
                     CreatedOn = comment.CreatedOn.ToString("dd/M/yy"),
                     CreatorName = this.User.FindFirstValue(ClaimTypes.Name),
                     Description = comment.Description,
-                    RatingGiven = comment.RatingGiven,   // TODO allow nulls
+                    RatingGiven = comment.RatingGiven,
                 });
             }
 
@@ -116,7 +123,7 @@
             try
             {
                 inputModel.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                await this.offerService.AddReviewToOffer(inputModel);
+                await this.commentService.AddReviewToOffer(inputModel);
             }
             catch (Exception)
             {
