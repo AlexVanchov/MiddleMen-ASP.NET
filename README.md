@@ -32,6 +32,7 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
  * Identity pages customise
  * Apply for seller
  * Buy button
+ * Alerts(Bootstrap)
  
  ### Done:
  * onclick item displaying

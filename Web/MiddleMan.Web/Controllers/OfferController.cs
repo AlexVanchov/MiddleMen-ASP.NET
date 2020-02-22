@@ -60,8 +60,15 @@
             var categoryId = await this.categoryService.GetIdByNameAsync(a.CategotyName);
             a.CategotyName = categoryId;
             a.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var imgSize = inputModel.CreateOfferModel.Photo.Length;
+
+            if (imgSize >= 1048576)
+            {
+                return this.Redirect("/Offer");
+            }
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
 
             var photoUrl = await this.cloudinaryService.UploadPhotoAsync(
                 a.Photo,
