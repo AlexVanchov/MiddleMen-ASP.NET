@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using MiddleMan.Data.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace MiddleMan.Web.Areas.Identity.Pages.Account
 {
