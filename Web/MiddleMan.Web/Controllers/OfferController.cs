@@ -63,9 +63,13 @@
             var imgSize = inputModel.CreateOfferModel.Photo.Length;
 
             if (imgSize >= 1048576)
-            {
                 return this.Redirect("/Offer");
-            }
+            else if (inputModel.CreateOfferModel.Name.Length < 3 || inputModel.CreateOfferModel.Name.Length > 50)
+                return this.Redirect("/Offer");
+            else if (inputModel.CreateOfferModel.Description.Length < 20 || inputModel.CreateOfferModel.Description.Length > 1000)
+                return this.Redirect("/Offer");
+            else if (inputModel.CreateOfferModel.Price < 0.01 || inputModel.CreateOfferModel.Price > 2000)
+                return this.Redirect("/Offer");
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 

@@ -11,12 +11,12 @@
     <div class="form-group required">
         <div class="controls col-md-8 ">
             <h4>Name</h4>
-            <input class="input-md  textinput textInput form-control" maxlength="50" asp-for="CreateOfferModel.Name" placeholder="Offer Name" style="margin-bottom: 10px" type="text" />
+            <input type="text" class="input-md  textinput textInput form-control" min="3" required minlength="3" maxlength="50" asp-for="CreateOfferModel.Name" placeholder="Offer Name" style="margin-bottom: 10px" />
         </div>
     </div>
     <div class="form-group col-md-8 required">
         <h4 @*asp-for="CreateOfferModel.CategoryId"*@ class="required">Choose Category</h4>
-        <select asp-for="CreateOfferModel.CategotyName" class="form-control">
+        <select asp-for="CreateOfferModel.CategotyName" class="form-control" required>
             <option selected="true" disabled="disabled">--Select--</option>"
             @foreach (var category in Model.CreateOfferViewModel.Categories)
             {
@@ -31,19 +31,19 @@
     <div class="form-group required">
         <div class="controls col-md-8 ">
             <h4>Description</h4>
-            <textarea rows="4" style="margin-bottom: 10px" class="input-md textinput textInput form-control" maxlength="1000" asp-for="CreateOfferModel.Description" placeholder="Description" type="text"></textarea>
+            <textarea rows="4" style="margin-bottom: 10px" class="input-md textinput textInput form-control" required minlength="20" maxlength="1000" asp-for="CreateOfferModel.Description" placeholder="Description" type="text"></textarea>
         </div>
     </div>
     <div class="form-group required">
         <div class="controls col-md-8 ">
             <h4>Price($USD)</h4>
-            <input class="input-md textinput textInput form-control" asp-for="CreateOfferModel.Price" placeholder="Price(10$)" style="margin-bottom: 10px" type="number" />
+            <input required min="1" max="2000" class="input-md textinput textInput form-control" asp-for="CreateOfferModel.Price" placeholder="Price(10$)" style="margin-bottom: 10px" type="number" />
         </div>
     </div>
     <div class="form-group required controls col-md-8">
         <h4>Upload Photo</h4>
         <i class="fa fa-upload"></i> Upload
-        <input asp-for="CreateOfferModel.Photo" type="file" class="form-control" />
+        <input required asp-for="CreateOfferModel.Photo" type="file" class="form-control" />
 
         @*<div class="file-field">
             <a class="btn-floating peach-gradient mt-0 float-left">
