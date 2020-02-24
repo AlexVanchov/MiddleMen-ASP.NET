@@ -34,6 +34,7 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
  * Buy button
  * Alerts(Bootstrap)
  * Error pages and Alert Redirects
+ * Email login and username display after
  
  ### Done:
  * onclick item displaying
