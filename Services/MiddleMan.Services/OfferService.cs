@@ -124,11 +124,19 @@
             offer.IsFeatured = false;
             await this.context.SaveChangesAsync();
         }
-        
+
         public async Task<bool> IsOfferRated(string id, string userId)
         {
-            return await this.context.Comments
-                .AnyAsync(x => x.CreatorId == userId && x.OfferId == id) ? true : false;
+            return await this.context.OfferUserRates
+                .AnyAsync(x => x.UserId == userId && x.OfferId == id) ? true : false;
+        }
+
+        public async Task<int> GetRateForOffer(string id, string userId)
+        {
+            var offerUser = await this.context.OfferUserRates
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.OfferId == id);
+
+            return offerUser.Rate;
         }
     }
 }

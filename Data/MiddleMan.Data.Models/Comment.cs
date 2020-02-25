@@ -29,8 +29,5 @@
 
         [Required]
         public string CreatorId { get; set; }
-
-        [Range(0, 6)]
-        public int? RatingGiven { get; set; }
     }
 }

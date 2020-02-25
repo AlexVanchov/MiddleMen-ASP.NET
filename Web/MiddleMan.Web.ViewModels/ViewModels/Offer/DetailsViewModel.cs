@@ -21,5 +21,7 @@
         public string CategoryId { get; set; }
 
         public OfferViewModelDetails Offer { get; set; }
+
+        public int UserRated { get; set; }
     }
 }

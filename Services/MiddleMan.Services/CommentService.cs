@@ -14,10 +14,12 @@ namespace MiddleMan.Services
     public class CommentService : ICommentService
     {
         private readonly ApplicationDbContext context;
+        private readonly IOfferService offerService;
 
-        public CommentService(ApplicationDbContext context)
+        public CommentService(ApplicationDbContext context, IOfferService offerService)
         {
             this.context = context;
+            this.offerService = offerService;
         }
 
         public async Task AddReviewToOffer(CreateReviewModel inputModel)
@@ -34,10 +36,20 @@ namespace MiddleMan.Services
             {
                 Description = inputModel.Review,
                 OfferId = inputModel.Id,
-                RatingGiven = int.Parse(inputModel.Rating),
                 CreatorId = inputModel.CreatorId,
             };
 
+            var rated = await this.offerService.IsOfferRated(offer.Id, inputModel.CreatorId);
+            var offerRatedByUser = await this.offerService.GetRateForOffer(offer.Id, inputModel.CreatorId);
+
+            var offerRate = new OfferUserRate()
+            {
+                OfferId = offer.Id,
+                UserId = inputModel.CreatorId,
+                Rate = offerRatedByUser,
+            };
+
+            this.context.OfferUserRates.Add(offerRate);
             offer.Comments.Add(comment);
             await this.context.SaveChangesAsync();
         }
