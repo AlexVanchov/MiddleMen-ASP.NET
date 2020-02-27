@@ -25,11 +25,10 @@ namespace MiddleMan.Services
         public async Task AddReviewToOffer(CreateReviewModel inputModel)
         {
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == inputModel.Id);
+            var userComments = this.GetOfferComments(inputModel.Id).Result.Where(x => x.CreatorId == inputModel.CreatorId).ToList();
             if (offer == null)
                 throw new ArgumentNullException("Invalid Data");
             else if (int.Parse(inputModel.Rating) < 1 || int.Parse(inputModel.Rating) > 5)
-                throw new ArgumentNullException("Invalid Data");
-            else if (inputModel.Review == null) 
                 throw new ArgumentNullException("Invalid Data");
 
             var comment = new Comment()
@@ -40,17 +39,47 @@ namespace MiddleMan.Services
             };
 
             var rated = await this.offerService.IsOfferRated(offer.Id, inputModel.CreatorId);
-            var offerRatedByUser = await this.offerService.GetRateForOffer(offer.Id, inputModel.CreatorId);
+            int? offerRatedByUser = null;
 
-            var offerRate = new OfferUserRate()
+            try
             {
-                OfferId = offer.Id,
-                UserId = inputModel.CreatorId,
-                Rate = offerRatedByUser,
-            };
+                offerRatedByUser = await this.offerService.GetRateForOffer(offer.Id, inputModel.CreatorId);
+            }
+            catch (Exception)
+            {
+            }
 
-            this.context.OfferUserRates.Add(offerRate);
-            offer.Comments.Add(comment);
+            OfferUserRate offerRate = null;
+
+            if (offerRatedByUser == null)
+            {
+                offerRate = new OfferUserRate()
+                {
+                    OfferId = offer.Id,
+                    UserId = inputModel.CreatorId,
+                    Rate = int.Parse(inputModel.Rating),
+                };
+            }
+
+            if (comment.Description == null)
+            {
+                if (userComments.Any())
+                {
+                    var offerUserRate = await this.context.OfferUserRates.FirstOrDefaultAsync(x => x.UserId == inputModel.CreatorId && x.OfferId == inputModel.Id);
+                    offerUserRate.Rate = int.Parse(inputModel.Rating);
+                }
+                else
+                {
+                    // Description error validation
+                    throw new ArgumentNullException("Invalid Data");
+                }
+            }
+            else
+            {
+                this.context.OfferUserRates.Add(offerRate);
+                offer.Comments.Add(comment);
+            }
+
             await this.context.SaveChangesAsync();
         }
 
