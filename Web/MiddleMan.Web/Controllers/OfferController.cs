@@ -20,6 +20,7 @@
     using Microsoft.AspNetCore.Http;
     using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
     using MiddleMan.Web.ViewModels.ViewModels.Comment;
+    using System.Linq;
 
     public class OfferController : BaseController
     {
@@ -119,7 +120,7 @@
             {
                 offerView.Comments.Add(new CommentViewModel()
                 {
-                    CreatedOn = comment.CreatedOn.ToString("dd/M/yy"),
+                    CreatedOn = comment.CreatedOn.ToString("dd/M/yy H:mm"),
                     CreatorName = this.User.FindFirstValue(ClaimTypes.Name),
                     Description = comment.Description,
                 });

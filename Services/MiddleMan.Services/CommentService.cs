@@ -49,6 +49,18 @@ namespace MiddleMan.Services
             {
             }
 
+            if (userComments.Any())
+            {
+                var offerUserRate = await this.context.OfferUserRates
+                    .FirstOrDefaultAsync(x => x.UserId == inputModel.CreatorId && x.OfferId == inputModel.Id);
+                offerUserRate.Rate = int.Parse(inputModel.Rating);
+            }
+            else
+            {
+                // Description error validation
+                throw new ArgumentNullException("Invalid Data");
+            }
+
             OfferUserRate offerRate = null;
 
             if (offerRatedByUser == null)
@@ -60,23 +72,12 @@ namespace MiddleMan.Services
                     Rate = int.Parse(inputModel.Rating),
                 };
             }
-
-            if (comment.Description == null)
-            {
-                if (userComments.Any())
-                {
-                    var offerUserRate = await this.context.OfferUserRates.FirstOrDefaultAsync(x => x.UserId == inputModel.CreatorId && x.OfferId == inputModel.Id);
-                    offerUserRate.Rate = int.Parse(inputModel.Rating);
-                }
-                else
-                {
-                    // Description error validation
-                    throw new ArgumentNullException("Invalid Data");
-                }
-            }
             else
             {
-                this.context.OfferUserRates.Add(offerRate);
+                if (offerRatedByUser == null)
+                {
+                    this.context.OfferUserRates.Add(offerRate);
+                }
                 offer.Comments.Add(comment);
             }
 
@@ -85,7 +86,10 @@ namespace MiddleMan.Services
 
         public async Task<List<Comment>> GetOfferComments(string id)
         {
-            return await this.context.Comments.Where(x => x.OfferId == id).ToListAsync();
+            return await this.context.Comments
+                .Where(x => x.OfferId == id)
+                .OrderByDescending(x => x.CreatedOn)
+                .ToListAsync();
         }
     }
 }
