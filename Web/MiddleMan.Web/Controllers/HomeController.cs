@@ -56,8 +56,9 @@
                 });
             }
 
-            var homeModel = new HomeViewModel(categories)
+            var homeModel = new HomeViewModel()
             {
+                Categories = categories,
                 LatestOffers = latestOffersViewModel,
                 FeaturedOffers = featuredOffersViewModel,
             };
@@ -77,8 +78,9 @@
             var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync(categoryId);
             // var category = await this.categoryService.GetCategoryNameByIdAsync(id);
 
-            var homeModel = new HomeSelectedCategoryViewModel(categories)
+            var homeModel = new HomeSelectedCategoryViewModel()
             {
+                Categories = categories,
                 CategoryName = name,
                 Offers = offers,
             };

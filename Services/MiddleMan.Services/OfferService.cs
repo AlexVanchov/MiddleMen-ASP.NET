@@ -131,7 +131,7 @@
                 .AnyAsync(x => x.UserId == userId && x.OfferId == id) ? true : false;
         }
 
-        public async Task<int> GetRateForOffer(string id, string userId)
+        public async Task<int?> GetRateForOffer(string id, string userId)
         {
             var offerUser = await this.context.OfferUserRates
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.OfferId == id);

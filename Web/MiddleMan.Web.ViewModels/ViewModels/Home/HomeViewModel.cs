@@ -9,11 +9,6 @@
 
     public class HomeViewModel
     {
-        public HomeViewModel(ICollection<CategoryViewModel> categories)
-        {
-            this.Categories = categories;
-        }
-
         public ICollection<CategoryViewModel> Categories { get; set; }
 
         public List<OfferViewModel> FeaturedOffers { get; set; }

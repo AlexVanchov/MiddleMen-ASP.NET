@@ -8,12 +8,6 @@
 
     public class DetailsViewModel : HomeViewModel
     {
-        public DetailsViewModel(ICollection<CategoryViewModel> categories)
-            : base(categories)
-        {
-            this.Categories = categories;
-        }
-
         public ICollection<CategoryViewModel> Categories { get; set; }
 
         public string CategoryName { get; set; }
@@ -22,6 +16,6 @@
 
         public OfferViewModelDetails Offer { get; set; }
 
-        public int UserRated { get; set; }
+        public int? UserRated { get; set; }
     }
 }

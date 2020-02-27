@@ -93,7 +93,14 @@
             var comments = await this.commentService.GetOfferComments(id);
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var rated = await this.offerService.IsOfferRated(offer.Id, userId);
-            var offerRatedByUser = await this.offerService.GetRateForOffer(offer.Id, userId);
+            int? offerRatedByUser = null;
+            try
+            {
+                offerRatedByUser = await this.offerService.GetRateForOffer(offer.Id, userId);
+            }
+            catch (Exception)
+            {
+            }
 
 
             var offerView = new OfferViewModelDetails()
@@ -118,7 +125,7 @@
                 });
             }
 
-            var detailsModel = new DetailsViewModel(categories)
+            var detailsModel = new DetailsViewModel()
             {
                 CategoryName = category,
                 Categories = categories,

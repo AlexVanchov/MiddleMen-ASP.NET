@@ -9,7 +9,7 @@ namespace MiddleMan.Web.ViewModels.ViewModels
     public class HomeSelectedCategoryViewModel : HomeViewModel
     {
 
-        public HomeSelectedCategoryViewModel(ICollection<CategoryViewModel> categories) : base(categories)
+        public HomeSelectedCategoryViewModel()
         {
             this.Offers = new HashSet<OfferViewModel>();
         }
