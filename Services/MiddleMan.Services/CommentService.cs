@@ -55,11 +55,6 @@ namespace MiddleMan.Services
                     .FirstOrDefaultAsync(x => x.UserId == inputModel.CreatorId && x.OfferId == inputModel.Id);
                 offerUserRate.Rate = int.Parse(inputModel.Rating);
             }
-            else
-            {
-                // Description error validation
-                throw new ArgumentNullException("Invalid Data");
-            }
 
             OfferUserRate offerRate = null;
 
@@ -71,13 +66,17 @@ namespace MiddleMan.Services
                     UserId = inputModel.CreatorId,
                     Rate = int.Parse(inputModel.Rating),
                 };
-            }
-            else
-            {
+
+                if (offer.Description == null)
+                {
+                    throw new ArgumentNullException("Invalid Data");
+                }
+
                 if (offerRatedByUser == null)
                 {
                     this.context.OfferUserRates.Add(offerRate);
                 }
+
                 offer.Comments.Add(comment);
             }
 
