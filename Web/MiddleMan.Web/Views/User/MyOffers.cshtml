@@ -1,0 +1,66 @@
+﻿@using MiddleMan.Web.ViewModels.Administration.Dashboard
+@model ApproveOffersViewModel
+
+@{
+    ViewData["Title"] = "MyOffers";
+}
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-3">
+
+            <h1 class="my-4">My Offers</h1>
+            <div class="list-group">
+                <a href="/User/MyOffers" class="list-group-item bg-primary text-white">All</a>
+                <a href="/User/Active" class="list-group-item">Active</a>
+                <a href="/User/Deactivated" class="list-group-item">Deactivated</a>
+            </div>
+
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+
+            <div class="row">
+                @if (Model.Offers.Count == 0)
+                {
+                    <h1 style="width: 70%; margin: auto; margin-top: 30px;">You dont have any offers. You can create one <a href="/Offer">here</a></h1>
+                }
+                @foreach (var offer in Model.Offers)
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <a style="height:150px; margin:auto" href="/Offer/Details?id=@offer.Id"><img class="card-img-top" src="@offer.PicUrl" alt="" style="max-width:100%; max-height:100%; height:auto; width: auto;"></a>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="/Offer/Details?id=@offer.Id">@offer.Name</a>
+                                </h5>
+                                <h5>$@offer.Price</h5>
+                                <h6>@offer.CategoryName</h6>
+                                <p class="card-text" style="height: 75px;">@offer.Description
+
+                                <p class="" style="text-align:right;">
+                                    <a class="btn btn-warning" href="/Offer/Edit?id=@offer.Id">Edit</a>
+                                    <a class="btn btn-primary" href="/Offer/Details?id=@offer.Id">View</a>
+                                </p>
+
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->

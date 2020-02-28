@@ -36,5 +36,7 @@
         Task<bool> IsOfferRated(string id, string userId);
 
         Task<int?> GetRateForOffer(string id, string userId);
+
+        Task<List<Offer>> GetAllUserOffersAsync(string userId);
     }
 }

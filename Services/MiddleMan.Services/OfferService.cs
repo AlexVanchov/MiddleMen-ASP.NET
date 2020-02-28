@@ -138,5 +138,12 @@
 
             return offerUser.Rate;
         }
+
+        public async Task<List<Offer>> GetAllUserOffersAsync(string userId)
+        {
+            return await this.context.Offers
+                .Where(x => x.CreatorId == userId)
+                .ToListAsync();
+        }
     }
 }
