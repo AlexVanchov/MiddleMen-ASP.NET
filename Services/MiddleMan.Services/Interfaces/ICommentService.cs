@@ -12,6 +12,6 @@
     {
         Task AddReviewToOffer(CreateReviewModel inputModel);
 
-        Task<List<Comment>> GetOfferComments(string id);
+        Task<List<Comment>> GetOfferCommentsAsync(string id);
     }
 }

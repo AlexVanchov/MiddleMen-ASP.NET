@@ -33,8 +33,10 @@
 
         public bool Rated { get; set; }
 
-        public ICollection<CommentViewModel> Comments { get; set; }
+        public double OfferRating { get; set; }
 
-        // todo comments
+        public string StartsStringRating { get; set; }
+
+        public ICollection<CommentViewModel> Comments { get; set; }
     }
 }

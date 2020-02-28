@@ -1,26 +1,25 @@
 ﻿namespace MiddleMan.Web.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using MiddleMan.Common;
     using MiddleMan.Data.Common.Repositories;
     using MiddleMan.Data.Models;
-    using MiddleMan.Services.Data;
-    using MiddleMan.Web.ViewModels.Sell;
-
-    using Microsoft.AspNetCore.Mvc;
-    using MiddleMan.Services.Interfaces;
-    using MiddleMan.Web.ViewModels.ViewModels;
-    using System.Collections.Generic;
-    using MiddleMan.Web.ViewModels.InputModels;
-    using System.Security.Claims;
-    using MiddleMan.Web.ViewModels.ViewModels.Offer;
     using MiddleMan.Services;
-    using MiddleMan.Common;
-    using Microsoft.AspNetCore.Http;
+    using MiddleMan.Services.Data;
+    using MiddleMan.Services.Interfaces;
     using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
+    using MiddleMan.Web.ViewModels.InputModels;
+    using MiddleMan.Web.ViewModels.Sell;
+    using MiddleMan.Web.ViewModels.ViewModels;
     using MiddleMan.Web.ViewModels.ViewModels.Comment;
-    using System.Linq;
+    using MiddleMan.Web.ViewModels.ViewModels.Offer;
 
     public class OfferController : BaseController
     {
@@ -32,16 +31,20 @@
 
         private readonly ICommentService commentService;
 
+        private readonly IUserService userService;
+
         public OfferController(
             IOfferService offerService,
             ICategoryService categoryService,
             ICloudinaryService cloudinaryService,
-            ICommentService commentService)
+            ICommentService commentService,
+            IUserService userService)
         {
             this.offerService = offerService;  // todo rename sell to offer or revert
             this.categoryService = categoryService;
             this.cloudinaryService = cloudinaryService;
             this.commentService = commentService;
+            this.userService = userService;
         }
 
         public async Task<IActionResult> Index()
@@ -91,9 +94,12 @@
             var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
             var offer = await this.offerService.GetOfferByIdAsync(id);
             var category = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
-            var comments = await this.commentService.GetOfferComments(id);
+            var comments = await this.commentService.GetOfferCommentsAsync(id);
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var rated = await this.offerService.IsOfferRated(offer.Id, userId);
+            var rated = await this.offerService.IsOfferRatedAsync(offer.Id, userId);
+            double offerRating = await this.offerService.GetOfferRatingAsync(id);
+            string startsStringRating = this.offerService.StartsStringRating(offerRating);
+
             int? offerRatedByUser = null;
             try
             {
@@ -114,6 +120,8 @@
                 CreatedOn = offer.CreatedOn,
                 Id = offer.Id,
                 Rated = rated,
+                OfferRating = offerRating,
+                StartsStringRating = startsStringRating,
             };
 
             foreach (var comment in comments)
@@ -121,7 +129,7 @@
                 offerView.Comments.Add(new CommentViewModel()
                 {
                     CreatedOn = comment.CreatedOn.ToString("dd/M/yy H:mm"),
-                    CreatorName = this.User.FindFirstValue(ClaimTypes.Name),
+                    CreatorName = await this.userService.GetUsernameByIdAsync(comment.CreatorId),
                     Description = comment.Description,
                 });
             }

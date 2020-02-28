@@ -125,7 +125,7 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task<bool> IsOfferRated(string id, string userId)
+        public async Task<bool> IsOfferRatedAsync(string id, string userId)
         {
             return await this.context.OfferUserRates
                 .AnyAsync(x => x.UserId == userId && x.OfferId == id) ? true : false;
@@ -144,6 +144,40 @@
             return await this.context.Offers
                 .Where(x => x.CreatorId == userId)
                 .ToListAsync();
+        }
+
+        public async Task<double> GetOfferRatingAsync(string id)
+        {
+            var offers = await this.context.OfferUserRates.Where(x => x.OfferId == id).ToListAsync();
+            if (offers.Count == 0)
+            {
+                return 0;
+            }
+
+            return Math.Round(offers.Average(x => (double)x.Rate));
+        }
+
+        public string StartsStringRating(double stars)
+        {
+            string empty = "☆";
+            string full = "★";
+
+            var sb = new StringBuilder();
+
+            int startsCount = 0;
+            for (int i = 0; i < stars; i++)
+            {
+                sb.Append(full);
+                startsCount++;
+            }
+
+            while (startsCount < 5)
+            {
+                sb.Append(empty);
+                startsCount++;
+            }
+
+            return sb.ToString().TrimEnd();
         }
     }
 }

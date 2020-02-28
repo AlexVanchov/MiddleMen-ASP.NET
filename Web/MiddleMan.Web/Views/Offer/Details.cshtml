@@ -36,8 +36,9 @@
                     <h3 class="card-title">@Model.Offer.Name</h3>
                     <h4>$@Model.Offer.Price</h4>
                     <p class="card-text">@Model.Offer.Description</p>
-                    <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-                    4.0 stars
+                    @*<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>*@
+                    <span class="text-warning">@Model.Offer.StartsStringRating</span>
+                    @Model.Offer.OfferRating stars (Average)
                 </div>
             </div>
             <!-- /.card -->
@@ -105,7 +106,7 @@
                                 @if (!Model.Offer.Rated)
                                 {
                                     <select name="Rating" class="form-control">
-                                        <option selected="selected" disabled="disabled">--Rating(1-6)--</option>"
+                                        <option selected="selected" disabled="disabled">--Rating(1-5)--</option>"
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>

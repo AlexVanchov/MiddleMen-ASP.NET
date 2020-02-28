@@ -33,10 +33,14 @@
 
         Task RemoveFeatureOnItem(string id);
 
-        Task<bool> IsOfferRated(string id, string userId);
+        Task<bool> IsOfferRatedAsync(string id, string userId);
 
         Task<int?> GetRateForOffer(string id, string userId);
 
         Task<List<Offer>> GetAllUserOffersAsync(string userId);
+
+        Task<double> GetOfferRatingAsync(string id);
+
+        string StartsStringRating(double offerRating);
     }
 }

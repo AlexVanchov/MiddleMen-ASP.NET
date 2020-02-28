@@ -25,7 +25,7 @@ namespace MiddleMan.Services
         public async Task AddReviewToOffer(CreateReviewModel inputModel)
         {
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == inputModel.Id);
-            var userComments = this.GetOfferComments(inputModel.Id).Result.Where(x => x.CreatorId == inputModel.CreatorId).ToList();
+            var userComments = this.GetOfferCommentsAsync(inputModel.Id).Result.Where(x => x.CreatorId == inputModel.CreatorId).ToList();
             if (offer == null)
                 throw new ArgumentNullException("Invalid Data");
             else if (int.Parse(inputModel.Rating) < 1 || int.Parse(inputModel.Rating) > 5)
@@ -38,7 +38,7 @@ namespace MiddleMan.Services
                 CreatorId = inputModel.CreatorId,
             };
 
-            var rated = await this.offerService.IsOfferRated(offer.Id, inputModel.CreatorId);
+            var rated = await this.offerService.IsOfferRatedAsync(offer.Id, inputModel.CreatorId);
             int? offerRatedByUser = null;
 
             try
@@ -83,7 +83,7 @@ namespace MiddleMan.Services
             await this.context.SaveChangesAsync();
         }
 
-        public async Task<List<Comment>> GetOfferComments(string id)
+        public async Task<List<Comment>> GetOfferCommentsAsync(string id)
         {
             return await this.context.Comments
                 .Where(x => x.OfferId == id)
