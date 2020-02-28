@@ -179,5 +179,11 @@
 
             return sb.ToString().TrimEnd();
         }
+
+        public async Task<bool> IsUserCreatorOfOfferAsync(string userId, string id)
+        {
+            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
+            return offer.CreatorId == userId ? true : false;
+        }
     }
 }

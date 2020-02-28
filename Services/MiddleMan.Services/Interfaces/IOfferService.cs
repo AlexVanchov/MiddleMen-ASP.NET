@@ -42,5 +42,7 @@
         Task<double> GetOfferRatingAsync(string id);
 
         string StartsStringRating(double offerRating);
+
+        Task<bool> IsUserCreatorOfOfferAsync(string userId, string id);
     }
 }
