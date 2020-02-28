@@ -223,5 +223,32 @@
 
             return this.View(detailsModel);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, CreateOfferSharedModel inputModel) // index post requsest for create
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!await this.offerService.IsUserCreatorOfOfferAsync(userId, id))
+            {
+                return this.Redirect($"/Offer/Details?id={id}");
+            }
+
+            var a = inputModel.CreateOfferModel;
+            var categoryId = await this.categoryService.GetIdByNameAsync(a.CategotyName);
+            a.CategotyName = categoryId;
+            a.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (inputModel.CreateOfferModel.Name.Length < 3 || inputModel.CreateOfferModel.Name.Length > 50)
+                return this.Redirect("/Offer");
+            else if (inputModel.CreateOfferModel.Description.Length < 20 || inputModel.CreateOfferModel.Description.Length > 1000)
+                return this.Redirect("/Offer");
+            else if (inputModel.CreateOfferModel.Price < 0.01 || inputModel.CreateOfferModel.Price > 2000)
+                return this.Redirect("/Offer");
+
+            await this.offerService.CreateOfferAsync(a);
+
+            return this.Redirect("/");
+        }
     }
 }
