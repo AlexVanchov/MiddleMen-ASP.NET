@@ -41,6 +41,8 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
  * User profiles with pictures and recent offers
  * User rating
  * Many pictures with displayng on crate offer
+ * Canvas stats
+ * Basket with admin live baskets check
  
  ### Done:
  * onclick item displaying
