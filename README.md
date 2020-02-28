@@ -27,7 +27,6 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
  * Validations
  * Authorizations for admin pages
  * Profile view
- * Username on regis
  * Object relations to update
  * Identity pages customise
  * Apply for seller
@@ -37,12 +36,16 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
  * Email login and username display after
  * Error view (Bootstrap)
  * Email send (verification/welcome/recover password)
- * Possible to add yt embed to offer
+ * Possible to add yt embed to offer(Not sure???)
+ * Favorites
+ * User profiles with pictures and recent offers
+ * User rating
  
  ### Done:
  * onclick item displaying
  * Home page listingitems in category
  * Cloudinary(Cloud)
+ * Username on regis
  
  ## Objects relations:
 * BaseOnDeleteModel addon
