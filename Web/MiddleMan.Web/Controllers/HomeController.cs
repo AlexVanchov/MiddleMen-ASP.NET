@@ -15,11 +15,16 @@
         private readonly ICategoryService categoryService;
 
         private readonly IOfferService offerService;
+        private readonly IUserService userService;
 
-        public HomeController(ICategoryService categoryService, IOfferService offerService)
+        public HomeController(
+            ICategoryService categoryService, 
+            IOfferService offerService,
+            IUserService userService)
         {
             this.categoryService = categoryService;
             this.offerService = offerService;
+            this.userService = userService;
         }
 
         public async Task<IActionResult> Index()
@@ -33,6 +38,8 @@
             foreach (var offer in latestOffers)
             {
                 var categoryName = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
+                var offerRating = await this.offerService.GetOfferRatingAsync(offer.Id);
+
                 latestOffersViewModel.Add(new OfferViewModel()
                 {
                     Name = offer.Name,
@@ -42,6 +49,7 @@
                     ClickUrl = $"/Offer/Details?id={offer.Id}",
                     ReadMore = offer.Description.Length >= 65 ? true : false,
                     CategoryName = categoryName,
+                    StartsStringRating = this.offerService.StartsStringRating(offerRating),
                 });
             }
 

@@ -160,5 +160,62 @@
 
             return this.Redirect($"/Offer/Details?id={inputModel.Id}");
         }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
+            var offer = await this.offerService.GetOfferByIdAsync(id);
+            var category = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
+            var comments = await this.commentService.GetOfferCommentsAsync(id);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var rated = await this.offerService.IsOfferRatedAsync(offer.Id, userId);
+            double offerRating = await this.offerService.GetOfferRatingAsync(id);
+            string startsStringRating = this.offerService.StartsStringRating(offerRating);
+
+            int? offerRatedByUser = null;
+            try
+            {
+                offerRatedByUser = await this.offerService.GetRateForOffer(offer.Id, userId);
+            }
+            catch (Exception)
+            {
+            }
+
+
+            var offerView = new OfferViewModelDetails()
+            {
+                CreatorId = offer.CreatorId,
+                Description = offer.Description,
+                Name = offer.Name,
+                PicUrl = offer.PicUrl,
+                Price = offer.Price,
+                CreatedOn = offer.CreatedOn,
+                Id = offer.Id,
+                Rated = rated,
+                OfferRating = offerRating,
+                StartsStringRating = startsStringRating,
+            };
+
+            foreach (var comment in comments)
+            {
+                offerView.Comments.Add(new CommentViewModel()
+                {
+                    CreatedOn = comment.CreatedOn.ToString("dd/M/yy H:mm"),
+                    CreatorName = await this.userService.GetUsernameByIdAsync(comment.CreatorId),
+                    Description = comment.Description,
+                });
+            }
+
+            var detailsModel = new DetailsViewModel()
+            {
+                CategoryName = category,
+                Categories = categories,
+                Offer = offerView,
+                CategoryId = offer.CategoryId,
+                UserRated = offerRatedByUser,
+            };
+
+            return this.View(detailsModel);
+        }
     }
 }

@@ -26,5 +26,7 @@
         public string CategoryName { get; set; }
 
         public bool IsFeatured { get; set; }
+
+        public string StartsStringRating { get; set; }
     }
 }
