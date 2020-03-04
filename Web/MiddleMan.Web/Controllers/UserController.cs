@@ -22,6 +22,7 @@
     using MiddleMan.Web.ViewModels.ViewModels.Comment;
     using System.Linq;
     using MiddleMan.Web.ViewModels.Administration.Dashboard;
+    using Microsoft.AspNetCore.Identity.UI.Services;
 
     public class UserController : BaseController
     {
@@ -33,16 +34,20 @@
 
         private readonly ICommentService commentService;
 
+        private readonly IEmailSender emailSender;
+
         public UserController(
             IOfferService offerService,
             ICategoryService categoryService,
             ICloudinaryService cloudinaryService,
-            ICommentService commentService)
+            ICommentService commentService,
+            IEmailSender emailSender)
         {
             this.offerService = offerService;  // todo rename sell to offer or revert
             this.categoryService = categoryService;
             this.cloudinaryService = cloudinaryService;
             this.commentService = commentService;
+            this.emailSender = emailSender;
         }
 
         public async Task<IActionResult> MyOffers()

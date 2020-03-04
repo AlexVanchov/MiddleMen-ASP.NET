@@ -76,7 +76,7 @@
             // services.AddScoped<ICloudinaryService, CloudinaryService>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ISettingsService, SettingsService>();
 
             services.AddTransient<ICommentService, CommentService>();

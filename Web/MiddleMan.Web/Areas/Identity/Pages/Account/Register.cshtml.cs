@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using MiddleMan.Data.Models;
+using MiddleMan.Services.Messaging;
 
 namespace MiddleMan.Web.Areas.Identity.Pages.Account
 {
@@ -23,13 +24,13 @@ namespace MiddleMan.Web.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly Services.Messaging.IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            Services.Messaging.IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -94,7 +95,7 @@ namespace MiddleMan.Web.Areas.Identity.Pages.Account
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        $"{HtmlEncoder.Default.Encode(callbackUrl)}");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

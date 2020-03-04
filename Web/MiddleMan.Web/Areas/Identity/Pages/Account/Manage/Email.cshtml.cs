@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using MiddleMan.Data.Models;
+using MiddleMan.Services.Messaging;
 
 namespace MiddleMan.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -18,12 +19,12 @@ namespace MiddleMan.Web.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly Services.Messaging.IEmailSender _emailSender;
 
         public EmailModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender)
+            Services.Messaging.IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -102,7 +103,7 @@ namespace MiddleMan.Web.Areas.Identity.Pages.Account.Manage
                 await _emailSender.SendEmailAsync(
                     Input.NewEmail,
                     "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    $"{HtmlEncoder.Default.Encode(callbackUrl)}");
 
                 StatusMessage = "Confirmation link to change email sent. Please check your email.";
                 return RedirectToPage();
@@ -138,7 +139,7 @@ namespace MiddleMan.Web.Areas.Identity.Pages.Account.Manage
             await _emailSender.SendEmailAsync(
                 email,
                 "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                $"{HtmlEncoder.Default.Encode(callbackUrl)}");
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();

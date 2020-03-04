@@ -36,6 +36,7 @@
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.0.96" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.1" />
+    <PackageReference Include="SendGrid" Version="9.12.7" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.113" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -50,5 +51,11 @@
     <ProjectReference Include="..\..\Services\MiddleMan.Services.Messaging\MiddleMan.Services.Messaging.csproj" />
     <ProjectReference Include="..\..\Services\MiddleMan.Services\MiddleMan.Services.csproj" />
     <ProjectReference Include="..\MiddleMan.Web.ViewModels\MiddleMan.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\EmailTemplates\EmailConfirm.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
