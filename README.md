@@ -22,8 +22,7 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
     * Make hidden form with name="categoryId" and name="orderNumber" with Submint btn which is on the page where the JavaSctipt will fill with the orderNumber
  * Delete/Edit for creator of the offer
  * Serach menu
- * Comments(with coments for them), ratings, profiles
- * Cloud out of limit error
+ * Profiles
  * Validations
  * Authorizations for admin pages
  * Profile view
@@ -35,20 +34,30 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
  * Error pages and Alert Redirects
  * Email login and username display after
  * Error view (Bootstrap)
- * Email send (verification/welcome/recover password)
+ * Email send (recover password)
  * Possible to add yt embed to offer(Not sure???)
  * Favorites
  * User profiles with pictures and recent offers
- * User rating
  * Many pictures with displayng on crate offer
  * Canvas stats
  * Basket with admin live baskets check
+ * Fix idea with comments and reviews (maybe should be separated)
+ * My Offers unactive
+ * Admin on post active functions
+ * Offer creator options to edit directly from details page (Edit redirect btn only for him)
+ 
  
  ### Done:
  * onclick item displaying
  * Home page listingitems in category
  * Cloudinary(Cloud)
  * Username on regis
+ * Email send (verification/welcome) only
+ * Cloud out of limit error
+ * Ratings
+ * Comments halfly done
+ * My Offers active
+ * User rating
  
  ## Objects relations:
 * BaseOnDeleteModel addon
