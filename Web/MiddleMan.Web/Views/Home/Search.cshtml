@@ -7,7 +7,7 @@
 
 <h1>Search</h1>
 
-<form action="/Home/Search" method="post">
+<form asp-controller="Offer" asp-action="Search" method="get">
     <div class="container">
         <div class="row">
             <div class="col-xs-8 col-xs-offset-2" style="width: 100%;">
@@ -24,8 +24,8 @@
                     </div>
                     <input asp-for="@Model.SearchWord" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success btn-rounded btn-sm my-0" type="submit">Search</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </form>

@@ -38,9 +38,9 @@
                                 <p class="card-text" style="height: 75px;">
                                     @offer.Description
 
-                                @*<p class="" style="text-align:right;">
-            <a class="btn btn-success" href="/Administration/Dashboard/Approve?id=@offer.Id">Approve</a>
-        </p>*@
+                                    @*<p class="" style="text-align:right;">
+                    <a class="btn btn-success" href="/Administration/Dashboard/Approve?id=@offer.Id">Approve</a>
+                </p>*@
                                 <p class="" style="text-align:right;">
                                     @if (!offer.IsFeatured)
                                     {
@@ -55,7 +55,7 @@
 
                             </div>
                             <div class="card-footer">
-                                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                                <small class="text-muted">@offer.StartsStringRating</small>
                             </div>
                         </div>
                     </div>

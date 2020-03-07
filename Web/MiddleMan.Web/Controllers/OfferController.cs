@@ -16,10 +16,12 @@
     using MiddleMan.Services.Interfaces;
     using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
     using MiddleMan.Web.ViewModels.InputModels;
+    using MiddleMan.Web.ViewModels.Search;
     using MiddleMan.Web.ViewModels.Sell;
     using MiddleMan.Web.ViewModels.ViewModels;
     using MiddleMan.Web.ViewModels.ViewModels.Comment;
     using MiddleMan.Web.ViewModels.ViewModels.Offer;
+    using MiddleMan.Web.ViewModels.ViewModels.Search;
 
     public class OfferController : BaseController
     {
@@ -249,6 +251,33 @@
             await this.offerService.CreateOfferAsync(a);
 
             return this.Redirect("/");
+        }
+
+        public async Task<IActionResult> Search(SearchInputModel input)
+        {
+            var offers = await this.offerService.GetOffersBySearchAsync(input.SearchWord);
+
+            var searchModel = new SearchViewModel();
+            searchModel.SearchWord = input.SearchWord;
+
+            foreach (var offer in offers)
+            {
+                var categoryName = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
+                searchModel.Offers.Add(new OfferViewModelDetails()
+                {
+                    Name = offer.Name,
+                    CreatedOn = offer.CreatedOn,
+                    CreatorId = offer.CreatorId,
+                    Description = offer.Description.Length >= 65 ? offer.Description.Substring(0, 65) : offer.Description,
+                    PicUrl = offer.PicUrl,
+                    Price = offer.Price,
+                    Id = offer.Id,
+                    CategoryName = categoryName,
+                    IsFeatured = offer.IsFeatured,
+                });
+            }
+
+            return this.View(searchModel);
         }
     }
 }

@@ -44,5 +44,7 @@
         string StartsStringRating(double offerRating);
 
         Task<bool> IsUserCreatorOfOfferAsync(string userId, string id);
+
+        Task<List<Offer>> GetOffersBySearchAsync(string searchWord);
     }
 }

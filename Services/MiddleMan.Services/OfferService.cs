@@ -185,5 +185,12 @@
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
             return offer.CreatorId == userId ? true : false;
         }
+
+        public async Task<List<Offer>> GetOffersBySearchAsync(string searchWord)
+        {
+            return await this.context.Offers
+                .Where(x => x.Name.Contains(searchWord) || x.Description.Contains(searchWord))
+                .ToListAsync();
+        }
     }
 }
