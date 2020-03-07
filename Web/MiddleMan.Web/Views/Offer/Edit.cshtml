@@ -26,7 +26,7 @@
         </div>
         <!-- /.col-lg-3 -->
 
-        <form class="form-horizontal" asp-controller="Offer" asp-action="CreateOffer" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" actio="/Offer/Edit?id=@Model.Offer.Id" method="post" enctype="multipart/form-data">
             <div class="col-lg-9">
                 @*<a href="/Home/Category?name=@Model.CategoryName" style="height:30px; padding-top: 0px;" class="btn btn-primary hBack text-white"><img style="max-width:100%; max-height:80%; height:auto; width: auto;" src="https://pngimage.net/wp-content/uploads/2018/05/back-icon-png-white-6.png"/>Go back</a>*@
                 <div class="card mt-4">
@@ -35,12 +35,29 @@
                     </div>
                     <div class="card-body">
                         <h4>Title: </h4>
-                        <h3 class="card-title"><input type="text" style="width:100%;" value="@Model.Offer.Name" /></h3>
+                        <h3 class="card-title"><input type="text" name="Name" style="width:100%;" value="@Model.Offer.Name" /></h3>
+
+                        <h4 @*asp-for="CreateOfferModel.CategoryId"*@ class="required">Choose Category</h4>
+                        <select name="CategoryName" class="form-control" required>
+                            @foreach (var category in Model.Categories)
+                            {
+                                if (Model.Offer.CategoryName == category.Name)
+                                {
+                                    <option selected="selected" value="@category.Name">@category.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@category.Name">@category.Name</option>
+                                }
+                            }
+                            <vc:categories-dropdown>
+                            </vc:categories-dropdown>
+                        </select>
                         <h4>Price ($): </h4>
-                        <p><input type="number" style="width:100%;" value="@Model.Offer.Price" /></p>
+                        <p><input type="number" name="Price" style="width:100%;" value="@Model.Offer.Price" /></p>
                         <h4>Description: </h4>
                         <p class="card-text">
-                            <textarea style="width:100%;">@Model.Offer.Description</textarea>
+                            <textarea name="Description" style="width:100%;">@Model.Offer.Description</textarea>
                         </p>
                         @*<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>*@
                         <span class="text-warning">@Model.Offer.StartsStringRating</span>

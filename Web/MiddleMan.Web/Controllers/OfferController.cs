@@ -16,6 +16,7 @@
     using MiddleMan.Services.Interfaces;
     using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
     using MiddleMan.Web.ViewModels.InputModels;
+    using MiddleMan.Web.ViewModels.InputModels.Offer;
     using MiddleMan.Web.ViewModels.Search;
     using MiddleMan.Web.ViewModels.Sell;
     using MiddleMan.Web.ViewModels.ViewModels;
@@ -78,7 +79,6 @@
                 return this.Redirect("/Offer");
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
 
             var photoUrl = await this.cloudinaryService.UploadPhotoAsync(
                 a.Photo,
@@ -227,7 +227,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, CreateOfferSharedModel inputModel) // index post requsest for create
+        public async Task<IActionResult> Edit(string id, EditOfferModel inputModel) // index post requsest for create
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -236,19 +236,18 @@
                 return this.Redirect($"/Offer/Details?id={id}");
             }
 
-            var a = inputModel.CreateOfferModel;
-            var categoryId = await this.categoryService.GetIdByNameAsync(a.CategotyName);
-            a.CategotyName = categoryId;
-            a.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var offerInput = inputModel;
+            var categoryId = await this.categoryService.GetIdByNameAsync(offerInput.CategoryName);
+            offerInput.CategoryId = categoryId;
 
-            if (inputModel.CreateOfferModel.Name.Length < 3 || inputModel.CreateOfferModel.Name.Length > 50)
+            if (inputModel.Name.Length < 3 || inputModel.Name.Length > 50)
                 return this.Redirect("/Offer");
-            else if (inputModel.CreateOfferModel.Description.Length < 20 || inputModel.CreateOfferModel.Description.Length > 1000)
+            else if (inputModel.Description.Length < 20 || inputModel.Description.Length > 1000)
                 return this.Redirect("/Offer");
-            else if (inputModel.CreateOfferModel.Price < 0.01 || inputModel.CreateOfferModel.Price > 2000)
+            else if (inputModel.Price < 0.01 || inputModel.Price > 2000)
                 return this.Redirect("/Offer");
 
-            await this.offerService.CreateOfferAsync(a);
+            await this.offerService.EditOfferAsync(offerInput, id);
 
             return this.Redirect("/");
         }

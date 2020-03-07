@@ -13,15 +13,20 @@
     using MiddleMan.Services.Interfaces;
     using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
     using MiddleMan.Web.ViewModels.InputModels;
+    using MiddleMan.Web.ViewModels.InputModels.Offer;
 
     public class OfferService : IOfferService
     {
 
         private readonly ApplicationDbContext context;
+        private readonly ICategoryService categoryService;
 
-        public OfferService(ApplicationDbContext context)
+        public OfferService(
+            ApplicationDbContext context,
+            ICategoryService categoryService)
         {
             this.context = context;
+            this.categoryService = categoryService;
         }
 
         public async Task CreateOfferAsync(CreateOfferModel inputModel)
@@ -191,6 +196,19 @@
             return await this.context.Offers
                 .Where(x => x.Name.Contains(searchWord) || x.Description.Contains(searchWord))
                 .ToListAsync();
+        }
+
+        public async Task EditOfferAsync(EditOfferModel offerInput, string id)
+        {
+            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
+
+            offer.Name = offerInput.Name;
+            offer.Price = offerInput.Price;
+            offer.Description = offerInput.Description;
+            offer.ModifiedOn = DateTime.UtcNow;
+            offer.CategoryId = offerInput.CategoryId;
+
+            await this.context.SaveChangesAsync();
         }
     }
 }

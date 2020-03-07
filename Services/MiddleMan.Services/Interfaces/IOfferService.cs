@@ -8,6 +8,7 @@
     using MiddleMan.Data.Models;
     using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
     using MiddleMan.Web.ViewModels.InputModels;
+    using MiddleMan.Web.ViewModels.InputModels.Offer;
 
     public interface IOfferService
     {
@@ -46,5 +47,7 @@
         Task<bool> IsUserCreatorOfOfferAsync(string userId, string id);
 
         Task<List<Offer>> GetOffersBySearchAsync(string searchWord);
+
+        Task EditOfferAsync(EditOfferModel offerInput, string id);
     }
 }

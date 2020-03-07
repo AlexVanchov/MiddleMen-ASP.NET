@@ -8,6 +8,8 @@
 
         public string Description { get; set; }
 
-        public string CategotyName { get; set; }
+        public string CategoryName { get; set; }
+
+        public string CategoryId { get; set; }
     }
 }
