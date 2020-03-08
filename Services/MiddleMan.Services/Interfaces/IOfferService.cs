@@ -22,17 +22,17 @@
 
         Task ApproveOfferAsync(string id);
 
-        Task RemoveOffer(string id);
+        Task RemoveOfferAsync(string id);
 
         Task<List<Offer>> GetAllDeletedOffersAsync();
 
         Task<List<Offer>> GetLatestOffers(int n);
 
-        Task FeatureItem(string id);
+        Task FeatureItemAsync(string id);
 
         Task<List<Offer>> GetFeaturedOffers();
 
-        Task RemoveFeatureOnItem(string id);
+        Task RemoveFeatureOnItemAsync(string id);
 
         Task<bool> IsOfferRatedAsync(string id, string userId);
 
@@ -49,5 +49,7 @@
         Task<List<Offer>> GetOffersBySearchAsync(string searchWord);
 
         Task EditOfferAsync(EditOfferModel offerInput, string id);
+
+        Task ActivateOfferAsync(string id);
     }
 }

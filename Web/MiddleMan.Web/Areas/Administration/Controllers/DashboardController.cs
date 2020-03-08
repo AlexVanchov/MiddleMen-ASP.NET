@@ -150,7 +150,7 @@
 
         public async Task<IActionResult> RemoveConfirmed(string id)
         {
-            await this.offerService.RemoveOffer(id);
+            await this.offerService.RemoveOfferAsync(id);
 
             return this.Redirect("/Administration/Dashboard/Approved");
         }
@@ -210,16 +210,23 @@
 
         public async Task<IActionResult> Boost(string id)
         {
-            await this.offerService.FeatureItem(id);
+            await this.offerService.FeatureItemAsync(id);
 
             return this.Redirect("/Administration/Dashboard/Approved");
         }
 
         public async Task<IActionResult> RemoveBoost(string id)
         {
-            await this.offerService.RemoveFeatureOnItem(id);
+            await this.offerService.RemoveFeatureOnItemAsync(id);
 
             return this.Redirect("/Administration/Dashboard/Approved");
+        }
+
+        public async Task<IActionResult> ActivateOffer(string id)
+        {
+            await this.offerService.ActivateOfferAsync(id);
+
+            return this.Redirect("/Administration/Dashboard/Deleted");
         }
     }
 }

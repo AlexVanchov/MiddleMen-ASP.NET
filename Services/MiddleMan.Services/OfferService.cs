@@ -78,7 +78,7 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task RemoveOffer(string id)
+        public async Task RemoveOfferAsync(string id)
         {
             var offer = await this.context.Offers
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -106,7 +106,7 @@
             return offers;
         }
 
-        public async Task FeatureItem(string id)
+        public async Task FeatureItemAsync(string id)
         {
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
             offer.IsFeatured = true;
@@ -123,7 +123,7 @@
             return offers;
         }
 
-        public async Task RemoveFeatureOnItem(string id)
+        public async Task RemoveFeatureOnItemAsync(string id)
         {
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
             offer.IsFeatured = false;
@@ -208,6 +208,16 @@
             offer.ModifiedOn = DateTime.UtcNow;
             offer.CategoryId = offerInput.CategoryId;
 
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task ActivateOfferAsync(string id)
+        {
+            var offer = await this.context.Offers
+                   .FirstOrDefaultAsync(x => x.Id == id);
+            offer.IsDeclined = false;
+
+            // offer.DeletedOn = DateTime.UtcNow;
             await this.context.SaveChangesAsync();
         }
     }
