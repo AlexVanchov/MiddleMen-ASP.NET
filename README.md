@@ -45,7 +45,7 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
  * My Offers unactive
  * Admin on post active functions
  * Offer creator options to edit directly from details page (Edit redirect btn only for him)
- 
+ * Messages with live updates
  
  ### Done:
  * onclick item displaying
