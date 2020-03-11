@@ -144,13 +144,6 @@
             return offerUser.Rate;
         }
 
-        public async Task<List<Offer>> GetAllUserOffersAsync(string userId)
-        {
-            return await this.context.Offers
-                .Where(x => x.CreatorId == userId)
-                .ToListAsync();
-        }
-
         public async Task<double> GetOfferRatingAsync(string id)
         {
             var offers = await this.context.OfferUserRates.Where(x => x.OfferId == id).ToListAsync();
@@ -219,6 +212,27 @@
 
             // offer.DeletedOn = DateTime.UtcNow;
             await this.context.SaveChangesAsync();
+        }
+
+        public async Task<List<Offer>> GetAllUserOffersAsync(string userId)
+        {
+            return await this.context.Offers
+                .Where(x => x.CreatorId == userId)
+                .ToListAsync();
+        }
+
+        public async Task<List<Offer>> GetAllActiveUserOffersAsync(string userId)
+        {
+            return await this.context.Offers
+                .Where(x => x.CreatorId == userId && x.IsRemovedByUser == false)
+                .ToListAsync();
+        }
+
+        public async Task<List<Offer>> GetAllDeactivatedUserOffersAsync(string userId)
+        {
+            return await this.context.Offers
+                .Where(x => x.CreatorId == userId && x.IsRemovedByUser == true)
+                .ToListAsync();
         }
     }
 }

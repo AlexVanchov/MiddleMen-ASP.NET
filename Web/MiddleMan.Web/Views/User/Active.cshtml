@@ -2,7 +2,7 @@
 @model ApproveOffersViewModel
 
 @{
-    ViewData["Title"] = "MyOffers";
+    ViewData["Title"] = "Active";
 }
 <div class="container">
 
@@ -12,8 +12,8 @@
 
             <h1 class="my-4">My Offers</h1>
             <div class="list-group">
-                <a href="/User/MyOffers" class="list-group-item bg-primary text-white">All</a>
-                <a href="/User/Active" class="list-group-item">Active</a>
+                <a href="/User/MyOffers" class="list-group-item">All</a>
+                <a href="/User/Active" class="list-group-item bg-primary text-white">Active</a>
                 <a href="/User/Deactivated" class="list-group-item">Deactivated</a>
             </div>
 
@@ -42,10 +42,7 @@
 
                                 <p class="" style="text-align:right;">
                                     <a class="btn btn-warning" href="/Offer/Edit?id=@offer.Id">Edit</a>
-                                    @if (!offer.IsRemovedByUser)
-                                    {
-                                        <a class="btn btn-danger" href="/Offer/Delete?id=@offer.Id">Delete</a>
-                                    }
+                                    <a class="btn btn-danger" href="/Offer/Delete?id=@offer.Id">Delete</a>
                                     <a class="btn btn-primary" href="/Offer/Details?id=@offer.Id">View</a>
                                 </p>
 

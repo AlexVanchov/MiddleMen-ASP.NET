@@ -72,6 +72,7 @@
                     Id = offer.Id,
                     CategoryName = categoryName,
                     IsFeatured = offer.IsFeatured,
+                    IsRemovedByUser = offer.IsRemovedByUser,
                 });
             }
 
@@ -80,14 +81,58 @@
 
         public async Task<IActionResult> Active()
         {
-            // TODO
-            return this.Redirect("/User/MyOffers");
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var offers = await this.offerService.GetAllActiveUserOffersAsync(userId);
+
+            var aproveModel = new ApproveOffersViewModel();
+
+            foreach (var offer in offers)
+            {
+                var categoryName = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
+                aproveModel.Offers.Add(new OfferViewModelDetails()
+                {
+                    Name = offer.Name,
+                    CreatedOn = offer.CreatedOn,
+                    CreatorId = offer.CreatorId,
+                    Description = offer.Description.Length >= 65 ? offer.Description.Substring(0, 65) : offer.Description,
+                    PicUrl = offer.PicUrl,
+                    Price = offer.Price,
+                    Id = offer.Id,
+                    CategoryName = categoryName,
+                    IsFeatured = offer.IsFeatured,
+                    IsRemovedByUser = offer.IsRemovedByUser,
+                });
+            }
+
+            return this.View(aproveModel);
         }
 
         public async Task<IActionResult> Deactivated()
         {
-            // TODO
-            return this.Redirect("/User/MyOffers");
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var offers = await this.offerService.GetAllDeactivatedUserOffersAsync(userId);
+
+            var aproveModel = new ApproveOffersViewModel();
+
+            foreach (var offer in offers)
+            {
+                var categoryName = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
+                aproveModel.Offers.Add(new OfferViewModelDetails()
+                {
+                    Name = offer.Name,
+                    CreatedOn = offer.CreatedOn,
+                    CreatorId = offer.CreatorId,
+                    Description = offer.Description.Length >= 65 ? offer.Description.Substring(0, 65) : offer.Description,
+                    PicUrl = offer.PicUrl,
+                    Price = offer.Price,
+                    Id = offer.Id,
+                    CategoryName = categoryName,
+                    IsFeatured = offer.IsFeatured,
+                    IsRemovedByUser = offer.IsRemovedByUser,
+                });
+            }
+
+            return this.View(aproveModel);
         }
     }
 }

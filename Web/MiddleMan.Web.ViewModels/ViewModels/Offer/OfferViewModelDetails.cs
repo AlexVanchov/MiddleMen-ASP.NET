@@ -31,6 +31,8 @@
 
         public bool IsFeatured { get; set; }
 
+        public bool IsRemovedByUser { get; set; }
+
         public bool Rated { get; set; }
 
         public double OfferRating { get; set; }

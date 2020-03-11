@@ -1,10 +1,9 @@
-﻿using MiddleMan.Web.ViewModels.ViewModels.Offer;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MiddleMan.Web.ViewModels.Administration.Dashboard
+﻿namespace MiddleMan.Web.ViewModels.Administration.Dashboard
 {
+    using System.Collections.Generic;
+
+    using MiddleMan.Web.ViewModels.ViewModels.Offer;
+
     public class ApproveOffersViewModel
     {
         public ApproveOffersViewModel()

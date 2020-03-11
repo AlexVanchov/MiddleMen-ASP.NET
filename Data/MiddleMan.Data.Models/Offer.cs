@@ -18,6 +18,7 @@ namespace MiddleMan.Data.Models
             this.IsApproved = false;
             this.IsDeclined = false;
             this.IsFeatured = false;
+            this.IsRemovedByUser = false;
             this.Comments = new HashSet<Comment>();
         }
 
@@ -55,6 +56,9 @@ namespace MiddleMan.Data.Models
 
         [Required]
         public bool IsDeclined { get; set; }
+
+        [Required]
+        public bool IsRemovedByUser { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
     }

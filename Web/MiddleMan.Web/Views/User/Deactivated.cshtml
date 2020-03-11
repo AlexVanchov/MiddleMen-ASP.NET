@@ -2,7 +2,7 @@
 @model ApproveOffersViewModel
 
 @{
-    ViewData["Title"] = "MyOffers";
+    ViewData["Title"] = "Deactivated";
 }
 <div class="container">
 
@@ -12,9 +12,9 @@
 
             <h1 class="my-4">My Offers</h1>
             <div class="list-group">
-                <a href="/User/MyOffers" class="list-group-item bg-primary text-white">All</a>
+                <a href="/User/MyOffers" class="list-group-item">All</a>
                 <a href="/User/Active" class="list-group-item">Active</a>
-                <a href="/User/Deactivated" class="list-group-item">Deactivated</a>
+                <a href="/User/Deactivated" class="list-group-item bg-primary text-white">Deactivated</a>
             </div>
 
         </div>
@@ -25,7 +25,7 @@
             <div class="row">
                 @if (Model.Offers.Count == 0)
                 {
-                    <h1 style="width: 70%; margin: auto; margin-top: 30px;">You dont have any offers. You can create one <a href="/Offer">here</a></h1>
+                    <h1 style="width: 70%; margin: auto; margin-top: 30px;">You dont have any removed offers. Btw you can create one <a href="/Offer">here</a></h1>
                 }
                 @foreach (var offer in Model.Offers)
                 {
@@ -42,11 +42,7 @@
 
                                 <p class="" style="text-align:right;">
                                     <a class="btn btn-warning" href="/Offer/Edit?id=@offer.Id">Edit</a>
-                                    @if (!offer.IsRemovedByUser)
-                                    {
-                                        <a class="btn btn-danger" href="/Offer/Delete?id=@offer.Id">Delete</a>
-                                    }
-                                    <a class="btn btn-primary" href="/Offer/Details?id=@offer.Id">View</a>
+                                    <a class="btn btn-success" href="/Offer/Activate?id=@offer.Id">Activate</a>
                                 </p>
 
                             </div>

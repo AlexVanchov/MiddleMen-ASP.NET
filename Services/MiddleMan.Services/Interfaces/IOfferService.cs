@@ -51,5 +51,9 @@
         Task EditOfferAsync(EditOfferModel offerInput, string id);
 
         Task ActivateOfferAsync(string id);
+
+        Task<List<Offer>> GetAllActiveUserOffersAsync(string userId);
+
+        Task<List<Offer>> GetAllDeactivatedUserOffersAsync(string userId);
     }
 }
