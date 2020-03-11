@@ -48,7 +48,7 @@
         public async Task<List<Offer>> GetAllNotAprovedOffersAsync()
         {
             var offers = await this.context.Offers
-                .Where(x => x.IsApproved == false && x.IsDeclined == false)
+                .Where(x => x.IsApproved == false && x.IsDeclined == false && x.IsRemovedByUser == false)
                 .OrderByDescending(x => x.CreatedOn)
                 .ToListAsync();
             return offers;
@@ -57,7 +57,7 @@
         public async Task<List<Offer>> GetAllAprovedOffersAsync()
         {
             var offers = await this.context.Offers
-                .Where(x => x.IsApproved == true && x.IsDeclined == false)
+                .Where(x => x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false)
                 .OrderByDescending(x => x.CreatedOn)
                 .ToListAsync();
             return offers;
@@ -99,7 +99,7 @@
         public async Task<List<Offer>> GetLatestOffers(int n)
         {
             var offers = await this.context.Offers
-                .Where(x => x.IsApproved == true && x.IsDeclined == false)
+                .Where(x => x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false)
                 .OrderByDescending(x => x.CreatedOn)
                 .Take(n)
                 .ToListAsync();
@@ -233,6 +233,27 @@
             return await this.context.Offers
                 .Where(x => x.CreatorId == userId && x.IsRemovedByUser == true)
                 .ToListAsync();
+        }
+
+        public async Task<List<Offer>> GetAllCategoryOffersAsync(string id)
+        {
+            return await this.context.Offers
+                .Where(x => x.CategoryId == id && x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false)
+                .ToListAsync();
+        }
+
+        public async Task ActivateOfferAsUserAsync(string id)
+        {
+            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
+            offer.IsRemovedByUser = false;
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task DeleteOfferAsUserAsync(string id)
+        {
+            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
+            offer.IsRemovedByUser = true;
+            await this.context.SaveChangesAsync();
         }
     }
 }

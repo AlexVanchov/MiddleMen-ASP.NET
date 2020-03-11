@@ -134,5 +134,19 @@
 
             return this.View(aproveModel);
         }
+
+        public async Task<IActionResult> Activate(string id)
+        {
+            await this.offerService.ActivateOfferAsUserAsync(id);
+
+            return this.Redirect("/User/Deactivated");
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.offerService.DeleteOfferAsUserAsync(id);
+
+            return this.Redirect("/User/Activate");
+        }
     }
 }

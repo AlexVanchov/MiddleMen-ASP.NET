@@ -55,5 +55,10 @@
         Task<List<Offer>> GetAllActiveUserOffersAsync(string userId);
 
         Task<List<Offer>> GetAllDeactivatedUserOffersAsync(string userId);
+
+        Task<List<Offer>> GetAllCategoryOffersAsync(string id);
+
+        Task ActivateOfferAsUserAsync(string id);
+        Task DeleteOfferAsUserAsync(string id);
     }
 }
