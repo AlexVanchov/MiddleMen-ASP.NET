@@ -21,7 +21,6 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
  * Admin edit reordering
     * Make hidden form with name="categoryId" and name="orderNumber" with Submint btn which is on the page where the JavaSctipt will fill with the orderNumber
  * Delete/Edit for creator of the offer
- * Serach menu
  * Profiles
  * Validations
  * Authorizations for admin pages
@@ -42,7 +41,6 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
  * Canvas stats
  * Basket with admin live baskets check
  * Fix idea with comments and reviews (maybe should be separated)
- * My Offers unactive
  * Admin on post active functions
  * Offer creator options to edit directly from details page (Edit redirect btn only for him)
  * Messages with live updates
@@ -58,6 +56,8 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
  * Comments halfly done
  * My Offers active
  * User rating
+ * My Offers unactive
+ * Serach menu
  
  ## Objects relations:
 * BaseOnDeleteModel addon
