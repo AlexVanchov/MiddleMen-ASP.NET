@@ -146,7 +146,7 @@
         {
             await this.offerService.DeleteOfferAsUserAsync(id);
 
-            return this.Redirect("/User/Activate");
+            return this.Redirect("/User/Active");
         }
     }
 }
