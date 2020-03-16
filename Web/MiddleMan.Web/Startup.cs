@@ -26,6 +26,7 @@
     using SellMe.Services.Utilities;
     using MiddleMan.Services.Services;
     using CloudinaryDotNet;
+    using Microsoft.AspNetCore.Identity;
 
     public class Startup
     {
@@ -52,7 +53,17 @@
             services.AddSingleton(cloudinaryUtility);
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-                .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddRoles<ApplicationRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Default User settings.
+                options.User.AllowedUserNameCharacters =
+                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@";
+                options.User.RequireUniqueEmail = true;
+
+            });
 
             services.Configure<CookiePolicyOptions>(
                 options =>
@@ -60,7 +71,6 @@
                         options.CheckConsentNeeded = context => true;
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
-
 
             services.AddControllersWithViews();
             services.AddRazorPages();

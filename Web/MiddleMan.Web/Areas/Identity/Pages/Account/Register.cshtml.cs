@@ -81,6 +81,10 @@ namespace MiddleMan.Web.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email };
+                if (_userManager.FindByEmailAsync(Input.Email) != null)
+                {
+                    return this.Redirect("/Identity/Account/Register");
+                }
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
