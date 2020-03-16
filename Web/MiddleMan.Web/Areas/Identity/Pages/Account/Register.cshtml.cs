@@ -80,12 +80,15 @@ namespace MiddleMan.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email };
-                if (_userManager.FindByEmailAsync(Input.Email) != null)
+                var user = new ApplicationUser { UserName = this.Input.UserName, Email = this.Input.Email };
+
+                if (this._userManager.FindByEmailAsync(this.Input.Email) != null)
                 {
-                    return this.Redirect("/Identity/Account/Register");
+                    this._logger.LogError("Email already registered");
+                    return this.Page();
                 }
-                var result = await _userManager.CreateAsync(user, Input.Password);
+
+                var result = await this._userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
@@ -118,7 +121,7 @@ namespace MiddleMan.Web.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
-            return Page();
+            return this.Page();
         }
     }
 }

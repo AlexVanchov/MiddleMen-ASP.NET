@@ -134,6 +134,8 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseStatusCodePagesWithRedirects("/error/{0}");
+
             app.UseEndpoints(
                 endpoints =>
                     {
