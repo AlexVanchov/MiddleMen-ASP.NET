@@ -148,5 +148,10 @@
 
             return this.Redirect("/User/Active");
         }
+
+        public async Task<IActionResult> Profile(string id)
+        {
+            return this.View();
+        }
     }
 }
