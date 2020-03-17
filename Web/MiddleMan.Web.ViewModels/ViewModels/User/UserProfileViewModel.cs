@@ -6,7 +6,7 @@ namespace MiddleMan.Web.ViewModels.ViewModels.User
 {
     class UserProfileViewModel
     {
-        public User User { get; set; }
+        public UserModel User { get; set; }
 
 
     }
