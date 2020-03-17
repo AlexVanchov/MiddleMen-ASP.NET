@@ -24,8 +24,4 @@
     <ProjectReference Include="..\..\Services\MiddleMan.Services.Mapping\MiddleMan.Services.Mapping.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\User\" />
-  </ItemGroup>
-
 </Project>

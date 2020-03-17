@@ -36,18 +36,22 @@
 
         private readonly IEmailSender emailSender;
 
+        private readonly IUserService userService;
+
         public UserController(
             IOfferService offerService,
             ICategoryService categoryService,
             ICloudinaryService cloudinaryService,
             ICommentService commentService,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IUserService userService)
         {
             this.offerService = offerService;  // todo rename sell to offer or revert
             this.categoryService = categoryService;
             this.cloudinaryService = cloudinaryService;
             this.commentService = commentService;
             this.emailSender = emailSender;
+            this.userService = userService;
         }
 
         public async Task<IActionResult> MyOffers()
@@ -151,6 +155,9 @@
 
         public async Task<IActionResult> Profile(string id)
         {
+            var user = await this.userService.GetUserByIdAsync(id);
+
+
             return this.View();
         }
     }

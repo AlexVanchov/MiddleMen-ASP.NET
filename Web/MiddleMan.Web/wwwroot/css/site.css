@@ -101,6 +101,7 @@ body {
     margin-top: 10px;
     font-size: 22px;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .profile-panel .profile-avatar img {
@@ -109,6 +110,7 @@ body {
 }
 
 .profile-panel .profile-avatar {
+    text-align: center;
 }
 
 .panel-default .panel-body {
@@ -184,7 +186,7 @@ body {
 }
 
 .profimg {
-    width: 50%;
+    width: 20%;
     border-radius: 50%;
     padding: 10px;
     border: 1px solid #e7e7e2;
