@@ -12,6 +12,8 @@
 
         public const string CloudFolderForRecipePhotos = "offers";
 
+        public const string CloudFolderForProfilePictures = "profilePics";
+
         public const int DefaultPageNumber = 1;
 
         public const int PageSize = 16;

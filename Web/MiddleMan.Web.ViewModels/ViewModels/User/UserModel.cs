@@ -2,15 +2,13 @@
 {
     using System;
 
-    class UserModel
+    public class UserModel
     {
         public string Id { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
-
-        public DateTimeOffset? LockoutEnd { get; set; }
 
         public bool TwoFactorEnabled { get; set; }
 

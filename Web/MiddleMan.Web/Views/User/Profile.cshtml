@@ -1,4 +1,4 @@
-﻿
+﻿@model UserProfileViewModel
 @{
     ViewData["Title"] = "Profile";
 }
@@ -14,7 +14,7 @@
                 </div>
                 <div class="">
                     <div class="user-name">
-                        Full name <span class="label label-success">admin</span>
+                        @Model.User.UserName
                     </div>
                     <div class="user-information">
                         <p>Creating awesome snippet for bootdey, bootdey is a gellery of free bootstrap snippets</p>

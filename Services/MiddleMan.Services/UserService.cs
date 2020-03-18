@@ -29,5 +29,21 @@
 
             return user.UserName;
         }
+
+        public async Task<string> GetUserProfilePictureUrlAsync(string id)
+        {
+            var user = await this.context.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+            return user.ProfilePhotoUrl;
+        }
+
+        public async Task UpdateProfilePictureUrl(string userId, string photoUrl)
+        {
+            var user = await this.context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+
+            user.ProfilePhotoUrl = photoUrl;
+
+            await this.context.SaveChangesAsync();
+        }
     }
 }

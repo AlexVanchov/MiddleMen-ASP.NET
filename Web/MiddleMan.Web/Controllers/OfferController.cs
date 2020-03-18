@@ -133,6 +133,7 @@
                     CreatedOn = comment.CreatedOn.ToString("dd/M/yy H:mm"),
                     CreatorName = await this.userService.GetUsernameByIdAsync(comment.CreatorId),
                     Description = comment.Description,
+                    CreatorId = comment.CreatorId,
                 });
             }
 
@@ -211,6 +212,7 @@
                     CreatedOn = comment.CreatedOn.ToString("dd/M/yy H:mm"),
                     CreatorName = await this.userService.GetUsernameByIdAsync(comment.CreatorId),
                     Description = comment.Description,
+                    CreatorId = comment.CreatorId,
                 });
             }
 

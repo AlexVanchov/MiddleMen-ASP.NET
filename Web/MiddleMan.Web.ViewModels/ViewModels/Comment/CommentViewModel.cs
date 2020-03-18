@@ -12,6 +12,8 @@
 
         public string CreatorName { get; set; }
 
+        public string CreatorId { get; set; }
+
         public int? RatingGiven { get; set; }
     }
 }

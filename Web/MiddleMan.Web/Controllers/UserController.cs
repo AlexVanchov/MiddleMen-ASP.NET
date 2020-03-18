@@ -23,6 +23,7 @@
     using System.Linq;
     using MiddleMan.Web.ViewModels.Administration.Dashboard;
     using Microsoft.AspNetCore.Identity.UI.Services;
+    using MiddleMan.Web.ViewModels.ViewModels.User;
 
     public class UserController : BaseController
     {
@@ -157,8 +158,29 @@
         {
             var user = await this.userService.GetUserByIdAsync(id);
 
+            var userModel = new UserModel()
+            {
+                CreatedOn = user.CreatedOn,
+                Email = user.Email,
+                EmailConfirmed = user.EmailConfirmed,
+                Id = user.Id,
+                ModifiedOn = user.ModifiedOn,
+                NormalizedEmail = user.NormalizedEmail,
+                NormalizedUserName = user.NormalizedUserName,
+                PhoneNumber = user.PhoneNumber,
+                PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+                TwoFactorEnabled = user.TwoFactorEnabled,
+                UserName = user.UserName,
+            };
 
-            return this.View();
+            var viewModel = new UserProfileViewModel()
+            {
+                User = userModel,
+            };
+
+
+
+            return this.View(viewModel);
         }
     }
 }

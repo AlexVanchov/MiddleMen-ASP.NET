@@ -9,7 +9,22 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 <div class="row">
     <div class="col-md-6">
-        <form id="profile-form" method="post">
+        <form id="profile-form" method="post" enctype="multipart/form-data">
+
+            <div class="profile-avatar">
+                <img class="img-responsive profimg" src="@Model.ProfilePhotoUrl" style="padding: 5px;" alt="profile picture">
+            </div>
+
+            <h4>Profile Photo</h4>
+            <div class="form-group">
+                <label asp-for="Input.ProfilePhoto" class="upload-btn">
+                    <i class="fa fa-upload"></i> Upload
+                    <input asp-for="Input.ProfilePhoto" type="file" class="form-control" />
+                    <span asp-validation-for="Input.ProfilePhoto" class="text-danger"></span>
+                </label>
+                <div class="margin-top-0"></div>
+                <span id="file-selected"></span>
+            </div>
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Username"></label>

@@ -1,29 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using MiddleMan.Data.Models;
-
-namespace MiddleMan.Web.Areas.Identity.Pages.Account.Manage
+﻿namespace MiddleMan.Web.Areas.Identity.Pages.Account.Manage
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using MiddleMan.Common;
+    using MiddleMan.Data.Models;
+    using MiddleMan.Services;
+    using MiddleMan.Services.Interfaces;
+
     public partial class IndexModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IUserService userService;
+        private readonly ICloudinaryService cloudinaryService;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IUserService userService,
+            ICloudinaryService cloudinaryService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            this._userManager = userManager;
+            this._signInManager = signInManager;
+            this.userService = userService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public string Username { get; set; }
+
+        public string? ProfilePhotoUrl { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -36,18 +49,23 @@ namespace MiddleMan.Web.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Profile Photo")]
+            public IFormFile ProfilePhoto { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
         {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var userName = await this._userManager.GetUserNameAsync(user);
+            var phoneNumber = await this._userManager.GetPhoneNumberAsync(user);
+            var profilePhotoUrl = await this.userService.GetUserProfilePictureUrlAsync(user.Id);
 
-            Username = userName;
+            this.Username = userName;
+            this.ProfilePhotoUrl = profilePhotoUrl;
 
-            Input = new InputModel
+            this.Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
             };
         }
 
@@ -86,6 +104,23 @@ namespace MiddleMan.Web.Areas.Identity.Pages.Account.Manage
                     var userId = await _userManager.GetUserIdAsync(user);
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
+            }
+
+            var imgSize = Input.ProfilePhoto.Length;
+
+            if (imgSize >= 1048576)
+            {
+                StatusMessage = "Profile picture is too powerful";
+                return RedirectToPage();
+            }
+            else
+            {
+                var photoUrl = await this.cloudinaryService.UploadPhotoAsync(
+                Input.ProfilePhoto,
+                $"{user.Id}-{DateTime.Now.ToString()}",
+                GlobalConstants.CloudFolderForProfilePictures);
+
+                await this.userService.UpdateProfilePictureUrl(user.Id, photoUrl);
             }
 
             await _signInManager.RefreshSignInAsync(user);

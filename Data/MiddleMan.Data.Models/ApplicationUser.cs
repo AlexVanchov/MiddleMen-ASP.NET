@@ -18,10 +18,13 @@ namespace MiddleMan.Data.Models
             this.Logins = new HashSet<IdentityUserLogin<string>>();
         }
 
+        public string ProfilePhotoUrl { get; set; }
+
         // Audit info
         public DateTime CreatedOn { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
+
 
         // Deletable entity
         public bool IsDeleted { get; set; }

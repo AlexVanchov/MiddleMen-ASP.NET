@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MiddleMan.Web.ViewModels.ViewModels.User
+﻿namespace MiddleMan.Web.ViewModels.ViewModels.User
 {
-    class UserProfileViewModel
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
+    public class UserProfileViewModel
     {
         public UserModel User { get; set; }
-
-
     }
 }
