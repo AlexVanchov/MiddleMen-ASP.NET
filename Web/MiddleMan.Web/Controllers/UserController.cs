@@ -171,6 +171,7 @@
                 PhoneNumberConfirmed = user.PhoneNumberConfirmed,
                 TwoFactorEnabled = user.TwoFactorEnabled,
                 UserName = user.UserName,
+                ProfilePictureUrl = user.ProfilePhotoUrl,
             };
 
             var viewModel = new UserProfileViewModel()
