@@ -50,7 +50,7 @@
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 
-            [Display(Name = "Profile Photo")]
+            [Display(Name = "Update Profile Photo")]
             public IFormFile ProfilePhoto { get; set; }
         }
 
@@ -106,24 +106,27 @@
                 }
             }
 
-            var imgSize = Input.ProfilePhoto.Length;
-
-            if (imgSize >= 1048576)
+            if (Input.ProfilePhoto != null)
             {
-                StatusMessage = "Profile picture is too powerful";
-                return RedirectToPage();
-            }
-            else
-            {
-                var photoUrl = await this.cloudinaryService.UploadPhotoAsync(
-                Input.ProfilePhoto,
-                $"{user.Id}-{DateTime.Now.ToString()}",
-                GlobalConstants.CloudFolderForProfilePictures);
+                var imgSize = Input.ProfilePhoto.Length;
 
-                await this.userService.UpdateProfilePictureUrl(user.Id, photoUrl);
+                if (imgSize >= 1048576)
+                {
+                    StatusMessage = "Profile picture is too powerful";
+                    return RedirectToPage();
+                }
+                else
+                {
+                    var photoUrl = await this.cloudinaryService.UploadPhotoAsync(
+                    this.Input.ProfilePhoto,
+                    $"{user.Id}-{DateTime.Now.ToString()}",
+                    GlobalConstants.CloudFolderForProfilePictures);
+
+                    await this.userService.UpdateProfilePictureUrl(user.Id, photoUrl);
+                }
             }
 
-            await _signInManager.RefreshSignInAsync(user);
+            await this._signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
