@@ -158,6 +158,11 @@
         {
             var user = await this.userService.GetUserByIdAsync(id);
 
+            if (user == null)
+            {
+                return this.NotFound();
+            }
+
             var userModel = new UserModel()
             {
                 CreatedOn = user.CreatedOn,

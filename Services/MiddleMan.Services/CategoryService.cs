@@ -75,6 +75,10 @@
         public async Task<string> GetCategoryIdByNameAsync(string name)
         {
             var category = await this.context.Categories.FirstOrDefaultAsync(x => x.Name == name);
+            if (category == null)
+            {
+                return null;
+            }
 
             return category.Id;
         }

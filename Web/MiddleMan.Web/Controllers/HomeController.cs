@@ -81,8 +81,12 @@
 
         public async Task<IActionResult> Category(string name)
         {
-            var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
             var categoryId = await this.categoryService.GetCategoryIdByNameAsync(name);
+            if (categoryId == null)
+            {
+                return this.NotFound();
+            }
+            var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
             var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync(categoryId);
             // var category = await this.categoryService.GetCategoryNameByIdAsync(id);
 
