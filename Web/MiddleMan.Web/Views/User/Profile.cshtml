@@ -9,7 +9,14 @@
             <div class="panel-body">
                 <div class="">
                     <div class="profile-avatar">
-                        <img class="img-responsive profimg" src="@Model.User.ProfilePictureUrl" alt="profile picture">
+                        @if (Model.User.ProfilePictureUrl == null)
+                        {
+                            <img class="img-responsive profimg" src="https://i.imgur.com/56lPbUe.png" alt="profile picture">
+                        }
+                        else
+                        {
+                            <img class="img-responsive profimg" src="@Model.User.ProfilePictureUrl" alt="profile picture">
+                        }
                     </div>
                 </div>
                 <div class="">
