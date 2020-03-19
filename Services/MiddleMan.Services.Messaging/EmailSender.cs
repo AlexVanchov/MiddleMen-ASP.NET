@@ -48,7 +48,7 @@
                 From = new EmailAddress("middleman.alex@gmail.com", "middleman"),
                 Subject = subject,
                 PlainTextContent = message,
-                HtmlContent = this.PopulateBody(message),
+                HtmlContent = this.PopulateBody(message, subject),
             };
             msg.AddTo(new EmailAddress(email));
 
@@ -59,12 +59,22 @@
             await client.SendEmailAsync(msg);
         }
 
-        private string PopulateBody(string url)
+        private string PopulateBody(string url, string subject)
         {
             string body = string.Empty;
 
             var webRoot = env.WebRootPath;
-            var file = webRoot + "/EmailTemplates/EmailConfirm.htm";
+
+            var file = "";
+
+            if (subject == "Confirm your email")
+            {
+                file = webRoot + "/EmailTemplates/EmailConfirm.htm";
+            }
+            else if (subject == "Reset Password")
+            {
+                file = webRoot + "/EmailTemplates/PasswordReset.htm";
+            }
 
             using (StreamReader reader = new StreamReader(file))
             {
