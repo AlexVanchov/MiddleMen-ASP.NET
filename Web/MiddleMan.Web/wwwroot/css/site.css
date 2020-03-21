@@ -203,6 +203,11 @@ body {
     object-fit: cover;
 }
 
+.buy{
+    float: right;
+    width: 20%;
+}
+
 
 
 

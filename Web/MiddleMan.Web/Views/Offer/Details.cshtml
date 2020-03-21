@@ -39,6 +39,7 @@
                     @*<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>*@
                     <span class="text-warning">@Model.Offer.StartsStringRating</span>
                     @Model.Offer.OfferRating stars (Average)
+                    <a href="/Offer/Buy?id=@Model.Offer.Id" class="btn btn-success buy">Buy ($@Model.Offer.Price)</a>
                 </div>
             </div>
             <!-- /.card -->
