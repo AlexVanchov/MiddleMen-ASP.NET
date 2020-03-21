@@ -149,6 +149,7 @@
             return this.View(detailsModel);
         }
 
+        [HttpPost]
         public async Task<IActionResult> AddReview(CreateReviewModel inputModel) // index post requsest for create
         {
             try

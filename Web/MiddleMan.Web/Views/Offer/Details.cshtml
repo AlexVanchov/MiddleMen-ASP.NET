@@ -58,7 +58,7 @@
                             }
                             <hr>
                         }
-                        <form action="/Offer/AddReview?id=@Model.Offer.Id" method="post">
+                        <form method="post" asp-controller="Offer" asp-action="AddReview" id="@Model.Offer.Id">
                             <div class="controls">
                                 <h4>Leave review</h4>
                                 @if (Model.Offer.Rated)
