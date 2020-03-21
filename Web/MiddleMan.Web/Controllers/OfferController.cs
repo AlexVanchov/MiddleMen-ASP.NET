@@ -150,11 +150,12 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddReview(CreateReviewModel inputModel) // index post requsest for create
+        public async Task<IActionResult> AddReview(CreateReviewModel inputModel, string id) // index post requsest for create
         {
             try
             {
                 inputModel.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
                 await this.commentService.AddReviewToOffer(inputModel);
             }
             catch (Exception)
