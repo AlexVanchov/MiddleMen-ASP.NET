@@ -27,6 +27,7 @@
     using MiddleMan.Services.Services;
     using CloudinaryDotNet;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
 
     public class Startup
     {
@@ -63,6 +64,11 @@
                         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@";
                 options.User.RequireUniqueEmail = true;
 
+            });
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
 
             services.Configure<CookiePolicyOptions>(
