@@ -86,6 +86,7 @@
             {
                 return this.NotFound();
             }
+
             var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
             var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync(categoryId);
             // var category = await this.categoryService.GetCategoryNameByIdAsync(id);

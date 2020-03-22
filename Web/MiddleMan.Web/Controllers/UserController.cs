@@ -179,12 +179,28 @@
                 ProfilePictureUrl = user.ProfilePhotoUrl,
             };
 
+            var offers = await this.offerService.GetAllActiveUserOffersAsync(id);
+
+            var offersAsViewModel = new List<OfferViewModel>();
+
+            foreach (var offer in offers)
+            {
+                offersAsViewModel.Add(new OfferViewModel()
+                {
+                    Name = offer.Name,
+                    Description = offer.Description.Length >= 65 ? offer.Description.Substring(0, 65) : offer.Description,
+                    Price = offer.Price,
+                    PicUrl = offer.PicUrl,
+                    ClickUrl = $"/Offer/Details?id={offer.Id}",
+                    ReadMore = offer.Description.Length >= 65 ? true : false,
+                });
+            }
+
             var viewModel = new UserProfileViewModel()
             {
                 User = userModel,
+                UserOffers = offersAsViewModel,
             };
-
-
 
             return this.View(viewModel);
         }
