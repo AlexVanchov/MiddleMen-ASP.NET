@@ -59,6 +59,7 @@
         Task<List<Offer>> GetAllCategoryOffersAsync(string id);
 
         Task ActivateOfferAsUserAsync(string id);
+
         Task DeleteOfferAsUserAsync(string id);
     }
 }

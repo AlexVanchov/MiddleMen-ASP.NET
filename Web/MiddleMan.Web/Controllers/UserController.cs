@@ -193,6 +193,7 @@
                     PicUrl = offer.PicUrl,
                     ClickUrl = $"/Offer/Details?id={offer.Id}",
                     ReadMore = offer.Description.Length >= 65 ? true : false,
+                    Rating = await this.offerService.GetOfferRatingAsync(id),
                 });
             }
 
@@ -200,6 +201,7 @@
             {
                 User = userModel,
                 UserOffers = offersAsViewModel,
+                AverageRate = await this.userService.GetUserRatingAsync(id),
             };
 
             return this.View(viewModel);

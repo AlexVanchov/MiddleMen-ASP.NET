@@ -16,5 +16,7 @@ namespace MiddleMan.Services.Interfaces
         Task<string> GetUserProfilePictureUrlAsync(string id);
 
         Task UpdateProfilePictureUrl(string userId, string photoUrl);
+
+        Task<double> GetUserRatingAsync(string id);
     }
 }

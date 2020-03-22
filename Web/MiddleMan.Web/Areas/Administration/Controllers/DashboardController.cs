@@ -71,6 +71,7 @@
             foreach (var offer in offers)
             {
                 var categoryName = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
+
                 aproveModel.Offers.Add(new OfferViewModelDetails()
                 {
                     Name = offer.Name,

@@ -1,5 +1,7 @@
 ﻿namespace MiddleMan.Services
 {
+    using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
@@ -35,6 +37,18 @@
             var user = await this.context.Users.FirstOrDefaultAsync(x => x.Id == id);
 
             return user.ProfilePhotoUrl;
+        }
+
+        public async Task<double> GetUserRatingAsync(string id)
+        {
+            var offers = await this.context.OfferUserRates.Where(x => x.Offer.CreatorId == id).ToListAsync();
+
+            if (offers.Count == 0)
+            {
+                return 0;
+            }
+
+            return Math.Round(offers.Average(x => (double)x.Rate));
         }
 
         public async Task UpdateProfilePictureUrl(string userId, string photoUrl)

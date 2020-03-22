@@ -36,7 +36,17 @@
                         <h6>
                             User
                         </h6>
-                        <p class="proile-rating">RANKINGS : <span>8/10</span></p>
+                        <p class="proile-rating">
+                            RATING :
+                            @if (@Model.AverageRate != 0)
+                            {
+                                <span>@Model.AverageRate/5</span>
+                            }
+                            else
+                            {
+                                <span>No Rating Yet</span>
+                            }
+                        </p>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>

@@ -28,5 +28,7 @@
         public bool IsFeatured { get; set; }
 
         public string StartsStringRating { get; set; }
+
+        public double Rating { get; set; }
     }
 }

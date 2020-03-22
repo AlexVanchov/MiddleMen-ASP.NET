@@ -15,5 +15,7 @@
         public UserModel User { get; set; }
 
         public ICollection<OfferViewModel> UserOffers { get; set; }
+
+        public double AverageRate { get; set; }
     }
 }
