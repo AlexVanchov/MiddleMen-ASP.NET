@@ -36,6 +36,10 @@
 
         public string Username { get; set; }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         public string? ProfilePhotoUrl { get; set; }
 
         [TempData]
@@ -52,6 +56,14 @@
 
             [Display(Name = "Update Profile Photo")]
             public IFormFile ProfilePhoto { get; set; }
+
+            [MinLength(3)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [MinLength(3)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -59,6 +71,8 @@
             var userName = await this._userManager.GetUserNameAsync(user);
             var phoneNumber = await this._userManager.GetPhoneNumberAsync(user);
             var profilePhotoUrl = await this.userService.GetUserProfilePictureUrlAsync(user.Id);
+            var firstName = await this.userService.GetUserFirstNameAsync(user.Id);
+            var lastName = await this.userService.GetUserLastNameAsync(user.Id);
 
             this.Username = userName;
             this.ProfilePhotoUrl = profilePhotoUrl;
@@ -66,6 +80,8 @@
             this.Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
+                FirstName = firstName,
+                LastName = lastName,
             };
         }
 
@@ -125,6 +141,8 @@
                     await this.userService.UpdateProfilePictureUrl(user.Id, photoUrl);
                 }
             }
+
+            await this.userService.UpdateUserFirstAndLastNameAsync(user.Id, Input.FirstName, Input.LastName);
 
             await this._signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

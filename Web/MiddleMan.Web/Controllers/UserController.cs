@@ -158,6 +158,8 @@
         {
             var user = await this.userService.GetUserByIdAsync(id);
 
+            var roles = await this.userService.GetUserRolesAsync(id);
+
             if (user == null)
             {
                 return this.NotFound();
@@ -177,6 +179,9 @@
                 TwoFactorEnabled = user.TwoFactorEnabled,
                 UserName = user.UserName,
                 ProfilePictureUrl = user.ProfilePhotoUrl,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Roles = roles,
             };
 
             var offers = await this.offerService.GetAllActiveUserOffersAsync(id);

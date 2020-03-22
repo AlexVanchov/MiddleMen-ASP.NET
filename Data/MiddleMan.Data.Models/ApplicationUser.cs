@@ -20,6 +20,10 @@ namespace MiddleMan.Data.Models
 
         public string ProfilePhotoUrl { get; set; }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         // Audit info
         public DateTime CreatedOn { get; set; }
 

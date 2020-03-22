@@ -35,6 +35,10 @@
                         </h5>
                         <h6>
                             User
+                            @foreach (var role in Model.User.Roles)
+                            {
+                                @(", ")@role
+                            }
                         </h6>
                         <p class="proile-rating">
                             RATING :
@@ -89,7 +93,14 @@
                                     <label>Name</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <p>Name Name</p>
+                                    @if (Model.User.FirstName != null)
+                                    {
+                                        <p>@Model.User.FirstName @Model.User.LastName</p>
+                                    }
+                                    else
+                                    {
+                                        <p>No Name Provided</p>
+                                    }
                                 </div>
                             </div>
                             <div class="row">
@@ -105,7 +116,14 @@
                                     <label>Phone</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <p>@Model.User.PhoneNumber</p>
+                                    @if (Model.User.PhoneNumber != null)
+                                    {
+                                        <p>@Model.User.PhoneNumber</p>
+                                    }
+                                    else
+                                    {
+                                        <p>No Phone Number Provided</p>
+                                    }
                                 </div>
                             </div>
                             <div class="row">

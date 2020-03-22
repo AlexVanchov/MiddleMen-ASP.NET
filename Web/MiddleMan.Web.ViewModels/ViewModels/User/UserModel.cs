@@ -1,10 +1,21 @@
 ﻿namespace MiddleMan.Web.ViewModels.ViewModels.User
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
     public class UserModel
     {
+        public UserModel()
+        {
+            this.Roles = new HashSet<string>();
+        }
+
         public string Id { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
@@ -27,5 +38,7 @@
         public string UserName { get; set; }
 
         public string ProfilePictureUrl { get; set; }
+
+        public ICollection<string> Roles { get; set; }
     }
 }
