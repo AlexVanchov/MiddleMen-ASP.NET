@@ -63,7 +63,7 @@
                                 <h4>Leave review</h4>
                                 @if (Model.Offer.Rated)
                                 {
-                                    <select name="Rating" class="form-control">
+                                    <select asp-for="@Model.InputModel.Rating" class="form-control">
                                         @switch (Model.UserRated)
                                         {
                                             case 1:
@@ -106,7 +106,7 @@
                                 }
                                 @if (!Model.Offer.Rated)
                                 {
-                                    <select name="Rating" class="form-control">
+                                    <select asp-for="@Model.InputModel.Rating" class="form-control">
                                         <option selected="selected" disabled="disabled">--Rating(1-5)--</option>"
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -115,7 +115,7 @@
                                         <option value="5">5</option>
                                     </select>
                                 }
-                                <textarea rows="4" style="margin-bottom: 10px" class="input-md textinput textInput form-control" maxlength="1000" name="Review" placeholder="Review..." type="text"></textarea>
+                                <textarea asp-for="@Model.InputModel.Review" rows="4" style="margin-bottom: 10px" class="input-md textinput textInput form-control" maxlength="1000" placeholder="Review..." type="text"></textarea>
                             </div>
                             <input type="submit" value="Post Review" class="btn btn-success" />
                         </form>

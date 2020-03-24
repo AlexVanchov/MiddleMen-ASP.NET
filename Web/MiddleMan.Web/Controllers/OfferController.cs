@@ -155,6 +155,7 @@
             try
             {
                 inputModel.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                inputModel.Id = id;
 
                 await this.commentService.AddReviewToOffer(inputModel);
             }

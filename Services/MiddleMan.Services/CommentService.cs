@@ -76,7 +76,10 @@ namespace MiddleMan.Services
                 {
                     this.context.OfferUserRates.Add(offerRate);
                 }
+            }
 
+            if (comment.Description != null)
+            {
                 offer.Comments.Add(comment);
             }
 

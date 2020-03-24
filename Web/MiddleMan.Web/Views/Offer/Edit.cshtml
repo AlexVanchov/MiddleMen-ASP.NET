@@ -38,7 +38,7 @@
                         <h3 class="card-title"><input type="text" name="Name" style="width:100%;" value="@Model.Offer.Name" /></h3>
 
                         <h4 @*asp-for="CreateOfferModel.CategoryId"*@ class="required">Choose Category</h4>
-                        <select name="CategoryName" class="form-control" required>
+                        <select asp-for="@Model.EditInputModel.CategoryName" class="form-control" required>
                             @foreach (var category in Model.Categories)
                             {
                                 if (Model.Offer.CategoryName == category.Name)
@@ -54,10 +54,10 @@
                             </vc:categories-dropdown>
                         </select>
                         <h4>Price ($): </h4>
-                        <p><input type="number" name="Price" style="width:100%;" value="@Model.Offer.Price" /></p>
+                        <p><input type="number" asp-for="@Model.EditInputModel.Price" style="width:100%;" value="@Model.Offer.Price" /></p>
                         <h4>Description: </h4>
                         <p class="card-text">
-                            <textarea name="Description" style="width:100%;">@Model.Offer.Description</textarea>
+                            <textarea asp-for="@Model.EditInputModel.Description" style="width:100%;">@Model.Offer.Description</textarea>
                         </p>
                         @*<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>*@
                         <span class="text-warning">@Model.Offer.StartsStringRating</span>
