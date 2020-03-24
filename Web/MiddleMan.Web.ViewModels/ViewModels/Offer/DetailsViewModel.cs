@@ -22,5 +22,7 @@
         public CreateReviewModel CommentInputModel { get; set; }
 
         public EditOfferModel EditInputModel { get; set; }
+
+        public bool IsOwner { get; set; }
     }
 }

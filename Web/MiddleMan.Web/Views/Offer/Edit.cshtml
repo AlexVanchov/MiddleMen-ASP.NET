@@ -1,5 +1,4 @@
-﻿@using MiddleMan.Web.ViewModels.ViewModels.Offer
-@model DetailsViewModel
+﻿@model EditViewModel
 @{
     ViewData["Title"] = "Edit";
 }
@@ -10,35 +9,42 @@
 
         <div class="col-lg-3">
             @*<h1 class="my-4">MiddleMan</h1>
-                <div class="list-group">
-                    @foreach (var category in Model.Categories)
+            <div class="list-group">
+                @foreach (var category in Model.Categories)
+                {
+                    @if (category.Name == Model.CategoryName)
                     {
-                        @if (category.Name == Model.CategoryName)
-                        {
-                            <a href="/Home/Category?name=@category.Name" class="list-group-item bg-primary text-white">@category.Name</a>
-                        }
-                        else
-                        {
-                            <a href="/Home/Category?name=@category.Name" class="list-group-item">@category.Name</a>
-                        }
+                        <a href="/Home/Category?name=@category.Name" class="list-group-item bg-primary text-white">@category.Name</a>
                     }
-                </div>*@
+                    else
+                    {
+                        <a href="/Home/Category?name=@category.Name" class="list-group-item">@category.Name</a>
+                    }
+                }
+            </div>*@
         </div>
         <!-- /.col-lg-3 -->
-
-        <form class="form-horizontal" actio="/Offer/Edit?id=@Model.Offer.Id" method="post" enctype="multipart/form-data">
+        @*@await Html.PartialAsync("_StatusMessageCustom", Model.InputModel.StatusMessage)
+        @try
+        {
+            <partial name="_StatusMessage" model="Model.StatusMessage" />
+        }
+        catch (Exception)
+        {
+        }*@
+        <form asp-controller="Offer" asp-action="Edit" asp-route-id="@Model.Offer.Id" class="form-horizontal" method="post" enctype="multipart/form-data" style="width: 65%;">
             <div class="col-lg-9">
                 @*<a href="/Home/Category?name=@Model.CategoryName" style="height:30px; padding-top: 0px;" class="btn btn-primary hBack text-white"><img style="max-width:100%; max-height:80%; height:auto; width: auto;" src="https://pngimage.net/wp-content/uploads/2018/05/back-icon-png-white-6.png"/>Go back</a>*@
                 <div class="card mt-4">
                     <div style="height:400px; margin:auto">
-                        <img style="max-width:100%; max-height:100%; height:auto; width: auto;" class="card-img-top img-fluid" src="@Model.Offer.PicUrl" alt="">
+                        <img style="height: 72%; object-fit: contain; width: auto;" class="card-img-top img-fluid" src="@Model.Offer.PicUrl" alt="">
                     </div>
                     <div class="card-body">
                         <h4>Title: </h4>
-                        <h3 class="card-title"><input type="text" name="Name" style="width:100%;" value="@Model.Offer.Name" /></h3>
+                        <h3 class="card-title"><input type="text" asp-for="@Model.InputModel.Name" style="width:100%;" value="@Model.Offer.Name" /></h3>
 
                         <h4 @*asp-for="CreateOfferModel.CategoryId"*@ class="required">Choose Category</h4>
-                        <select asp-for="@Model.EditInputModel.CategoryName" class="form-control" required>
+                        <select asp-for="@Model.InputModel.CategoryName" class="form-control" required>
                             @foreach (var category in Model.Categories)
                             {
                                 if (Model.Offer.CategoryName == category.Name)
@@ -54,10 +60,10 @@
                             </vc:categories-dropdown>
                         </select>
                         <h4>Price ($): </h4>
-                        <p><input type="number" asp-for="@Model.EditInputModel.Price" style="width:100%;" value="@Model.Offer.Price" /></p>
+                        <p><input type="number" asp-for="@Model.InputModel.Price" style="width:100%;" value="@Model.Offer.Price" /></p>
                         <h4>Description: </h4>
                         <p class="card-text">
-                            <textarea asp-for="@Model.EditInputModel.Description" style="width:100%;">@Model.Offer.Description</textarea>
+                            <textarea rows="6" style="width:100%;" id="@Html.IdFor(m => m.InputModel.Description)" name="@Html.NameFor(m => m.InputModel.Description)">@Model.Offer.Description</textarea>
                         </p>
                         @*<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>*@
                         <span class="text-warning">@Model.Offer.StartsStringRating</span>

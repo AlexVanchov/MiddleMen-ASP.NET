@@ -144,6 +144,7 @@
                 Offer = offerView,
                 CategoryId = offer.CategoryId,
                 UserRated = offerRatedByUser,
+                IsOwner = offer.CreatorId == userId ? true : false,
             };
 
             return this.View(detailsModel);
@@ -193,7 +194,6 @@
             {
             }
 
-
             var offerView = new OfferViewModelDetails()
             {
                 CreatorId = offer.CreatorId,
@@ -219,13 +219,12 @@
                 });
             }
 
-            var detailsModel = new DetailsViewModel()
+            var detailsModel = new EditViewModel()
             {
                 CategoryName = category,
                 Categories = categories,
                 Offer = offerView,
                 CategoryId = offer.CategoryId,
-                UserRated = offerRatedByUser,
             };
 
             return this.View(detailsModel);
@@ -246,11 +245,20 @@
             offerInput.CategoryId = categoryId;
 
             if (inputModel.Name.Length < 3 || inputModel.Name.Length > 50)
-                return this.Redirect("/Offer");
-            else if (inputModel.Description.Length < 20 || inputModel.Description.Length > 1000)
-                return this.Redirect("/Offer");
+                return this.Redirect($"/Offer/Edit?id={id}");
             else if (inputModel.Price < 0.01 || inputModel.Price > 2000)
-                return this.Redirect("/Offer");
+                return this.Redirect($"/Offer/Edit?id={id}");
+            if (inputModel.Description != null)
+            {
+                if (inputModel.Description.Length < 20 || inputModel.Description.Length > 1000)
+                {
+                    return this.Redirect($"/Offer/Edit?id={id}");
+                }
+            }
+            else
+            {
+                return this.Redirect($"/Offer/Edit?id={id}");
+            }
 
             await this.offerService.EditOfferAsync(offerInput, id);
 

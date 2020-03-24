@@ -1,10 +1,13 @@
-﻿namespace MiddleMan.Web.ViewModels.InputModels.Offer
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace MiddleMan.Web.ViewModels.InputModels.Offer
 {
     public class EditOfferModel
     {
+
         public string Name { get; set; }
 
-        public double Price { get; set; }
+        public int Price { get; set; }
 
         public string Description { get; set; }
 
