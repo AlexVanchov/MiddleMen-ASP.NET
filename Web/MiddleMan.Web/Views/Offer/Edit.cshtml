@@ -39,9 +39,16 @@
                     <div style="height:400px; margin:auto">
                         <img style="height: 72%; object-fit: contain; width: auto;" class="card-img-top img-fluid" src="@Model.Offer.PicUrl" alt="">
                     </div>
+
+                    <h4>Upload Photo</h4>
+                    <i class="fa fa-upload"></i> Upload
+                    <input asp-for="InputModel.Photo" type="file" class="form-control" accept="image/*" />
+
+                    <span asp-validation-for="InputModel.Photo" class="text-danger"></span>
+
                     <div class="card-body">
                         <h4>Title: </h4>
-                        <h3 class="card-title"><input type="text" asp-for="@Model.InputModel.Name" style="width:100%;" value="@Model.Offer.Name" /></h3>
+                        <h3 class="card-title"><input type="text" required minlength="3" maxlength="50" asp-for="@Model.InputModel.Name" style="width:100%;" value="@Model.Offer.Name" /></h3>
 
                         <h4 @*asp-for="CreateOfferModel.CategoryId"*@ class="required">Choose Category</h4>
                         <select asp-for="@Model.InputModel.CategoryName" class="form-control" required>
@@ -60,10 +67,10 @@
                             </vc:categories-dropdown>
                         </select>
                         <h4>Price ($): </h4>
-                        <p><input type="number" asp-for="@Model.InputModel.Price" style="width:100%;" value="@Model.Offer.Price" /></p>
+                        <p><input type="number" required min="1" max="2000" asp-for="@Model.InputModel.Price" style="width:100%;" value="@Model.Offer.Price" /></p>
                         <h4>Description: </h4>
                         <p class="card-text">
-                            <textarea rows="6" style="width:100%;" id="@Html.IdFor(m => m.InputModel.Description)" name="@Html.NameFor(m => m.InputModel.Description)">@Model.Offer.Description</textarea>
+                            <textarea rows="6" required minlength="20" maxlength="1000" style="width:100%;" id="@Html.IdFor(m => m.InputModel.Description)" name="@Html.NameFor(m => m.InputModel.Description)">@Model.Offer.Description</textarea>
                         </p>
                         @*<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>*@
                         <span class="text-warning">@Model.Offer.StartsStringRating</span>

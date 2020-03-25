@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
+    using MiddleMan.Common;
     using MiddleMan.Data;
     using MiddleMan.Data.Models;
     using MiddleMan.Services.Interfaces;
@@ -20,13 +21,16 @@
 
         private readonly ApplicationDbContext context;
         private readonly ICategoryService categoryService;
+        private readonly ICloudinaryService cloudinaryService;
 
         public OfferService(
             ApplicationDbContext context,
-            ICategoryService categoryService)
+            ICategoryService categoryService,
+            ICloudinaryService cloudinaryService)
         {
             this.context = context;
             this.categoryService = categoryService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public async Task CreateOfferAsync(CreateOfferModel inputModel)
@@ -195,11 +199,22 @@
         {
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
 
+            
+
             offer.Name = offerInput.Name;
             offer.Price = offerInput.Price;
             offer.Description = offerInput.Description;
             offer.ModifiedOn = DateTime.UtcNow;
             offer.CategoryId = offerInput.CategoryId;
+
+            if (offerInput.Photo != null)
+            {
+                var photoUrl = await this.cloudinaryService.UploadPhotoAsync(
+                    offerInput.Photo,
+                    $"{id}-{DateTime.Now.ToString()}",
+                    GlobalConstants.CloudFolderForProfilePictures);
+                offer.PicUrl = photoUrl;
+            }
 
             await this.context.SaveChangesAsync();
         }

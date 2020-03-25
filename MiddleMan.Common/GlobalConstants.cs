@@ -10,7 +10,7 @@
 
         public const string CloudFolderForUserProfilePhotos = "user_photos";
 
-        public const string CloudFolderForRecipePhotos = "offers";
+        public const string CloudFolderForOfferPhotos = "offers";
 
         public const string CloudFolderForProfilePictures = "profilePics";
 
