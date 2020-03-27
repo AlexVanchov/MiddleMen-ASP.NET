@@ -63,8 +63,22 @@
                 options.User.AllowedUserNameCharacters =
                         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@";
                 options.User.RequireUniqueEmail = true;
-
             });
+
+            services.AddAuthentication()
+                .AddFacebook(facebookOptions =>
+                {
+                    facebookOptions.AppId = this.configuration["Facebook:AppId"];
+                    facebookOptions.AppSecret = this.configuration["Facebook:AppSecret"];
+                })
+                .AddGoogle(options =>
+                {
+                    IConfigurationSection googleAuthNSection =
+                    this.configuration.GetSection("Google");
+
+                    options.ClientId = googleAuthNSection["ClientId"];
+                    options.ClientSecret = googleAuthNSection["ClientSecret"];
+                });
 
             services.AddMvc(options =>
             {

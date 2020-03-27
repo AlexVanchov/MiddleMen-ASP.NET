@@ -151,21 +151,21 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddReview(CreateReviewModel inputModel, string id) // index post requsest for create
+        public async Task<IActionResult> AddReview(CreateReviewModel commentInputModel, string id) // index post requsest for create
         {
             try
             {
-                inputModel.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                inputModel.Id = id;
+                commentInputModel.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                commentInputModel.Id = id;
 
-                await this.commentService.AddReviewToOffer(inputModel);
+                await this.commentService.AddReviewToOffer(commentInputModel);
             }
             catch (Exception)
             {
                 return this.Redirect("/");
             }
 
-            return this.Redirect($"/Offer/Details?id={inputModel.Id}");
+            return this.Redirect($"/Offer/Details?id={commentInputModel.Id}");
         }
 
         public async Task<IActionResult> Edit(string id)
