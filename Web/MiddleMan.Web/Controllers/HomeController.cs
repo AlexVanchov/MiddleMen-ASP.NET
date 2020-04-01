@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
@@ -37,9 +38,11 @@
 
             foreach (var offer in latestOffers)
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var categoryName = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
                 var offerRating = await this.offerService.GetOfferRatingAsync(offer.Id);
 
+                var isFavoritedByUser = await this.userService.IsOfferFavoritedByUserAsync(offer.Id, userId);
                 latestOffersViewModel.Add(new OfferViewModel()
                 {
                     Id = offer.Id,
@@ -51,6 +54,7 @@
                     ReadMore = offer.Description.Length >= 65 ? true : false,
                     CategoryName = categoryName,
                     StartsStringRating = this.offerService.StartsStringRating(offerRating),
+                    IsFavoritedByUser = isFavoritedByUser,
                 });
             }
 
@@ -83,6 +87,7 @@
 
         public async Task<IActionResult> Category(string name)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var categoryId = await this.categoryService.GetCategoryIdByNameAsync(name);
             if (categoryId == null)
             {
@@ -90,7 +95,7 @@
             }
 
             var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
-            var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync(categoryId);
+            var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync(categoryId, userId);
             // var category = await this.categoryService.GetCategoryNameByIdAsync(id);
 
             var homeModel = new HomeSelectedCategoryViewModel()

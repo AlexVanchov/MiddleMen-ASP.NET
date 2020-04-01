@@ -3,9 +3,8 @@
     $(".addFavorites").on('click', function () {
         event.stopImmediatePropagation();
         var offerId = $(this).val();
-
         $.ajax({
-            url: "/Favorites/Add",
+            url: "/Favorite/Add",
             type: "GET",
             data: "offerId=" + offerId,
             dataType: 'json',
@@ -20,9 +19,8 @@
         () {
         event.stopImmediatePropagation();
         var offerId = $(this).val();
-
         $.ajax({
-            url: "/Favorites/Remove",
+            url: "/Favorite/Remove",
             type: "GET",
             data: "offerId=" + offerId,
             dataType: 'json',

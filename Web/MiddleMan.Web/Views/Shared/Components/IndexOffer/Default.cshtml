@@ -4,8 +4,16 @@
     <div class="card h-100">
         <a style="height:150px; margin:auto" href="@Model.ClickUrl"><img class="card-img-top" src="@Model.PicUrl" alt="" style="max-width:100%; max-height:100%; height:auto; width: auto;"></a>
         <label for="id-of-input" class="custom-checkbox">
-            <button value="@Model.Id" id="add-@Model.Id" class="glyphicon glyphicon-star-empty addFavorites">☆</button>
-            <button value="@Model.Id" id="remove-@Model.Id" class="glyphicon glyphicon-star removeFavorites invisible">★</button>
+            @if (Model.IsFavoritedByUser)
+            {
+                <button value="@Model.Id" id="add-@Model.Id" class="glyphicon glyphicon-star-empty addFavorites invisible">☆</button>
+                <button value="@Model.Id" id="remove-@Model.Id" class="glyphicon glyphicon-star removeFavorites">★</button>
+            }
+            else
+            {
+                <button value="@Model.Id" id="add-@Model.Id" class="glyphicon glyphicon-star-empty addFavorites">☆</button>
+                <button value="@Model.Id" id="remove-@Model.Id" class="glyphicon glyphicon-star removeFavorites invisible">★</button>
+            }
         </label>
         <div class="card-body">
             <h5 class="card-title">

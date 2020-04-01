@@ -32,5 +32,7 @@
         public string StartsStringRating { get; set; }
 
         public double Rating { get; set; }
+
+        public bool IsFavoritedByUser { get; set; }
     }
 }

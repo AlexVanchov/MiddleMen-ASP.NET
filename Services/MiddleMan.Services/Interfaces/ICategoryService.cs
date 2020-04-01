@@ -15,7 +15,7 @@
 
         Task<List<CategoryViewModel>> GetAllCategoryViewModelsAsync();
 
-        Task<List<OfferViewModel>> GetAllOffersFromCategoryViewModelsAsync(string categoryName);
+        Task<List<OfferViewModel>> GetAllOffersFromCategoryViewModelsAsync(string categoryName, string userId);
 
         Task<string> GetIdByNameAsync(string categoryTitle);
 

@@ -17,10 +17,14 @@
     {
 
         private readonly ApplicationDbContext context;
+        private readonly IUserService userService;
 
-        public CategoryService(ApplicationDbContext context)
+        public CategoryService(
+            ApplicationDbContext context,
+            IUserService userService)
         {
             this.context = context;
+            this.userService = userService;
         }
 
         public async Task CreateCategoryAsync(CreateCategoryModel inputModel)
@@ -49,7 +53,7 @@
             return allCategories;
         }
 
-        public async Task<List<OfferViewModel>> GetAllOffersFromCategoryViewModelsAsync(string id)
+        public async Task<List<OfferViewModel>> GetAllOffersFromCategoryViewModelsAsync(string id, string userId)
         {
             var offersOutput = new List<OfferViewModel>();
             var offers = await this.context.Offers
@@ -58,6 +62,7 @@
 
             foreach (var offer in offers)
             {
+                var isFavoritedByUser = await this.userService.IsOfferFavoritedByUserAsync(offer.Id, userId);
                 offersOutput.Add(new OfferViewModel()
                 {
                     Id = offer.Id,
@@ -67,6 +72,7 @@
                     PicUrl = offer.PicUrl,
                     ClickUrl = $"/Offer/Details?id={offer.Id}",
                     ReadMore = offer.Description.Length >= 65 ? true : false,
+                    IsFavoritedByUser = isFavoritedByUser,
                 });
             }
 

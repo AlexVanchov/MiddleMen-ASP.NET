@@ -28,6 +28,7 @@
     using CloudinaryDotNet;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using MiddleMan.Web.Controllers;
 
     public class Startup
     {
@@ -116,6 +117,7 @@
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IOfferService, OfferService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IFavoriteService, FavoriteService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

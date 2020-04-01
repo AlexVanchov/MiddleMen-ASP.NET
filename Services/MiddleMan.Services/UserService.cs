@@ -81,6 +81,11 @@
             return roles;
         }
 
+        public async Task<bool> IsOfferFavoritedByUserAsync(string id, string userId)
+        {
+            return await this.context.UserFavorites.AnyAsync(x => x.OfferId == id && x.UserId == userId);
+        }
+
         public async Task UpdateProfilePictureUrl(string userId, string photoUrl)
         {
             var user = await this.context.Users.FirstOrDefaultAsync(x => x.Id == userId);

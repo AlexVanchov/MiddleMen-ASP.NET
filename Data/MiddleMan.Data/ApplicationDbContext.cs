@@ -34,6 +34,8 @@
 
         public DbSet<OfferUserRate> OfferUserRates { get; set; }
 
+        public DbSet<UserFavorite> UserFavorites { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -111,6 +113,12 @@
         private static void ConfigureOfferUser(ModelBuilder builder)
         {
             builder.Entity<OfferUserRate>()
+                .HasKey(x => new
+                {
+                    x.OfferId,
+                    x.UserId,
+                });
+            builder.Entity<UserFavorite>()
                 .HasKey(x => new
                 {
                     x.OfferId,
