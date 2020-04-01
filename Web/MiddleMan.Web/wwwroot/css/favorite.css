@@ -24,11 +24,14 @@
 
     .custom-checkbox .glyphicon-star-empty {
         color: gray;
+        background: none;
+        border: none;
     }
 
     .custom-checkbox .glyphicon-star {
-        opacity: 0;
         transition: opacity 0.2s ease-in-out;
+        background: none;
+        border: none;
     }
 
     .custom-checkbox:hover .glyphicon-star {

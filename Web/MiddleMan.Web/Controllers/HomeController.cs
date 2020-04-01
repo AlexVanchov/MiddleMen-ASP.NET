@@ -42,6 +42,7 @@
 
                 latestOffersViewModel.Add(new OfferViewModel()
                 {
+                    Id = offer.Id,
                     Name = offer.Name,
                     Description = offer.Description.Length >= 65 ? offer.Description.Substring(0, 65) : offer.Description,
                     Price = offer.Price,
@@ -57,6 +58,7 @@
             {
                 featuredOffersViewModel.Add(new OfferViewModel()
                 {
+                    Id = offer.Id,
                     Name = offer.Name,
                     Price = offer.Price,
                     PicUrl = offer.PicUrl,
