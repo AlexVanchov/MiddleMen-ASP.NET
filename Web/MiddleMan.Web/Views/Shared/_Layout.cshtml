@@ -7,14 +7,18 @@
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
 
     <environment names="Development">
+        @*<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">*@
         <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
-        <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/favorite.css" rel="stylesheet" asp-append-version="true" />
     </environment>
     <environment names="Staging,Production">
+        @*<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">*@
         <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
-        <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/favorite.css" rel="stylesheet" asp-append-version="true" />
     </environment>
 </head>
 <body>

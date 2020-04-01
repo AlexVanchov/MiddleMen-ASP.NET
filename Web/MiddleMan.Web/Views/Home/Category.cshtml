@@ -63,25 +63,7 @@
 
             @foreach (var offer in Model.Offers)
             {
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <a style="height:150px; margin:auto" href="@offer.ClickUrl"><img class="card-img-top" src="@offer.PicUrl" alt="" style="max-width:100%; max-height:100%; height:auto; width: auto;"></a>
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <a href="@offer.ClickUrl">@offer.Name</a>
-                            </h5>
-                            <h5>$@offer.Price</h5>
-                            <p class="card-text" style="height: 75px;">@offer.Description
-                            <p class="" style="text-align:right;">
-                                <a href="@offer.ClickUrl">Read more</a>
-                            </p>
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                        </div>
-                    </div>
-                </div>
+                <vc:index-offer view-model="@offer"></vc:index-offer>
             }
 
         </div>

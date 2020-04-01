@@ -1,0 +1,25 @@
+﻿@model OfferViewModel
+
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="card h-100">
+        <a style="height:150px; margin:auto" href="@Model.ClickUrl"><img class="card-img-top" src="@Model.PicUrl" alt="" style="max-width:100%; max-height:100%; height:auto; width: auto;"></a>
+        <label for="id-of-input" class="custom-checkbox">
+            <i class="glyphicon glyphicon-star-empty">☆</i>
+            <i class="glyphicon glyphicon-star">★</i>
+        </label>
+        <div class="card-body">
+            <h5 class="card-title">
+                <a href="@Model.ClickUrl">@Model.Name</a>
+            </h5>
+            <h5>$@Model.Price</h5>
+            <h6>@Model.CategoryName</h6>
+            <p class="card-text" style="height: 75px;">@Model.Description
+            <p class="" style="text-align:right;">
+                <a href="@Model.ClickUrl">Read more</a>
+            </p>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">@Model.StartsStringRating</small>
+        </div>
+    </div>
+</div>
