@@ -2,7 +2,7 @@
 
     $(".addFavorites").on('click', function () {
         event.stopImmediatePropagation();
-        var offerId = $(this).val();
+        let offerId = $(this).val();
         $.ajax({
             url: "/Favorite/Add",
             type: "GET",
@@ -18,7 +18,7 @@
     $(".removeFavorites").on('click', function
         () {
         event.stopImmediatePropagation();
-        var offerId = $(this).val();
+        let offerId = $(this).val();
         $.ajax({
             url: "/Favorite/Remove",
             type: "GET",

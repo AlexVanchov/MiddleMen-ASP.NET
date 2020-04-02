@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using MiddleMan.Common;
@@ -50,6 +50,7 @@
             this.userService = userService;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var categories = await this.categoryService.GetAllCategoryViewModelsAsync();

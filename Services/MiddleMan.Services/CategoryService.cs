@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using MiddleMan.Data;
@@ -62,6 +63,7 @@
 
             foreach (var offer in offers)
             {
+                var offerRating = await this.GetOfferRatingAsync(offer.Id);
                 var isFavoritedByUser = await this.userService.IsOfferFavoritedByUserAsync(offer.Id, userId);
                 offersOutput.Add(new OfferViewModel()
                 {
@@ -73,6 +75,7 @@
                     ClickUrl = $"/Offer/Details?id={offer.Id}",
                     ReadMore = offer.Description.Length >= 65 ? true : false,
                     IsFavoritedByUser = isFavoritedByUser,
+                    StartsStringRating = this.StartsStringRating(offerRating),
                 });
             }
 
@@ -109,6 +112,40 @@
             }
 
             return category.Id;
+        }
+
+        private async Task<double> GetOfferRatingAsync(string id)
+        {
+            var offers = await this.context.OfferUserRates.Where(x => x.OfferId == id).ToListAsync();
+            if (offers.Count == 0)
+            {
+                return 0;
+            }
+
+            return Math.Round(offers.Average(x => (double)x.Rate));
+        }
+
+        private string StartsStringRating(double stars)
+        {
+            string empty = "☆";
+            string full = "★";
+
+            var sb = new StringBuilder();
+
+            int startsCount = 0;
+            for (int i = 0; i < stars; i++)
+            {
+                sb.Append(full);
+                startsCount++;
+            }
+
+            while (startsCount < 5)
+            {
+                sb.Append(empty);
+                startsCount++;
+            }
+
+            return sb.ToString().TrimEnd();
         }
     }
 }

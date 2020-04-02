@@ -5,8 +5,10 @@
         type: "GET",
         dataType: 'json',
         success: function (response) {
-            $("#admin-link").html("(" + response + ")");
-            $("#notifications-count-navbar").html("(" + response + ")");
+            if (response > 0) {
+                $("#admin-link").html("(" + response + ")");
+                $("#notifications-count-navbar").html("(" + response + ")");
+            }
         }
     });
 });
