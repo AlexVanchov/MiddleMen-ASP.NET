@@ -15,6 +15,8 @@ MiddleMan is web service for trading accounts, selling game items and buying ite
 * [ASP.NET] - MVC
 * [node.js] - evented I/O for the backend
 * [Cloudinary] - Web cloud for the website
+* [SendGrid] - Email Sender API
+* [Chaport] - Live Chat Support
 
 ### TODO:
 
@@ -89,3 +91,5 @@ MIT
    [node.js]: <http://nodejs.org>
    [ASP.NET]: <https://dotnet.microsoft.com/apps/aspnet>
    [Cloudinary]: <https://cloudinary.com/documentation/dotnet_integration>
+   [Chaport]: <https://www.chaport.com/>
+   [SendGrid]: <https://sendgrid.com/>
