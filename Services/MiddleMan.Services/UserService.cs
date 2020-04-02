@@ -20,6 +20,16 @@
             this.context = context;
         }
 
+        public async Task<int> GetAdminOffersForApprove()
+        {
+            var offers = await this.context.Offers.Where(x => x.IsApproved == false &&
+            x.IsDeclined == false &&
+            x.IsRemovedByUser == false)
+                .ToListAsync();
+
+            return offers.Count;
+        }
+
         public async Task<ApplicationUser> GetUserByIdAsync(string id)
         {
             var user = await this.context.Users.FirstOrDefaultAsync(x => x.Id == id);

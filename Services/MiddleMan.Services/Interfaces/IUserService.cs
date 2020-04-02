@@ -28,5 +28,7 @@ namespace MiddleMan.Services.Interfaces
         Task<List<string>> GetUserRolesAsync(string id);
 
         Task<bool> IsOfferFavoritedByUserAsync(string id, string userId);
+
+        Task<int> GetAdminOffersForApprove();
     }
 }

@@ -24,6 +24,7 @@
     using MiddleMan.Web.ViewModels.Administration.Dashboard;
     using Microsoft.AspNetCore.Identity.UI.Services;
     using MiddleMan.Web.ViewModels.ViewModels.User;
+    using Microsoft.AspNetCore.Authorization;
 
     public class UserController : BaseController
     {
@@ -211,6 +212,12 @@
             };
 
             return this.View(viewModel);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> GetAdminOffersForApprove()
+        {
+            return this.Json(await this.userService.GetAdminOffersForApprove());
         }
     }
 }

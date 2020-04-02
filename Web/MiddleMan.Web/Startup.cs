@@ -2,33 +2,32 @@
 {
     using System.Reflection;
 
+    using AutoMapper;
+    using CloudinaryDotNet;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
     using MiddleMan.Data;
     using MiddleMan.Data.Common;
     using MiddleMan.Data.Common.Repositories;
     using MiddleMan.Data.Models;
     using MiddleMan.Data.Repositories;
     using MiddleMan.Data.Seeding;
+    using MiddleMan.Services;
     using MiddleMan.Services.Data;
+    using MiddleMan.Services.Interfaces;
     using MiddleMan.Services.Mapping;
     using MiddleMan.Services.Messaging;
-    using MiddleMan.Web.ViewModels;
-    using AutoMapper;
-
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-    using MiddleMan.Services;
-    using MiddleMan.Services.Interfaces;
-    using SellMe.Services.Utilities;
     using MiddleMan.Services.Services;
-    using CloudinaryDotNet;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
     using MiddleMan.Web.Controllers;
+    using MiddleMan.Web.ViewModels;
+    using SellMe.Services.Utilities;
 
     public class Startup
     {

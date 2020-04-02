@@ -99,12 +99,14 @@
         <script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         @*<script src="~/js/ordered.js" asp-append-version="true"></script>*@
+        <script src="~/js/admin.js"></script>
 
     </environment>
     <environment names="Staging,Production">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="~/js/admin.js"></script>
     </environment>
 
     @this.RenderSection("Scripts", required: false)

@@ -15,17 +15,26 @@
         private readonly ISettingsService settingsService;
         private readonly ICategoryService categoryService;
         private readonly IOfferService offerService;
+        private readonly IUserService userService;
 
-        public DashboardController(ISettingsService settingsService, ICategoryService categoryService, IOfferService offerService)
+        public DashboardController(
+            ISettingsService settingsService,
+            ICategoryService categoryService, 
+            IOfferService offerService,
+            IUserService userService)
         {
             this.settingsService = settingsService;
             this.categoryService = categoryService;
             this.offerService = offerService;
+            this.userService = userService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var viewModel = new IndexViewModel { SettingsCount = this.settingsService.GetCount(), };
+            var viewModel = new IndexViewModel()
+            {
+                ApproveCount = await this.userService.GetAdminOffersForApprove(),
+            };
             return this.View(viewModel);
         }
 
