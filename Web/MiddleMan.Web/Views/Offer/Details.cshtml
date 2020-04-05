@@ -39,6 +39,12 @@
                     @*<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>*@
                     <span class="text-warning">@Model.Offer.StartsStringRating</span>
                     @Model.Offer.OfferRating stars (Average)
+                    <p>
+                        <small class="text-muted">Seller: <a href="/User/Profile?id=@Model.Offer.CreatorId">@Model.Offer.CreatorName</a></small>
+                    </p>
+                    <p>
+                        <small class="text-muted">Added on: @Model.Offer.CreatedOn</small>
+                    </p>
                     @if (Model.IsOwner)
                     {
                         <a href="/Offer/Buy?id=@Model.Offer.Id" class="btn btn-success disabled buy">Buy ($@Model.Offer.Price)</a>

@@ -112,10 +112,10 @@
             {
             }
 
-
             var offerView = new OfferViewModelDetails()
             {
                 CreatorId = offer.CreatorId,
+                CreatorName = this.userService.GetUserByIdAsync(offer.CreatorId).Result.UserName,
                 Description = offer.Description,
                 Name = offer.Name,
                 PicUrl = offer.PicUrl,
