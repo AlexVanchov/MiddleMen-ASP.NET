@@ -125,6 +125,7 @@
                 Rated = rated,
                 OfferRating = offerRating,
                 StartsStringRating = startsStringRating,
+                IsFavoritedByUser = await this.userService.IsOfferFavoritedByUserAsync(offer.Id, userId),
             };
 
             foreach (var comment in comments)

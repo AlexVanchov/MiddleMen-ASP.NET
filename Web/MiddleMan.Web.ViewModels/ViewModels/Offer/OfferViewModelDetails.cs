@@ -41,6 +41,8 @@
 
         public string StartsStringRating { get; set; }
 
+        public bool IsFavoritedByUser { get; set; }
+
         public ICollection<CommentViewModel> Comments { get; set; }
     }
 }
