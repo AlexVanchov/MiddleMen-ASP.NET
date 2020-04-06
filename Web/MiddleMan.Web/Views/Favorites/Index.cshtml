@@ -1,0 +1,42 @@
+﻿@model FavoriteOffersViewModel
+@{
+    ViewData["Title"] = "Favorites";
+}
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-3">
+
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <h1>@this.ViewData["Title"]</h1>
+        <div class="col-lg-9">
+
+            <div class="row">
+
+                @if (Model.Offers.Any())
+                {
+                    @foreach (var offer in Model.Offers)
+                    {
+                        <vc:index-offer view-model="@offer"></vc:index-offer>
+                    }
+                }
+                else
+                {
+                    <h2>It looks like you don have any favorite offer</h2>
+                    <h2>You can add by clicking the star on any offer</h2>
+                }
+
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->

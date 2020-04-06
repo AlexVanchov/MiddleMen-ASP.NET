@@ -199,8 +199,6 @@
         {
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
 
-            
-
             offer.Name = offerInput.Name;
             offer.Price = offerInput.Price;
             offer.Description = offerInput.Description;
@@ -269,6 +267,23 @@
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
             offer.IsRemovedByUser = true;
             await this.context.SaveChangesAsync();
+        }
+
+        public async Task<List<Offer>> GetAllFavoriteUserOffersAsync(string userId)
+        {
+            return await this.context.Offers
+                   .Where(x => x.IsApproved == true &&
+                   x.IsDeclined == false &&
+                   x.IsRemovedByUser == false)
+                   .ToListAsync();
+        }
+
+        public async Task<List<UserFavorite>> GetAllFavoriteUserOffersKeysAsync(string userId)
+        {
+            return await this.context.UserFavorites
+                .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.FavoritedOn)
+                .ToListAsync();
         }
     }
 }

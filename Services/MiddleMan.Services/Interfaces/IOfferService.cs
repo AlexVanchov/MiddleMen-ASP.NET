@@ -46,6 +46,10 @@
 
         Task<bool> IsUserCreatorOfOfferAsync(string userId, string id);
 
+        Task<List<UserFavorite>> GetAllFavoriteUserOffersKeysAsync(string userId);
+
+        Task<List<Offer>> GetAllFavoriteUserOffersAsync(string userId);
+
         Task<List<Offer>> GetOffersBySearchAsync(string searchWord);
 
         Task EditOfferAsync(EditOfferModel offerInput, string id);

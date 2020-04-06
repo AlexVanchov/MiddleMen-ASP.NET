@@ -14,6 +14,14 @@
                 <i class="fa fa-envelope"></i> 5
             </a>
         </li>
+        <li class="nav-item">
+            <a asp-controller="Favorites" asp-action="Index" class="nav-link active" title="Favorites">
+
+                <span class="glyphicon glyphicon-star removeFavorites">★</span>
+                <strong id="favoritesCount">68</strong>
+            </a>
+        </li>
+
         <li class="nav-item active dropdown">
             <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user"></i> Hello @(this.User.Identity.Name)
@@ -21,7 +29,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="/User/MyOffers">My Offers</a>
-                <a class="dropdown-item" href="/Favorites/MyFavorites">Favorites</a>
+                <a class="dropdown-item" href="/Favorites">Favorites</a>
                 <a class="dropdown-item" href="/Messages/Inbox">Messages 5</a>
                 <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
                 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))

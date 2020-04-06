@@ -4,13 +4,14 @@
         event.stopImmediatePropagation();
         let offerId = $(this).val();
         $.ajax({
-            url: "/Favorite/Add",
+            url: "/Favorites/Add",
             type: "GET",
             data: "offerId=" + offerId,
             dataType: 'json',
             success: function (response) {
                 $("#remove-" + offerId).removeClass("invisible");
                 $("#add-" + offerId).addClass("invisible");
+                Favorites();
             }
         });
     });
@@ -20,13 +21,14 @@
         event.stopImmediatePropagation();
         let offerId = $(this).val();
         $.ajax({
-            url: "/Favorite/Remove",
+            url: "/Favorites/Remove",
             type: "GET",
             data: "offerId=" + offerId,
             dataType: 'json',
             success: function (response) {
                 $("#remove-" + offerId).addClass("invisible");
                 $("#add-" + offerId).removeClass("invisible");
+                Favorites();
             }
         });
     });
