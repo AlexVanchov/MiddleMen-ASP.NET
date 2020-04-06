@@ -18,7 +18,7 @@
             <a asp-controller="Favorites" asp-action="Index" class="nav-link active" title="Favorites">
 
                 <span class="glyphicon glyphicon-star removeFavorites">★</span>
-                <strong id="favoritesCount">68</strong>
+                <strong id="favoritesCount"></strong>
             </a>
         </li>
 
@@ -28,15 +28,21 @@
                 <span class="text-warning" id="notifications-count-navbar"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/User/MyOffers">My Offers</a>
-                <a class="dropdown-item" href="/Favorites">Favorites</a>
-                <a class="dropdown-item" href="/Messages/Inbox">Messages 5</a>
+                <a class="dropdown-item" href="/User/Active">My Offers</a>
+                <a class="dropdown-item" href="/Favorites">
+                    Favorites
+                    <strong id="favoritesCount2"></strong>
+                </a>
+                <a class="dropdown-item" href="/Messages/Inbox">
+                    Messages
+                    <strong id="messagesCount">5</strong>
+                </a>
                 <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
                 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                 {
             <a class="dropdown-item" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">
                 Admin
-                <span class="text-warning" id="admin-link"></span>
+                <strong class="text-warning" id="admin-link"></strong>
             </a>
                 }
                 <a class="dropdown-item">

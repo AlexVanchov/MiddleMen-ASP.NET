@@ -25,6 +25,7 @@ function Favorites() {
         success: function (response) {
             if (response > 0) {
                 $("#favoritesCount").html(response);
+                $("#favoritesCount2").html(response);
             }
         }
     });
