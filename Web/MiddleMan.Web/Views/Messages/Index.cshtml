@@ -1,0 +1,59 @@
+﻿@model List<MessageViewModel>
+@{
+    ViewData["Title"] = "Inbox";
+}
+
+<h3 class="text-center">Inbox:</h3>
+<hr class="hr-sell-me" />
+<div class="card text-center">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Inbox</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Messages" asp-action="SentBox">Sent Box</a>
+            </li>
+        </ul>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">From</th>
+                        <th scope="col">Last Message</th>
+                        <th scope="col">Offer Title</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var message in Model)
+                    {
+                        var messageParams = new Dictionary<string, string>
+                                    {
+                        {"recipientId", message.RecipientId},
+                        {"senderId", message.SenderId},
+                        {"offerId", message.OfferId}
+                    };
+
+                    <tr>
+                        @if (message.IsRead)
+                        {
+                            <td>@message.Sender</td>
+                            <td>@message.LastMessage</td>
+                            <td><a asp-controller="Messages" asp-action="Details" asp-all-route-data="messageParams">@message.OfferTitle</a></td>
+                            <td>@message.SentOn.ToString("g")</td>
+                        }
+                        else
+                        {
+                            <th>@message.Sender</th>
+                            <td>@message.LastMessage</td>
+                            <th><a asp-controller="Messages" asp-action="Details" asp-all-route-data="messageParams">@message.OfferTitle</a></th>
+                            <th>@message.SentOn.ToString("g")</th>
+                        }
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

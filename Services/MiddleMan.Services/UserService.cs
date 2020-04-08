@@ -3,9 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using MiddleMan.Data;
     using MiddleMan.Data.Models;
@@ -14,10 +15,14 @@
     public class UserService : IUserService
     {
         private readonly ApplicationDbContext context;
+        private readonly IHttpContextAccessor contextAccessor;
 
-        public UserService(ApplicationDbContext context)
+        public UserService(
+            ApplicationDbContext context,
+            IHttpContextAccessor contextAccessor)
         {
             this.context = context;
+            this.contextAccessor = contextAccessor;
         }
 
         public async Task<int> GetAdminOffersForApprove()
@@ -28,6 +33,16 @@
                 .ToListAsync();
 
             return offers.Count;
+        }
+
+        public string GetCurrentUserId()
+        {
+            var currentUserId = this.contextAccessor
+                .HttpContext.User
+                .FindFirst(ClaimTypes.NameIdentifier)
+                .Value;
+
+            return currentUserId;
         }
 
         public async Task<ApplicationUser> GetUserByIdAsync(string id)

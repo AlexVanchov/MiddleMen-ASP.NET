@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using MiddleMan.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MiddleMan.Services.Interfaces
+﻿namespace MiddleMan.Services.Interfaces
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using MiddleMan.Data.Models;
+
     public interface IUserService
     {
         Task<string> GetUsernameByIdAsync(string creatorId);
@@ -30,5 +28,7 @@ namespace MiddleMan.Services.Interfaces
         Task<bool> IsOfferFavoritedByUserAsync(string id, string userId);
 
         Task<int> GetAdminOffersForApprove();
+
+        string GetCurrentUserId();
     }
 }

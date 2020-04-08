@@ -61,5 +61,7 @@ namespace MiddleMan.Data.Models
         public bool IsRemovedByUser { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
+
+        public ICollection<Message> Messages { get; set; }
     }
 }

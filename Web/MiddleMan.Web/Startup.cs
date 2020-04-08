@@ -26,6 +26,7 @@
     using MiddleMan.Services.Messaging;
     using MiddleMan.Services.Services;
     using MiddleMan.Web.Controllers;
+    using MiddleMan.Web.Hubs;
     using MiddleMan.Web.ViewModels;
     using SellMe.Services.Utilities;
 
@@ -80,6 +81,7 @@
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
                 });
 
+            services.AddSignalR();
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
@@ -117,6 +119,7 @@
             services.AddTransient<IOfferService, OfferService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IFavoriteService, FavoriteService>();
+            services.AddTransient<IMessagesService, MessagesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -156,6 +159,12 @@
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSignalR(
+                routes =>
+                {
+                    routes.MapHub<MessageHub>("/message");
+                });
 
             app.UseStatusCodePagesWithRedirects("/error/{0}");
 
