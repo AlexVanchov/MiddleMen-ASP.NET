@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,15 +40,53 @@ namespace MiddleMan.Web.Controllers
         }
 
         [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Send(SendMessageInputModel inputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                var sendMessageBindingModel =
+                    await this.messagesService.GetMessageBindingModelByOfferIdAsync(inputModel.OfferId);
+                sendMessageBindingModel.InputModel = inputModel;
+
+                return this.View(sendMessageBindingModel);
+            }
+
+            var messageViewModel = await this.messagesService.CreateMessageAsync(inputModel.SenderId, inputModel.RecipientId, inputModel.OfferId, inputModel.Content);
+
+            var unreadMessagesCount = await this.messagesService.GetUnreadMessagesCountAsync(inputModel.RecipientId);
+
+            await this.hubContext.Clients.User(inputModel.RecipientId).SendAsync("MessageCount", unreadMessagesCount);
+
+            await this.hubContext.Clients.User(inputModel.RecipientId)
+                .SendAsync("SendMessage", messageViewModel);
+
+            return this.RedirectToAction("Details", new { offerId = inputModel.OfferId, senderId = inputModel.RecipientId, recipientId = inputModel.SenderId });
+        }
+
+        [Authorize]
         public async Task<IActionResult> Details(MessagesDetailsViewModel viewModel)
         {
             var messagesViewModel = new List<MessageViewModel>();
 
-            var messagesSideA = await this.messagesService.GetMessagesForOfferAsync(viewModel.OfferId, viewModel.SenderId, viewModel.RecipientId);
-            var messagesSideB = await this.messagesService.GetMessagesForOfferAsync(viewModel.OfferId, viewModel.RecipientId, viewModel.SenderId);
+            var messages = await this.messagesService.GetMessagesForOfferAsync(viewModel.OfferId, viewModel.SenderId, viewModel.RecipientId);
+            messages.OrderBy(date => date.CreatedOn);
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var sideAId = viewModel.SenderId;
             var sideBId = viewModel.RecipientId;
+
+            if (userId == viewModel.SenderId)
+            {
+                sideAId = viewModel.SenderId;
+                sideBId = viewModel.RecipientId;
+            }
+            else if (userId == viewModel.RecipientId)
+            {
+                sideAId = viewModel.RecipientId;
+                sideBId = viewModel.SenderId;
+            }
 
             viewModel.SideA = new UserMessagesViewModel()
             {
@@ -61,21 +100,7 @@ namespace MiddleMan.Web.Controllers
                 Username = await this.userService.GetUsernameByIdAsync(sideBId),
             };
 
-            foreach (var message in messagesSideA)
-            {
-                messagesViewModel.Add(new MessageViewModel()
-                {
-                    Content = message.Content,
-                    IsRead = message.IsRead,
-                    RecipientId = message.RecipientId,
-                    SenderId = message.SenderId,
-                    SentOn = message.CreatedOn.ToString("MM/dd hh:mm tt"),
-                    OfferId = message.OfferId,
-                    Sender = await this.userService.GetUsernameByIdAsync(message.SenderId),
-                });
-            }
-
-            foreach (var message in messagesSideB)
+            foreach (var message in messages)
             {
                 messagesViewModel.Add(new MessageViewModel()
                 {
@@ -93,9 +118,9 @@ namespace MiddleMan.Web.Controllers
             viewModel.OfferTitle = await this.offerService.GetOfferNameById(viewModel.OfferId);
             viewModel.InputModel = new SendMessageInputModel()
             {
-                SenderId = viewModel.SenderId,
+                SenderId = viewModel.RecipientId,
                 OfferId = viewModel.OfferId,
-                RecipientId = viewModel.RecipientId,
+                RecipientId = viewModel.SenderId,
             };
 
             return this.View(viewModel);

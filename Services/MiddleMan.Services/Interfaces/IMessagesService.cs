@@ -1,6 +1,7 @@
 ﻿namespace MiddleMan.Services.Interfaces
 {
     using MiddleMan.Data.Models;
+    using MiddleMan.Web.ViewModels.InputModels.Message;
     using MiddleMan.Web.ViewModels.ViewModels.Messages;
     using System;
     using System.Collections.Generic;
@@ -16,5 +17,9 @@
         Task<List<MessageViewModel>> GetInboxMessagesAsync();
 
         Task<List<Message>> GetMessagesForOfferAsync(string offerId, string senderId, string recipientId);
+
+        Task<SendMessageBindingModel> GetMessageBindingModelByOfferIdAsync(string offerId);
+
+        Task<SendMessageViewModel> GetMessageViewModelByOfferIdAsync(string offerId);
     }
 }

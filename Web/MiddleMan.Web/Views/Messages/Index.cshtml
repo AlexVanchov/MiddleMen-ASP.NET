@@ -35,7 +35,7 @@
                         {"offerId", message.OfferId}
                     };
 
-                    <tr class="message-tr" onclick="location.href='/Messages/Details?recipientId=@messageParams["recipientId"]&senderId=@messageParams["senderId"]&offerId=@messageParams["offerId"]'">
+                    <tr class="message-tr" onclick="location.href='/Messages/Details?offerId=@messageParams["offerId"]&senderId=@messageParams["senderId"]&recipientId=@messageParams["recipientId"]'">
                         @if (message.IsRead)
                         {
                             <td>@message.Sender</td>

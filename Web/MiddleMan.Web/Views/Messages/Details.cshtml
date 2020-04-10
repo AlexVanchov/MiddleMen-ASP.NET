@@ -10,33 +10,32 @@
     @foreach (var message in Model.Messages)
     {
         <div class="card-body msg_card_body">
-                <p>
-                    @if (message.Sender == User.Identity.Name)
-                    {
-                    <div class="d-flex justify-content-start mb-4">
-                        <div class="img_cont_msg">
-                            <img src="@Model.SideA.ProfilePicUrl" class="rounded-circle user_img_msg">
-                        </div>
-                        <div class="msg_cotainer">
-                            @message.Content
-                            <span class="msg_time">@message.SentOn</span>
-                        </div>
-                    </div>
-                    }
-                    else
-                    {
+            <p>
+                @if (message.Sender == User.Identity.Name)
+                {
                     <div class="d-flex justify-content-end mb-4">
                         <div class="msg_cotainer_send">
                             @message.Content
                             <span class="msg_time_send">@message.SentOn</span>
                         </div>
                         <div class="img_cont_msg">
-                            <img src="@Model.SideB.ProfilePicUrl" class="rounded-circle user_img_msg"/>
+                            <img src="@Model.SideA.ProfilePicUrl" class="rounded-circle user_img_msg" />
                         </div>
                     </div>
-
-                    }
-                </p>
+                }
+                else
+                {
+                    <div class="d-flex justify-content-start mb-4">
+                        <div class="img_cont_msg">
+                            <img src="@Model.SideB.ProfilePicUrl" class="rounded-circle user_img_msg">
+                        </div>
+                        <div class="msg_cotainer">
+                            @message.Content
+                            <span class="msg_time">@message.SentOn</span>
+                        </div>
+                    </div>
+                }
+            </p>
         </div>
     }
 </div>
