@@ -256,3 +256,13 @@
         margin-bottom: 15px !important;
     }
 }
+
+
+#message-content {
+    border-radius: 15px 0px 0px 15px !important;
+}
+
+.message-tr:hover {
+    background-color: rgba(0,0,0,0.2) !important;
+    cursor: pointer;
+}

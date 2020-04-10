@@ -21,5 +21,7 @@
         public const int DefaultCategoryId = 1;
 
         public const string DessertsCategoryTitle = "Desserts";
+
+        public const string DefaultProfilePicUrl = "https://i.imgur.com/56lPbUe.png";
     }
 }

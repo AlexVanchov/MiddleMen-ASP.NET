@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\MiddleMan.Common\MiddleMan.Common.csproj" />
     <ProjectReference Include="..\MiddleMan.Data.Common\MiddleMan.Data.Common.csproj" />
   </ItemGroup>
   

@@ -16,7 +16,7 @@
         private readonly IHostingEnvironment env;
 
         public EmailSender(
-            IOptions<AuthMessageSenderOptions> optionsAccessor, 
+            IOptions<AuthMessageSenderOptions> optionsAccessor,
             IConfiguration configuration,
             IHostingEnvironment env)
         {

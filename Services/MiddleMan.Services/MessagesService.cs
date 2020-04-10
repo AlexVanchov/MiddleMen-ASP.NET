@@ -69,7 +69,7 @@
                     SenderId = lastMsg.SenderId,
                     RecipientId = lastMsg.RecipientId,
                     OfferId = lastMsg.OfferId,
-                    SentOn = lastMsg.CreatedOn,
+                    SentOn = lastMsg.CreatedOn.ToString("MM/dd hh:mm tt"),
                     OfferTitle = offer.Name,
                     Sender = sender,
                     LastMessage = lastMsg.Content, // todo cuting listing

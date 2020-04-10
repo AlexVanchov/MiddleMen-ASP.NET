@@ -46,6 +46,21 @@ namespace MiddleMan.Web.Controllers
             var messagesSideA = await this.messagesService.GetMessagesForOfferAsync(viewModel.OfferId, viewModel.SenderId, viewModel.RecipientId);
             var messagesSideB = await this.messagesService.GetMessagesForOfferAsync(viewModel.OfferId, viewModel.RecipientId, viewModel.SenderId);
 
+            var sideAId = viewModel.SenderId;
+            var sideBId = viewModel.RecipientId;
+
+            viewModel.SideA = new UserMessagesViewModel()
+            {
+                ProfilePicUrl = await this.userService.GetUserProfilePictureUrlAsync(sideAId),
+                Username = await this.userService.GetUsernameByIdAsync(sideAId),
+            };
+
+            viewModel.SideB = new UserMessagesViewModel()
+            {
+                ProfilePicUrl = await this.userService.GetUserProfilePictureUrlAsync(sideBId),
+                Username = await this.userService.GetUsernameByIdAsync(sideBId),
+            };
+
             foreach (var message in messagesSideA)
             {
                 messagesViewModel.Add(new MessageViewModel()
@@ -54,7 +69,7 @@ namespace MiddleMan.Web.Controllers
                     IsRead = message.IsRead,
                     RecipientId = message.RecipientId,
                     SenderId = message.SenderId,
-                    SentOn = message.CreatedOn,
+                    SentOn = message.CreatedOn.ToString("MM/dd hh:mm tt"),
                     OfferId = message.OfferId,
                     Sender = await this.userService.GetUsernameByIdAsync(message.SenderId),
                 });
@@ -68,7 +83,7 @@ namespace MiddleMan.Web.Controllers
                     IsRead = message.IsRead,
                     RecipientId = message.RecipientId,
                     SenderId = message.SenderId,
-                    SentOn = message.CreatedOn,
+                    SentOn = message.CreatedOn.ToString("MM/dd hh:mm tt"),
                     OfferId = message.OfferId,
                     Sender = await this.userService.GetUsernameByIdAsync(message.SenderId),
                 });

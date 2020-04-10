@@ -20,6 +20,6 @@
 
         public bool IsRead { get; set; }
 
-        public DateTime SentOn { get; set; }
+        public string SentOn { get; set; }
     }
 }

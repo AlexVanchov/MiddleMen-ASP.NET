@@ -35,20 +35,20 @@
                         {"offerId", message.OfferId}
                     };
 
-                    <tr>
+                    <tr class="message-tr" onclick="location.href='/Messages/Details?recipientId=@messageParams["recipientId"]&senderId=@messageParams["senderId"]&offerId=@messageParams["offerId"]'">
                         @if (message.IsRead)
                         {
                             <td>@message.Sender</td>
                             <td>@message.LastMessage</td>
                             <td><a asp-controller="Messages" asp-action="Details" asp-all-route-data="messageParams">@message.OfferTitle</a></td>
-                            <td>@message.SentOn.ToString("g")</td>
+                            <td>@message.SentOn</td>
                         }
                         else
                         {
                             <th>@message.Sender</th>
                             <td>@message.LastMessage</td>
                             <th><a asp-controller="Messages" asp-action="Details" asp-all-route-data="messageParams">@message.OfferTitle</a></th>
-                            <th>@message.SentOn.ToString("g")</th>
+                            <th>@message.SentOn</th>
                         }
                     </tr>
                     }

@@ -7,6 +7,7 @@ namespace MiddleMan.Data.Models
     using MiddleMan.Data.Common.Models;
 
     using Microsoft.AspNetCore.Identity;
+    using MiddleMan.Common;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
@@ -16,6 +17,7 @@ namespace MiddleMan.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.ProfilePhotoUrl = GlobalConstants.DefaultProfilePicUrl;
         }
 
         public string ProfilePhotoUrl { get; set; }

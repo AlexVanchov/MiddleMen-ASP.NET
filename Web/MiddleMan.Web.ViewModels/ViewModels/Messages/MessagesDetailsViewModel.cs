@@ -8,6 +8,10 @@
 
     public class MessagesDetailsViewModel
     {
+        public UserMessagesViewModel SideA { get; set; }
+
+        public UserMessagesViewModel SideB { get; set; }
+
         public string RecipientId { get; set; }
 
         public string SenderId { get; set; }
