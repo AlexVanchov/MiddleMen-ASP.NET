@@ -77,17 +77,6 @@ namespace MiddleMan.Web.Controllers
             var sideAId = viewModel.SenderId;
             var sideBId = viewModel.RecipientId;
 
-            if (userId == viewModel.SenderId)
-            {
-                sideAId = viewModel.SenderId;
-                sideBId = viewModel.RecipientId;
-            }
-            else if (userId == viewModel.RecipientId)
-            {
-                sideAId = viewModel.RecipientId;
-                sideBId = viewModel.SenderId;
-            }
-
             viewModel.SideA = new UserMessagesViewModel()
             {
                 ProfilePicUrl = await this.userService.GetUserProfilePictureUrlAsync(sideAId),
@@ -118,9 +107,9 @@ namespace MiddleMan.Web.Controllers
             viewModel.OfferTitle = await this.offerService.GetOfferNameById(viewModel.OfferId);
             viewModel.InputModel = new SendMessageInputModel()
             {
-                SenderId = viewModel.RecipientId,
+                SenderId = viewModel.SenderId,
                 OfferId = viewModel.OfferId,
-                RecipientId = viewModel.SenderId,
+                RecipientId = viewModel.RecipientId,
             };
 
             return this.View(viewModel);

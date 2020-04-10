@@ -37,9 +37,11 @@
       ]
     },
     {
-      "provider": "cdnjs",
-      "library": "signalr.js@2.4.0",
-      "destination": "wwwroot/signalr.js/"
+      "library": "@microsoft/signalr@3.1.3",
+      "destination": "wwwroot/lib/signalr/",
+      "files": [
+        "dist/browser/signalr.min.js"
+      ]
     }
   ]
 }

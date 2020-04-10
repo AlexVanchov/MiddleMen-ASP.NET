@@ -57,7 +57,7 @@
 
             var offers = await this.context
                 .Offers
-                .Where(x => x.Messages.Any(y => y.RecipientId == currentUserId))
+                .Where(x => x.Messages.Any(y => y.RecipientId == currentUserId || y.SenderId == currentUserId))
                 .ToListAsync();
 
             var inboxMessages = new List<MessageViewModel>();
@@ -65,14 +65,27 @@
             foreach (var offer in offers)
             {
                 var lastMsg = this.context.Offers
-                .Where(x => x.Id == offer.Id).Select(x => x.Messages.FirstOrDefault()).FirstOrDefault();
+                .Where(x => x.Id == offer.Id).Select(x => x.Messages.OrderByDescending(x => x.CreatedOn).FirstOrDefault()).FirstOrDefault();
+                var senderId = lastMsg.SenderId;
+                var recipientId = lastMsg.RecipientId;
+                if (lastMsg.SenderId == currentUserId)
+                {
+                    senderId = currentUserId;
+                    recipientId = lastMsg.RecipientId;
+                }
+                else
+                {
+                    senderId = currentUserId;
+                    recipientId = lastMsg.SenderId;
+                }
+
                 var sender = await this.userService.GetUsernameByIdAsync(lastMsg.SenderId);
 
                 inboxMessages.Add(new MessageViewModel()
                 {
                     IsRead = lastMsg.IsRead,
-                    SenderId = lastMsg.SenderId,
-                    RecipientId = lastMsg.RecipientId,
+                    SenderId = senderId,
+                    RecipientId = recipientId,
                     OfferId = lastMsg.OfferId,
                     SentOn = lastMsg.CreatedOn.ToString("MM/dd hh:mm tt"),
                     OfferTitle = offer.Name,
@@ -90,7 +103,8 @@
             var offerOwnerId = offer.CreatorId;
 
             return await this.context.Messages
-                .Where(x => x.OfferId == offerId && (x.SenderId == senderId || x.SenderId == offerOwnerId) && (x.RecipientId == offerOwnerId || x.RecipientId == senderId))
+                .Where(x => x.OfferId == offerId && (x.SenderId == senderId || x.SenderId == offerOwnerId || x.RecipientId == senderId) &&
+                (x.RecipientId == recipientId || x.RecipientId == offerOwnerId || x.SenderId == recipientId))
                 .ToListAsync();
         }
 

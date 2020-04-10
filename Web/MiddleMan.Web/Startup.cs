@@ -160,17 +160,12 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSignalR(
-                routes =>
-                {
-                    routes.MapHub<MessageHub>("/message");
-                });
-
             app.UseStatusCodePagesWithRedirects("/error/{0}");
 
             app.UseEndpoints(
                 endpoints =>
                     {
+                        endpoints.MapHub<MessageHub>("/details");
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();

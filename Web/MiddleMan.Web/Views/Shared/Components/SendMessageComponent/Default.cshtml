@@ -3,15 +3,15 @@
 
 <div class="card-footer">
     <div class="input-group">
-        <textarea asp-for="@Model.Content" id="message-content" class="form-control type_msg" placeholder="Type your message..."></textarea>
+        <textarea asp-for="@Model.Content" id="messageInput" class="form-control type_msg message-content" placeholder="Type your message..."></textarea>
         <span asp-validation-for="@Model.Content" class="text-danger"></span>
 
-        <input asp-for="@Model.OfferId" type="hidden" value="@Model.OfferId" />
-        <input asp-for="@Model.SenderId" type="hidden" value="@Model.SenderId" />
+        <input asp-for="@Model.OfferId" type="hidden" value="@Model.OfferId" id="offerId" />
+        <input asp-for="@Model.SenderId" type="hidden" value="@Model.SenderId"  id="senderId" />
         <span asp-validation-for="@Model.SenderId" class="text-danger"></span>
-        <input asp-for="@Model.RecipientId" type="hidden" value="@Model.RecipientId" />
+        <input asp-for="@Model.RecipientId" type="hidden" value="@Model.RecipientId" id="recipientId" />
         <div class="input-group-append">
-            <button class="input-group-text send_btn"><i class="fa fa-paper-plane"></i></button>
+            <button id="sendButton" class="input-group-text send_btn"><i class="fa fa-paper-plane"></i></button>
         </div>
     </div>
 </div>

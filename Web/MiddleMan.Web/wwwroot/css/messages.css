@@ -258,7 +258,7 @@
 }
 
 
-#message-content {
+.message-content {
     border-radius: 15px 0px 0px 15px !important;
 }
 

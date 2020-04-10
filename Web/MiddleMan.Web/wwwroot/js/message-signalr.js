@@ -1,32 +1,64 @@
 ﻿setup = () => {
-    connection = new signalR.HubConnectionBuilder()
-        .withUrl("/message")
-        .build();
+    var connection =
+        new signalR.HubConnectionBuilder()
+            .withUrl("/details")
+            .build();
 
-    connection.on("SendMessage",
-        (message) => {
-            let allMessages = document.getElementById("messages");
-            allMessages.insertAdjacentHTML('beforeend', '<div class="row">' +
-                '<div class="offset-1 col-10">' +
-                '<p>' +
-                '<div class="row">' +
-                '<div class="col-2">' +
-                message.sender +
-                '</div>' +
-                '<div class="offset-6 col-3">' +
-                message.sentOn +
-                '</div> </div>' +
-                '<div class="card bg-info col-11">' +
-                '<div class="card-body text-white">' +
-                message.content +
-                '</div > </div >' +
-                '</div > </div >' +
-                '</p>'
-            );
+    connection.on("NewMessage",
+        function (message) {
+
+            var chatInfo = `<div class="card-body msg_card_body"><p>`;
+            var senderId = $("#senderId").val();
+
+            if (senderId === message.senderId) {
+                chatInfo += `<div class="d-flex justify-content-end mb-4">
+                        <div class="msg_cotainer_send">
+                            ${message.messageContent}/end
+                            ${message.sideA.username}
+                            <span class="msg_time_send">${message.sentOn}</span>
+                        </div>
+                        <div class="img_cont_msg">
+                            <img src="${message.sideA.profilePicUrl}" class="rounded-circle user_img_msg" />
+                        </div>
+                    </div>`;
+            }
+            else {
+                chatInfo += `<div class="d-flex justify-content-start mb-4">
+                        <div class="img_cont_msg">
+                            <img src="${message.sideA.profilePicUrl}" class="rounded-circle user_img_msg">
+                        </div>
+                        <div class="msg_cotainer">
+                            ${message.messageContent}/start
+                            ${message.sideA.username}
+                            <span class="msg_time">${message.sentOn}</span>
+                        </div>
+                    </div>`;
+            }
+            chatInfo += `</p></div>`;
+            var messagesList = document.getElementById("messages");
+            messagesList.innerHTML += chatInfo;
         });
 
-    connection.start()
-        .catch(err => console.error(err.toString()));
+    $("#sendButton").click(function (data) {
+        var content = $("#messageInput").val();
+        var offerId = $("#offerId").val();
+        var senderId = $("#senderId").val();
+        var recipientId = $("#recipientId").val();
+        connection.invoke("SendMessage", offerId, senderId, recipientId, content);
+    });
+
+    connection.start().catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    function escapeHtml(unsafe) {
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
 
 };
 setup();
