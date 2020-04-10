@@ -79,6 +79,14 @@
             return inboxMessages;
         }
 
+        public async Task<List<Message>> GetMessagesForOfferAsync(string offerId, string senderId, string recipientId)
+        {
+            return await this.context.Messages.Where(x => x.OfferId == offerId &&
+            x.SenderId == senderId &&
+            x.RecipientId == recipientId)
+                .ToListAsync();
+        }
+
         public async Task<int> GetUnreadMessagesCountAsync(string userId)
         {
             var unreadedMessages = await this.context.Messages.Where(x => x.RecipientId == userId).ToListAsync();

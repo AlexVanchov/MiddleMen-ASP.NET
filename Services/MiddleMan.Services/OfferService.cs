@@ -285,5 +285,11 @@
                 .OrderByDescending(x => x.FavoritedOn)
                 .ToListAsync();
         }
+
+        public async Task<string> GetOfferNameById(string offerId)
+        {
+            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == offerId);
+            return offer.Name;
+        }
     }
 }

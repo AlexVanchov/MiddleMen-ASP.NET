@@ -6,6 +6,8 @@
     {
         public string LastMessage { get; set; }
 
+        public string Content { get; set; }
+
         public string RecipientId { get; set; }
 
         public string Sender { get; set; }

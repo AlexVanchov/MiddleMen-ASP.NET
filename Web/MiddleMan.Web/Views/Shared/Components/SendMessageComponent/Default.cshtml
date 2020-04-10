@@ -1,0 +1,18 @@
+﻿@model SendMessageInputModel
+
+<div class="form-group">
+    <div class="row">
+        <label asp-for="@Model.Content">Content:</label>
+        <textarea asp-for="@Model.Content" id="message-content" class="form-control" rows="5"></textarea>
+        <span asp-validation-for="@Model.Content" class="text-danger"></span>
+    </div>
+    <input asp-for="@Model.OfferId" type="hidden" value="@Model.OfferId" />
+    <input asp-for="@Model.SenderId" type="hidden" value="@Model.SenderId" />
+    <span asp-validation-for="@Model.SenderId" class="text-danger"></span>
+    <input asp-for="@Model.RecipientId" type="hidden" value="@Model.RecipientId" />
+    <div class="row mt-3">
+        <div class="offset-5 col-2">
+            <button type="submit" class="btn btn-success btn-lg">Send</button>
+        </div>
+    </div>
+</div>

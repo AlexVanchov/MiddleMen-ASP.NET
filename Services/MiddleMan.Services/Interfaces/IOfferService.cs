@@ -50,6 +50,8 @@
 
         Task<List<Offer>> GetAllFavoriteUserOffersAsync(string userId);
 
+        Task<string> GetOfferNameById(string offerId);
+
         Task<List<Offer>> GetOffersBySearchAsync(string searchWord);
 
         Task EditOfferAsync(EditOfferModel offerInput, string id);

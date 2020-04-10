@@ -14,5 +14,7 @@
         Task<int> GetUnreadMessagesCountAsync(string userId);
 
         Task<List<MessageViewModel>> GetInboxMessagesAsync();
+
+        Task<List<Message>> GetMessagesForOfferAsync(string offerId, string senderId, string recipientId);
     }
 }

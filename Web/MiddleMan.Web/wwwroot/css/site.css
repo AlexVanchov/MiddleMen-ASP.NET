@@ -53,6 +53,7 @@ body {
     /* Set the fixed height of the footer here */
     height: 60px;
     line-height: 60px; /* Vertically center the text there */
+    background: rgba(0, 0, 0, 0.85);
 }
 
 .profile-panel .profile-info {
@@ -308,4 +309,8 @@ select:required:valid {
     /* margin: 0; */
     background-color: #fff;
     /* margin-top: 1px; */
+}
+
+img.card-img-top {
+    border-radius: 15px;
 }
