@@ -25,7 +25,7 @@
         <li class="nav-item active dropdown">
             <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user"></i> Hello @(this.User.Identity.Name)
-                <span class="text-warning" id="notifications-count-navbar"></span>
+                <span class="text-warning" id="notifications-count-navbar-admin"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="/User/Active">My Offers</a>
@@ -40,10 +40,10 @@
                 <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
                 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                 {
-            <a class="dropdown-item" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">
-                Admin
-                <strong class="text-warning" id="admin-link"></strong>
-            </a>
+                    <a class="dropdown-item" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">
+                    Admin
+                    <strong class="text-warning" id="admin-link"></strong>
+                    </a>
                 }
                 <a class="dropdown-item">
                     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">

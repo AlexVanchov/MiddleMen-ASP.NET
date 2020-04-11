@@ -11,7 +11,7 @@ function AdminOffersForApproveCount() {
         success: function (response) {
             if (response > 0) {
                 $("#admin-link").html("(" + response + ")");
-                $("#notifications-count-navbar").html("(" + response + ")");
+                $("#notifications-count-navbar-admin").html("(" + response + ")");
             }
         }
     });
