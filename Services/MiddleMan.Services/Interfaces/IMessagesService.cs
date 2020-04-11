@@ -21,5 +21,7 @@
         Task<SendMessageBindingModel> GetMessageBindingModelByOfferIdAsync(string offerId);
 
         Task<SendMessageViewModel> GetMessageViewModelByOfferIdAsync(string offerId);
+
+        Task MarkAsSeenForUserAsync(string userId, string offerId);
     }
 }

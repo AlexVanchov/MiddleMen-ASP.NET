@@ -62,10 +62,11 @@
 
             var inboxMessages = new List<MessageViewModel>();
 
-            foreach (var offer in offers)
+            foreach (var offer in offers.OrderByDescending(x => x.CreatedOn))
             {
                 var lastMsg = this.context.Offers
                 .Where(x => x.Id == offer.Id).Select(x => x.Messages.OrderByDescending(x => x.CreatedOn).FirstOrDefault()).FirstOrDefault();
+                var rlSenderId = lastMsg.RecipientId;
                 var senderId = lastMsg.SenderId;
                 var recipientId = lastMsg.RecipientId;
                 if (lastMsg.SenderId == currentUserId)
@@ -90,6 +91,7 @@
                     SentOn = lastMsg.CreatedOn.ToString("MM/dd hh:mm tt"),
                     OfferTitle = offer.Name,
                     Sender = sender,
+                    MessageForId = rlSenderId,
                     LastMessage = lastMsg.Content, // todo cuting listing
                 });
             }
@@ -151,6 +153,15 @@
             sendMessageViewModel.SenderId = this.userService.GetCurrentUserId();
 
             return sendMessageViewModel;
+        }
+
+        public async Task MarkAsSeenForUserAsync(string userId, string offerId)
+        {
+            var messages = await this.context.Messages.Where(x => x.RecipientId == userId && x.OfferId == offerId && x.IsRead == false).ToListAsync();
+
+            messages.ForEach(x => x.IsRead = true);
+
+            await this.context.SaveChangesAsync();
         }
     }
 }

@@ -2,10 +2,11 @@
 @inject IUserService UsersService
 
 @{
+    ViewData["Title"] = $"Chat - {Model.SideB.Username}";
     var currentUserId = UsersService.GetCurrentUserId();
 }
 
-<h3 class="text-center mb-4"><a asp-controller="Ads" asp-action="Details" asp-route-id="@Model.OfferId">@Model.OfferTitle</a></h3>
+<h3 class="text-center mb-4"><a asp-controller="Offer" asp-action="Details" asp-route-id="@Model.OfferId">@Model.OfferTitle</a></h3>
 <div id="messages">
     @foreach (var message in Model.Messages)
     {
@@ -15,8 +16,7 @@
                 {
                     <div class="d-flex justify-content-end mb-4">
                         <div class="msg_cotainer_send">
-                            @message.Content/
-                            @message.Sender
+                            @message.Content
                             <span class="msg_time_send">@message.SentOn</span>
                         </div>
                         <div class="img_cont_msg">
@@ -31,8 +31,7 @@
                             <img src="@Model.SideB.ProfilePicUrl" class="rounded-circle user_img_msg">
                         </div>
                         <div class="msg_cotainer">
-                            @message.Content/
-                            @message.Sender
+                            @message.Content
                             <span class="msg_time">@message.SentOn</span>
                         </div>
                     </div>

@@ -4,6 +4,8 @@
 
     public class MessageViewModel
     {
+        public string MessageForId { get; set; }
+
         public string LastMessage { get; set; }
 
         public string Content { get; set; }

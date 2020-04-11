@@ -29,26 +29,28 @@
                     @foreach (var message in Model)
                     {
                         var messageParams = new Dictionary<string, string>
-                                    {
+                                            {
                         {"recipientId", message.RecipientId},
                         {"senderId", message.SenderId},
                         {"offerId", message.OfferId}
                     };
 
                     <tr class="message-tr" onclick="location.href='/Messages/Details?offerId=@messageParams["offerId"]&senderId=@messageParams["senderId"]&recipientId=@messageParams["recipientId"]'">
-                        @if (message.IsRead)
+                        @{string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); }
+
+                        @if (!message.IsRead && message.MessageForId == userId)
+                        {
+                            <th>@message.Sender</th>
+                            <td style="font-weight: bold;">@message.LastMessage</td>
+                            <th><a asp-controller="Messages" asp-action="Details" asp-all-route-data="messageParams">@message.OfferTitle</a></th>
+                            <th>@message.SentOn</th>
+                        }
+                        else
                         {
                             <td>@message.Sender</td>
                             <td>@message.LastMessage</td>
                             <td><a asp-controller="Messages" asp-action="Details" asp-all-route-data="messageParams">@message.OfferTitle</a></td>
                             <td>@message.SentOn</td>
-                        }
-                        else
-                        {
-                            <th>@message.Sender</th>
-                            <td>@message.LastMessage</td>
-                            <th><a asp-controller="Messages" asp-action="Details" asp-all-route-data="messageParams">@message.OfferTitle</a></th>
-                            <th>@message.SentOn</th>
                         }
                     </tr>
                     }

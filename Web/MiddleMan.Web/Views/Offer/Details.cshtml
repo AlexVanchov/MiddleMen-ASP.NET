@@ -1,4 +1,6 @@
 ﻿@using MiddleMan.Web.ViewModels.ViewModels.Offer
+@using System.Security.Claims;
+
 @model DetailsViewModel
 @{
     ViewData["Title"] = "Details";
@@ -65,88 +67,90 @@
                     else
                     {
                         <a href="/Offer/Buy?id=@Model.Offer.Id" class="btn btn-success buy">Buy ($@Model.Offer.Price)</a>
+                        <a href="/Messages/Details?offerId=@Model.Offer.Id&senderId=@User.FindFirstValue(ClaimTypes.NameIdentifier)&recipientId=@Model.Offer.CreatorId" class="btn btn-success">Send Message</a>
                     }
+
                 </div>
             </div>
             <!-- /.card -->
-                <div class="card card-outline-secondary my-4">
-                    <div class="card-header">
-                        Product Reviews
-                    </div>
-                    <div class="card-body">
-                        @foreach (var comment in Model.Offer.Comments)
-                        {
-                            <p>@comment.Description</p>
-                            <small class="text-muted">Posted by <a href="/User/Profile?id=@comment.CreatorId">@comment.CreatorName</a> on @comment.CreatedOn</small>
-                            if (comment.RatingGiven != null)
-                            {
-                                <small class="text-muted">Rated: @comment.RatingGiven</small>
-                            }
-                            <hr>
-                        }
-                        <form method="post" asp-controller="Offer" asp-action="AddReview"  asp-route-id=@Model.Offer.Id>
-                            <div class="controls">
-                                <h4>Leave review</h4>
-                                @if (Model.Offer.Rated)
-                                {
-                                    <select asp-for="@Model.CommentInputModel.Rating" class="form-control">
-                                        @switch (Model.UserRated)
-                                        {
-                                            case 1:
-                                                <option selected="selected" value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                break;
-                                            case 2:
-                                                <option value="1">1</option>
-                                                <option selected="selected" value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                break;
-                                            case 3:
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option selected="selected" value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                break;
-                                            case 4:
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option selected="selected" value="4">4</option>
-                                                <option value="5">5</option>
-                                                break;
-                                            case 5:
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option selected="selected" value="5">5</option>
-                                                break;
-                                        }
-                                    </select>
-                                }
-                                @if (!Model.Offer.Rated)
-                                {
-                                    <select asp-for="@Model.CommentInputModel.Rating" class="form-control">
-                                        <option selected="selected" disabled="disabled">--Rating(1-5)--</option>"
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                }
-                                <textarea asp-for="@Model.CommentInputModel.Review" rows="4" style="margin-bottom: 10px" class="input-md textinput textInput form-control" maxlength="1000" placeholder="Review..." type="text"></textarea>
-                            </div>
-                            <input type="submit" value="Post Review" class="btn btn-success" />
-                        </form>
-                    </div>
+            <div class="card card-outline-secondary my-4">
+                <div class="card-header">
+                    Product Reviews
                 </div>
+                <div class="card-body">
+                    @foreach (var comment in Model.Offer.Comments)
+                    {
+                        <p>@comment.Description</p>
+                        <small class="text-muted">Posted by <a href="/User/Profile?id=@comment.CreatorId">@comment.CreatorName</a> on @comment.CreatedOn</small>
+                        if (comment.RatingGiven != null)
+                        {
+                            <small class="text-muted">Rated: @comment.RatingGiven</small>
+                        }
+                        <hr>
+                    }
+                    <form method="post" asp-controller="Offer" asp-action="AddReview" asp-route-id=@Model.Offer.Id>
+                        <div class="controls">
+                            <h4>Leave review</h4>
+                            @if (Model.Offer.Rated)
+                            {
+                                <select asp-for="@Model.CommentInputModel.Rating" class="form-control">
+                                    @switch (Model.UserRated)
+                                    {
+                                        case 1:
+                                            <option selected="selected" value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            break;
+                                        case 2:
+                                            <option value="1">1</option>
+                                            <option selected="selected" value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            break;
+                                        case 3:
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option selected="selected" value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            break;
+                                        case 4:
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option selected="selected" value="4">4</option>
+                                            <option value="5">5</option>
+                                            break;
+                                        case 5:
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option selected="selected" value="5">5</option>
+                                            break;
+                                    }
+                                </select>
+                            }
+                            @if (!Model.Offer.Rated)
+                            {
+                                <select asp-for="@Model.CommentInputModel.Rating" class="form-control">
+                                    <option selected="selected" disabled="disabled">--Rating(1-5)--</option>"
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            }
+                            <textarea asp-for="@Model.CommentInputModel.Review" rows="4" style="margin-bottom: 10px" class="input-md textinput textInput form-control" maxlength="1000" placeholder="Review..." type="text"></textarea>
+                        </div>
+                        <input type="submit" value="Post Review" class="btn btn-success" />
+                    </form>
+                </div>
+            </div>
             <!-- /.card -->
 
         </div>

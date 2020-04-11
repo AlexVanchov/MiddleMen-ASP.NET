@@ -32,6 +32,7 @@ namespace MiddleMan.Web.Controllers
             this.hubContext = hubContext;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var inboxMessagesViewModels = await this.messagesService.GetInboxMessagesAsync();
@@ -67,15 +68,22 @@ namespace MiddleMan.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Details(MessagesDetailsViewModel viewModel)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (viewModel.SenderId != userId)
+            {
+                return this.Redirect("/Messages");
+            }
+
             var messagesViewModel = new List<MessageViewModel>();
 
             var messages = await this.messagesService.GetMessagesForOfferAsync(viewModel.OfferId, viewModel.SenderId, viewModel.RecipientId);
             messages.OrderBy(date => date.CreatedOn);
 
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             var sideAId = viewModel.SenderId;
             var sideBId = viewModel.RecipientId;
+
+            await this.messagesService.MarkAsSeenForUserAsync(viewModel.SenderId, viewModel.OfferId);
 
             viewModel.SideA = new UserMessagesViewModel()
             {

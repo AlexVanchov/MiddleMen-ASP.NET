@@ -13,8 +13,7 @@
             if (senderId === message.senderId) {
                 chatInfo += `<div class="d-flex justify-content-end mb-4">
                         <div class="msg_cotainer_send">
-                            ${message.messageContent}/end
-                            ${message.sideA.username}
+                            ${message.messageContent}
                             <span class="msg_time_send">${message.sentOn}</span>
                         </div>
                         <div class="img_cont_msg">
@@ -28,8 +27,7 @@
                             <img src="${message.sideA.profilePicUrl}" class="rounded-circle user_img_msg">
                         </div>
                         <div class="msg_cotainer">
-                            ${message.messageContent}/start
-                            ${message.sideA.username}
+                            ${message.messageContent}
                             <span class="msg_time">${message.sentOn}</span>
                         </div>
                     </div>`;
@@ -41,6 +39,7 @@
 
     $("#sendButton").click(function (data) {
         var content = $("#messageInput").val();
+        content = escapeHtml(content);
         var offerId = $("#offerId").val();
         var senderId = $("#senderId").val();
         var recipientId = $("#recipientId").val();
