@@ -44,6 +44,7 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
+    color: white
 }
 .footer {
     position: absolute;
@@ -346,4 +347,8 @@ img.card-img-top {
 }
 .form-control:disabled {
     background-color: cornflowerblue;
+}
+
+a{
+    color: white;
 }

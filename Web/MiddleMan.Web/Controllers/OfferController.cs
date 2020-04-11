@@ -94,62 +94,68 @@
 
         public async Task<IActionResult> Details(string id)
         {
-            var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
             var offer = await this.offerService.GetOfferByIdAsync(id);
-            var category = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
-            var comments = await this.commentService.GetOfferCommentsAsync(id);
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var rated = await this.offerService.IsOfferRatedAsync(offer.Id, userId);
-            double offerRating = await this.offerService.GetOfferRatingAsync(id);
-            string startsStringRating = this.offerService.StartsStringRating(offerRating);
 
-            int? offerRatedByUser = null;
-            try
+            if (offer != null)
             {
-                offerRatedByUser = await this.offerService.GetRateForOffer(offer.Id, userId);
-            }
-            catch (Exception)
-            {
-            }
+                var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
+                var category = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
+                var comments = await this.commentService.GetOfferCommentsAsync(id);
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var rated = await this.offerService.IsOfferRatedAsync(offer.Id, userId);
+                double offerRating = await this.offerService.GetOfferRatingAsync(id);
+                string startsStringRating = this.offerService.StartsStringRating(offerRating);
 
-            var offerView = new OfferViewModelDetails()
-            {
-                CreatorId = offer.CreatorId,
-                CreatorName = this.userService.GetUserByIdAsync(offer.CreatorId).Result.UserName,
-                Description = offer.Description,
-                Name = offer.Name,
-                PicUrl = offer.PicUrl,
-                Price = offer.Price,
-                CreatedOn = offer.CreatedOn,
-                Id = offer.Id,
-                Rated = rated,
-                OfferRating = offerRating,
-                StartsStringRating = startsStringRating,
-                IsFavoritedByUser = await this.userService.IsOfferFavoritedByUserAsync(offer.Id, userId),
-            };
-
-            foreach (var comment in comments)
-            {
-                offerView.Comments.Add(new CommentViewModel()
+                int? offerRatedByUser = null;
+                try
                 {
-                    CreatedOn = comment.CreatedOn.ToString("dd/M/yy H:mm"),
-                    CreatorName = await this.userService.GetUsernameByIdAsync(comment.CreatorId),
-                    Description = comment.Description,
-                    CreatorId = comment.CreatorId,
-                });
+                    offerRatedByUser = await this.offerService.GetRateForOffer(offer.Id, userId);
+                }
+                catch (Exception)
+                {
+                }
+
+                var offerView = new OfferViewModelDetails()
+                {
+                    CreatorId = offer.CreatorId,
+                    CreatorName = this.userService.GetUserByIdAsync(offer.CreatorId).Result.UserName,
+                    Description = offer.Description,
+                    Name = offer.Name,
+                    PicUrl = offer.PicUrl,
+                    Price = offer.Price,
+                    CreatedOn = offer.CreatedOn,
+                    Id = offer.Id,
+                    Rated = rated,
+                    OfferRating = offerRating,
+                    StartsStringRating = startsStringRating,
+                    IsFavoritedByUser = await this.userService.IsOfferFavoritedByUserAsync(offer.Id, userId),
+                };
+
+                foreach (var comment in comments)
+                {
+                    offerView.Comments.Add(new CommentViewModel()
+                    {
+                        CreatedOn = comment.CreatedOn.ToString("dd/M/yy H:mm"),
+                        CreatorName = await this.userService.GetUsernameByIdAsync(comment.CreatorId),
+                        Description = comment.Description,
+                        CreatorId = comment.CreatorId,
+                    });
+                }
+
+                var detailsModel = new DetailsViewModel()
+                {
+                    CategoryName = category,
+                    Categories = categories,
+                    Offer = offerView,
+                    CategoryId = offer.CategoryId,
+                    UserRated = offerRatedByUser,
+                    IsOwner = offer.CreatorId == userId ? true : false,
+                };
+
+                return this.View(detailsModel);
             }
 
-            var detailsModel = new DetailsViewModel()
-            {
-                CategoryName = category,
-                Categories = categories,
-                Offer = offerView,
-                CategoryId = offer.CategoryId,
-                UserRated = offerRatedByUser,
-                IsOwner = offer.CreatorId == userId ? true : false,
-            };
-
-            return this.View(detailsModel);
+            throw new NullReferenceException();
         }
 
         [HttpPost]

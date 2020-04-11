@@ -17,7 +17,7 @@
                 {
                     @if (category.Name == Model.CategoryName)
                     {
-                        <a href="/Home/Category?name=@category.Name" class="list-group-item bg-primary text-white">@category.Name</a>
+                        <a href="/Home/Category?name=@category.Name" class="list-group-item custom-selected">@category.Name</a>
                     }
                     else
                     {
@@ -54,10 +54,10 @@
                     <span class="text-warning">@Model.Offer.StartsStringRating</span>
                     @Model.Offer.OfferRating stars (Average)
                     <p>
-                        <small class="text-muted">Seller: <a href="/User/Profile?id=@Model.Offer.CreatorId">@Model.Offer.CreatorName</a></small>
+                        <small class="text-white">Seller: <a href="/User/Profile?id=@Model.Offer.CreatorId">@Model.Offer.CreatorName</a></small>
                     </p>
                     <p>
-                        <small class="text-muted">Added on: @Model.Offer.CreatedOn</small>
+                        <small class="text-white">Added on: @Model.Offer.CreatedOn</small>
                     </p>
                     @if (Model.IsOwner)
                     {
@@ -81,10 +81,10 @@
                     @foreach (var comment in Model.Offer.Comments)
                     {
                         <p>@comment.Description</p>
-                        <small class="text-muted">Posted by <a href="/User/Profile?id=@comment.CreatorId">@comment.CreatorName</a> on @comment.CreatedOn</small>
+                        <small class="text-white">Posted by <a href="/User/Profile?id=@comment.CreatorId">@comment.CreatorName</a> on @comment.CreatedOn</small>
                         if (comment.RatingGiven != null)
                         {
-                            <small class="text-muted">Rated: @comment.RatingGiven</small>
+                            <small class="text-white">Rated: @comment.RatingGiven</small>
                         }
                         <hr>
                     }

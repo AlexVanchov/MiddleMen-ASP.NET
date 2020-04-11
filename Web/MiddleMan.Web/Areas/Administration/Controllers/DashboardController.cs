@@ -133,7 +133,7 @@
 
         public async Task<IActionResult> Remove(string id)
         {
-            var offer = await this.offerService.GetOfferByIdAsync(id);
+            var offer = await this.offerService.GetOfferAnywayAsync(id);
             var category = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
 
             var offerView = new OfferViewModelDetails()
@@ -193,7 +193,7 @@
 
         public async Task<IActionResult> RemovedOffer(string id)
         {
-            var offer = await this.offerService.GetOfferByIdAsync(id);
+            var offer = await this.offerService.GetOfferAnywayAsync(id);
             var category = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
 
             var offerView = new OfferViewModelDetails()

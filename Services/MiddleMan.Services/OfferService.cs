@@ -70,6 +70,13 @@
         public async Task<Offer> GetOfferByIdAsync(string id)
         {
             var offer = await this.context.Offers
+                .FirstOrDefaultAsync(x => x.Id == id && x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false);
+            return offer;
+        }
+
+        public async Task<Offer> GetOfferAnywayAsync(string id)
+        {
+            var offer = await this.context.Offers
                 .FirstOrDefaultAsync(x => x.Id == id);
             return offer;
         }
@@ -280,10 +287,24 @@
 
         public async Task<List<UserFavorite>> GetAllFavoriteUserOffersKeysAsync(string userId)
         {
-            return await this.context.UserFavorites
+            var favorites = await this.context.UserFavorites
                 .Where(x => x.UserId == userId)
                 .OrderByDescending(x => x.FavoritedOn)
                 .ToListAsync();
+
+            var validFavorites = new List<UserFavorite>();
+
+            foreach (var fav in favorites)
+            {
+                var offer = await this.GetOfferByIdAsync(fav.OfferId);
+
+                if (offer != null)
+                {
+                    validFavorites.Add(fav);
+                }
+            }
+
+            return validFavorites;
         }
 
         public async Task<string> GetOfferNameById(string offerId)

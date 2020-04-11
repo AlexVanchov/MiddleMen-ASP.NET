@@ -16,6 +16,8 @@
 
         Task<Offer> GetOfferByIdAsync(string id);
 
+        Task<Offer> GetOfferAnywayAsync(string id);
+
         Task<List<Offer>> GetAllNotAprovedOffersAsync();
 
         Task<List<Offer>> GetAllAprovedOffersAsync();

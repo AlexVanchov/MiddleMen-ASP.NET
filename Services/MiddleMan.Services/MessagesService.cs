@@ -112,7 +112,7 @@
 
         public async Task<int> GetUnreadMessagesCountAsync(string userId)
         {
-            var unreadedMessages = await this.context.Messages.Where(x => x.RecipientId == userId).ToListAsync();
+            var unreadedMessages = await this.context.Messages.Where(x => x.RecipientId == userId && x.IsRead == false).ToListAsync();
 
             return unreadedMessages.Count();
         }

@@ -11,7 +11,8 @@
 
         <li class="nav-item">
             <a class="nav-link active" asp-controller="Messages" asp-action="Index">
-                <i class="fa fa-envelope"></i> 5
+                <i class="fa fa-envelope"></i>
+                <strong id="messagesCount"></strong>
             </a>
         </li>
         <li class="nav-item">
@@ -35,7 +36,7 @@
                 </a>
                 <a class="dropdown-item" href="/Messages">
                     Messages
-                    <strong id="messagesCount">5</strong>
+                    <strong id="messagesCount2"></strong>
                 </a>
                 <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
                 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))

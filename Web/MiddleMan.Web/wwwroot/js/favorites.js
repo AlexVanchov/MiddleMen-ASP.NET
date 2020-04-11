@@ -4,7 +4,7 @@
         event.stopImmediatePropagation();
         let offerId = $(this).val();
         $.ajax({
-            url: "/Favorites/Add",
+            url: "/Api/Add",
             type: "GET",
             data: "offerId=" + offerId,
             dataType: 'json',
@@ -21,7 +21,7 @@
         event.stopImmediatePropagation();
         let offerId = $(this).val();
         $.ajax({
-            url: "/Favorites/Remove",
+            url: "/Api/Remove",
             type: "GET",
             data: "offerId=" + offerId,
             dataType: 'json',
