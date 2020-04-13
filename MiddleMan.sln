@@ -33,18 +33,29 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleMan.Web.Infrastructure", "Web\MiddleMan.Web.Infrastructure\MiddleMan.Web.Infrastructure.csproj", "{7A7A7986-1F5B-4EBD-9B17-8B41F8FABA58}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleMan.Services.Data", "Services\MiddleMan.Services.Data\MiddleMan.Services.Data.csproj", "{4D39C126-3FB5-4B26-B08C-1BF48EFFA23E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A2288C46-0FBF-43B6-80B6-3072FD65BC32} = {A2288C46-0FBF-43B6-80B6-3072FD65BC32}
+		{4B844ECB-E845-49A6-8B31-85E577933598} = {4B844ECB-E845-49A6-8B31-85E577933598}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleMan.Services.Mapping", "Services\MiddleMan.Services.Mapping\MiddleMan.Services.Mapping.csproj", "{415FD7FA-0453-4FE1-9A29-C6E1D8B45C3D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandbox", "Tests\Sandbox\Sandbox.csproj", "{8AB6B92A-0837-4BDE-B950-10BE3FF2B6A8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleMan.Services.Data.Tests", "Tests\MiddleMan.Services.Data.Tests\MiddleMan.Services.Data.Tests.csproj", "{901AB2DA-6E52-4FB2-91F0-58EB0115F2F7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8522212F-F01E-4E20-9975-FCF5E10D71DB} = {8522212F-F01E-4E20-9975-FCF5E10D71DB}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleMan.Web.Tests", "Tests\MiddleMan.Web.Tests\MiddleMan.Web.Tests.csproj", "{3EE06C6E-C8F3-418A-A309-8AC81976A074}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4D39C126-3FB5-4B26-B08C-1BF48EFFA23E} = {4D39C126-3FB5-4B26-B08C-1BF48EFFA23E}
+		{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7} = {13B7AACB-9C85-4409-8D4B-95A67D0DFFF7}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleMan.Web.ViewModels", "Web\MiddleMan.Web.ViewModels\MiddleMan.Web.ViewModels.csproj", "{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7}"
 	ProjectSection(ProjectDependencies) = postProject
-		{901AB2DA-6E52-4FB2-91F0-58EB0115F2F7} = {901AB2DA-6E52-4FB2-91F0-58EB0115F2F7}
+		{E9FDB52F-52DC-48B2-86E1-0176377BB53F} = {E9FDB52F-52DC-48B2-86E1-0176377BB53F}
 	EndProjectSection
 EndProject
 Global

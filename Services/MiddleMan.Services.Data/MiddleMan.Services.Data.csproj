@@ -8,6 +8,10 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="C:\Users\User\.nuget\packages\microsoft.net.compilers\1.0.0\build\..\tools\**" />
+  </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
@@ -21,7 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\MiddleMan.Data.Common\MiddleMan.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\MiddleMan.Data.Models\MiddleMan.Data.Models.csproj" />
-    <ProjectReference Include="..\MiddleMan.Services.Mapping\MiddleMan.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>

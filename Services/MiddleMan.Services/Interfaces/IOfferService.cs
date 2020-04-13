@@ -12,7 +12,7 @@
 
     public interface IOfferService
     {
-        Task CreateOfferAsync(CreateOfferModel inputModel);
+        Task<Offer> CreateOfferAsync(CreateOfferModel inputModel);
 
         Task<Offer> GetOfferByIdAsync(string id);
 

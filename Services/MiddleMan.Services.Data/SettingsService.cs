@@ -5,7 +5,6 @@
 
     using MiddleMan.Data.Common.Repositories;
     using MiddleMan.Data.Models;
-    using MiddleMan.Services.Mapping;
 
     public class SettingsService : ISettingsService
     {
@@ -21,9 +20,5 @@
             return this.settingsRepository.All().Count();
         }
 
-        public IEnumerable<T> GetAll<T>()
-        {
-            return this.settingsRepository.All().To<T>().ToList();
-        }
     }
 }

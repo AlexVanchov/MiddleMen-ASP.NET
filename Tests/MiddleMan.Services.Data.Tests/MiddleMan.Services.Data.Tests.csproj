@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     <PackageReference Include="Moq" Version="4.13.1" />
@@ -27,8 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Data\MiddleMan.Data.Models\MiddleMan.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\MiddleMan.Data\MiddleMan.Data.csproj" />
     <ProjectReference Include="..\..\Services\MiddleMan.Services.Data\MiddleMan.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\MiddleMan.Services\MiddleMan.Services.csproj" />
+    <ProjectReference Include="..\..\Web\MiddleMan.Web.ViewModels\MiddleMan.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

@@ -33,7 +33,7 @@
             this.cloudinaryService = cloudinaryService;
         }
 
-        public async Task CreateOfferAsync(CreateOfferModel inputModel)
+        public async Task<Offer> CreateOfferAsync(CreateOfferModel inputModel)
         {
             var offer = new Offer()
             {
@@ -47,6 +47,8 @@
 
             await this.context.Offers.AddAsync(offer);
             await this.context.SaveChangesAsync();
+
+            return offer;
         }
 
         public async Task<List<Offer>> GetAllNotAprovedOffersAsync()
