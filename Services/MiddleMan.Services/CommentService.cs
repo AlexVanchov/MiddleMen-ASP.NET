@@ -39,15 +39,9 @@ namespace MiddleMan.Services
             };
 
             var rated = await this.offerService.IsOfferRatedAsync(offer.Id, inputModel.CreatorId);
-            int? offerRatedByUser = null;
+            int? offerRatedByUser = 0;
 
-            try
-            {
-                offerRatedByUser = await this.offerService.GetRateForOffer(offer.Id, inputModel.CreatorId);
-            }
-            catch (Exception)
-            {
-            }
+            offerRatedByUser = await this.offerService.GetRateForOffer(offer.Id, inputModel.CreatorId);
 
             if (userComments.Any())
             {
@@ -58,7 +52,7 @@ namespace MiddleMan.Services
 
             OfferUserRate offerRate = null;
 
-            if (offerRatedByUser == null)
+            if (offerRatedByUser == 0)
             {
                 offerRate = new OfferUserRate()
                 {

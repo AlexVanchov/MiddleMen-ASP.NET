@@ -33,7 +33,7 @@
             var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
             var latestOffers = await this.offerService.GetLatestOffers(9);
             var latestOffersViewModel = new List<OfferViewModel>();
-            var featuredOffers = await this.offerService.GetFeaturedOffers();
+            var featuredOffers = await this.offerService.GetFeaturedOffersAsync();
             var featuredOffersViewModel = new List<OfferViewModel>();
 
             foreach (var offer in latestOffers)

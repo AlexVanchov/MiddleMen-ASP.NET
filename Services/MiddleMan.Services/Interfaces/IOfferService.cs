@@ -32,7 +32,7 @@
 
         Task FeatureItemAsync(string id);
 
-        Task<List<Offer>> GetFeaturedOffers();
+        Task<List<Offer>> GetFeaturedOffersAsync();
 
         Task RemoveFeatureOnItemAsync(string id);
 
@@ -50,15 +50,13 @@
 
         Task<List<UserFavorite>> GetAllFavoriteUserOffersKeysAsync(string userId);
 
-        Task<List<Offer>> GetAllFavoriteUserOffersAsync(string userId);
-
         Task<string> GetOfferNameById(string offerId);
 
         Task<List<Offer>> GetOffersBySearchAsync(string searchWord);
 
-        Task EditOfferAsync(EditOfferModel offerInput, string id);
+        Task<Offer> EditOfferAsync(EditOfferModel offerInput, string id);
 
-        Task ActivateOfferAsync(string id);
+        Task<Offer> ActivateOfferAsync(string id);
 
         Task<List<Offer>> GetAllActiveUserOffersAsync(string userId);
 
@@ -66,8 +64,10 @@
 
         Task<List<Offer>> GetAllCategoryOffersAsync(string id);
 
-        Task ActivateOfferAsUserAsync(string id);
+        Task<Offer> ActivateOfferAsUserAsync(string id);
 
-        Task DeleteOfferAsUserAsync(string id);
+        Task<Offer> DeleteOfferAsUserAsync(string id);
+
+        Task<bool> IsOfferExisting(string offerId);
     }
 }

@@ -85,19 +85,25 @@
 
         public async Task ApproveOfferAsync(string id)
         {
-            var offer = await this.context.Offers
-                .FirstOrDefaultAsync(x => x.Id == id);
-            offer.IsApproved = true;
-            await this.context.SaveChangesAsync();
+            if (await this.IsOfferExisting(id))
+            {
+                var offer = await this.context.Offers
+                    .FirstOrDefaultAsync(x => x.Id == id);
+                offer.IsApproved = true;
+                await this.context.SaveChangesAsync();
+            }
         }
 
         public async Task RemoveOfferAsync(string id)
         {
-            var offer = await this.context.Offers
+            if (await this.IsOfferExisting(id))
+            {
+                var offer = await this.context.Offers
                 .FirstOrDefaultAsync(x => x.Id == id);
-            offer.IsDeclined = true;
-            // offer.DeletedOn = DateTime.UtcNow;
-            await this.context.SaveChangesAsync();
+                offer.IsDeclined = true;
+                // offer.DeletedOn = DateTime.UtcNow;
+                await this.context.SaveChangesAsync();
+            }
         }
 
         public async Task<List<Offer>> GetAllDeletedOffersAsync()
@@ -126,7 +132,7 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task<List<Offer>> GetFeaturedOffers()
+        public async Task<List<Offer>> GetFeaturedOffersAsync()
         {
             var offers = await this.context.Offers
                 .Where(x => x.IsApproved == true && x.IsDeclined == false && x.IsFeatured == true && x.IsRemovedByUser == false)
@@ -154,7 +160,12 @@
             var offerUser = await this.context.OfferUserRates
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.OfferId == id);
 
-            return offerUser.Rate;
+            if (offerUser != null)
+            {
+                return offerUser.Rate;
+            }
+
+            return 0;
         }
 
         public async Task<double> GetOfferRatingAsync(string id)
@@ -194,46 +205,64 @@
         public async Task<bool> IsUserCreatorOfOfferAsync(string userId, string id)
         {
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
-            return offer.CreatorId == userId ? true : false;
+            return offer != null ? offer.CreatorId == userId ? true : false : false;
         }
 
         public async Task<List<Offer>> GetOffersBySearchAsync(string searchWord)
         {
-            return await this.context.Offers
-                .Where(x => x.Name.Contains(searchWord) || x.Description.Contains(searchWord))
+            searchWord = searchWord.ToLower();
+            var offers = await this.context.Offers
+                .Where(x => x.Name.ToLower().Contains(searchWord) || x.Description.ToLower().Contains(searchWord) || x.CategoryId.ToLower().Contains(searchWord))
                 .ToListAsync();
+
+            return offers;
         }
 
-        public async Task EditOfferAsync(EditOfferModel offerInput, string id)
+        public async Task<Offer> EditOfferAsync(EditOfferModel offerInput, string id)
         {
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
 
-            offer.Name = offerInput.Name;
-            offer.Price = offerInput.Price;
-            offer.Description = offerInput.Description;
-            offer.ModifiedOn = DateTime.UtcNow;
-            offer.CategoryId = offerInput.CategoryId;
-
-            if (offerInput.Photo != null)
+            if (offer != null)
             {
-                var photoUrl = await this.cloudinaryService.UploadPhotoAsync(
-                    offerInput.Photo,
-                    $"{id}-{DateTime.Now.ToString()}",
-                    GlobalConstants.CloudFolderForProfilePictures);
-                offer.PicUrl = photoUrl;
+                offer.Name = offerInput.Name;
+                offer.Price = offerInput.Price;
+                offer.Description = offerInput.Description;
+                offer.ModifiedOn = DateTime.UtcNow;
+                offer.CategoryId = offerInput.CategoryId;
+
+                if (offerInput.Photo != null)
+                {
+                    var photoUrl = await this.cloudinaryService.UploadPhotoAsync(
+                        offerInput.Photo,
+                        $"{id}-{DateTime.Now.ToString()}",
+                        GlobalConstants.CloudFolderForProfilePictures);
+                    offer.PicUrl = photoUrl;
+                }
+
+                await this.context.SaveChangesAsync();
+
+                return offer;
             }
 
-            await this.context.SaveChangesAsync();
+            return null;
         }
 
-        public async Task ActivateOfferAsync(string id)
+        public async Task<Offer> ActivateOfferAsync(string id)
         {
             var offer = await this.context.Offers
                    .FirstOrDefaultAsync(x => x.Id == id);
-            offer.IsDeclined = false;
 
-            // offer.DeletedOn = DateTime.UtcNow;
-            await this.context.SaveChangesAsync();
+            if (offer != null)
+            {
+                offer.IsDeclined = false;
+
+                // offer.DeletedOn = DateTime.UtcNow;
+                await this.context.SaveChangesAsync();
+
+                return offer;
+            }
+
+            return null;
         }
 
         public async Task<List<Offer>> GetAllUserOffersAsync(string userId)
@@ -264,27 +293,34 @@
                 .ToListAsync();
         }
 
-        public async Task ActivateOfferAsUserAsync(string id)
+        public async Task<Offer> ActivateOfferAsUserAsync(string id)
         {
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
-            offer.IsRemovedByUser = false;
-            await this.context.SaveChangesAsync();
+
+            if (offer != null)
+            {
+                offer.IsRemovedByUser = false;
+                await this.context.SaveChangesAsync();
+
+                return offer;
+            }
+
+            return null;
         }
 
-        public async Task DeleteOfferAsUserAsync(string id)
+        public async Task<Offer> DeleteOfferAsUserAsync(string id)
         {
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == id);
-            offer.IsRemovedByUser = true;
-            await this.context.SaveChangesAsync();
-        }
 
-        public async Task<List<Offer>> GetAllFavoriteUserOffersAsync(string userId)
-        {
-            return await this.context.Offers
-                   .Where(x => x.IsApproved == true &&
-                   x.IsDeclined == false &&
-                   x.IsRemovedByUser == false)
-                   .ToListAsync();
+            if (offer != null)
+            {
+                offer.IsRemovedByUser = true;
+                await this.context.SaveChangesAsync();
+
+                return offer;
+            }
+
+            return null;
         }
 
         public async Task<List<UserFavorite>> GetAllFavoriteUserOffersKeysAsync(string userId)
@@ -312,7 +348,22 @@
         public async Task<string> GetOfferNameById(string offerId)
         {
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == offerId);
-            return offer.Name;
+            if (offer != null)
+            {
+                return offer.Name;
+            }
+            else return null;
+        }
+
+        public async Task<bool> IsOfferExisting(string offerId)
+        {
+            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == offerId);
+            if (offer == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
