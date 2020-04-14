@@ -60,6 +60,9 @@ namespace MiddleMan.Data.Models
         [Required]
         public bool IsRemovedByUser { get; set; }
 
+        [Required]
+        public string BuyContent { get; set; }
+
         public ICollection<Comment> Comments { get; set; }
 
         public ICollection<Message> Messages { get; set; }

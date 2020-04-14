@@ -1,0 +1,42 @@
+﻿@model OrdersHistoryViewModel
+@{
+    ViewData["Title"] = "History";
+}
+
+<h1>Order History</h1>
+
+@foreach (var order in Model.Orders)
+{
+    <div id="collapseOne" class="panel-collapse collapse in show">
+        <div class="panel-body-custom" style="border-style: double;">
+            <div class="items">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <tr>
+                            <td style="width: 80%;" colspan="2">
+                                <img src="@order.ImageUrl" alt="OfferIMG" style="height: 50px;" />
+                                <b style="margin-left: 10px;">
+                                    @if (Model.CurrentUserId == order.BoughtBy)
+                                    {
+                                        <span>Category: @order.Name - Bought</span>
+                                    }
+                                    else if (Model.CurrentUserId == order.SoldBy)
+                                    {
+                                        <span>Category: @order.Name - Sold</span>
+                                    }
+                                </b>
+                            </td>
+                            <td style="width: 20%; text-align:center;">
+                                <b>$@order.Price.ToString("f2")</b>
+                            </td>
+
+                        </tr>
+                        <tr style="display:block; text-align:left;">
+                            <b style="margin-top: 78px;">Order id: @order.Id</b>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}

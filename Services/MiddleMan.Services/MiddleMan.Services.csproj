@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\MiddleMan.Data\MiddleMan.Data.csproj" />
     <ProjectReference Include="..\..\Web\MiddleMan.Web.ViewModels\MiddleMan.Web.ViewModels.csproj" />
+    <ProjectReference Include="..\MiddleMan.Services.Messaging\MiddleMan.Services.Messaging.csproj" />
   </ItemGroup>
 
 </Project>

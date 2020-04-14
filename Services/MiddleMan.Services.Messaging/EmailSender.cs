@@ -5,8 +5,10 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity.UI.Services;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Options;
+    using MiddleMan.Data;
     using SendGrid;
     using SendGrid.Helpers.Mail;
 
@@ -14,15 +16,18 @@
     {
         private readonly IConfiguration configuration;
         private readonly IHostingEnvironment env;
+        private readonly ApplicationDbContext context;
 
         public EmailSender(
             IOptions<AuthMessageSenderOptions> optionsAccessor,
             IConfiguration configuration,
-            IHostingEnvironment env)
+            IHostingEnvironment env,
+            ApplicationDbContext context)
         {
             this.Options = optionsAccessor.Value;
             this.configuration = configuration;
             this.env = env;
+            this.context = context;
         }
 
         public AuthMessageSenderOptions Options { get; } //set only via Secret Manager
@@ -48,7 +53,7 @@
                 From = new EmailAddress("middleman.alex@gmail.com", "middleman"),
                 Subject = subject,
                 PlainTextContent = message,
-                HtmlContent = this.PopulateBody(message, subject),
+                HtmlContent = await this.PopulateBody(message, subject),
             };
             msg.AddTo(new EmailAddress(email));
 
@@ -59,7 +64,7 @@
             await client.SendEmailAsync(msg);
         }
 
-        private string PopulateBody(string url, string subject)
+        private async Task<string> PopulateBody(string url, string subject)
         {
             string body = string.Empty;
 
@@ -75,13 +80,40 @@
             {
                 file = webRoot + "/EmailTemplates/PasswordReset.htm";
             }
+            else if (subject == "Order Details")
+            {
+                file = webRoot + "/EmailTemplates/OrderDetails.htm";
+            }
 
             using (StreamReader reader = new StreamReader(file))
             {
                 body = reader.ReadToEnd();
             }
 
-            body = body.Replace("{Url}", url);
+            if (subject == "Confirm your email" || subject == "Reset Password")
+            {
+                body = body.Replace("{Url}", url);
+            }
+            else if (subject == "Order Details")
+            {
+                var orderId = int.Parse(url);
+                var order = await this.context.Orders
+                    .FirstOrDefaultAsync(x => x.Id == orderId);
+
+                var offer = await this.context.Offers
+                    .FirstOrDefaultAsync(x => x.Id == order.OfferId);
+
+                var user = await this.context.Users.FirstOrDefaultAsync(x => x.Id == order.UserId);
+                var username = user.UserName;
+
+                body = body.Replace("{purchase_date}", order.CreatedOn.ToString("dd/M/yy H:mm"));
+                body = body.Replace("{name}", username);
+                body = body.Replace("{receipt_id}", order.OfferName +" - " + order.Id.ToString());
+                body = body.Replace("{order_secret_details}", offer.BuyContent);
+                body = body.Replace("{order_offer_desc}", offer.Description);
+                body = body.Replace("{total}", order.OfferPrice.ToString("f2"));
+            }
+
             return body;
         }
     }

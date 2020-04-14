@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleMan.Services", "Servi
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleMan.Services.Messaging", "Services\MiddleMan.Services.Messaging\MiddleMan.Services.Messaging.csproj", "{43FDC0C4-F250-45DE-93F8-3CA8A9247CC9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4D39C126-3FB5-4B26-B08C-1BF48EFFA23E} = {4D39C126-3FB5-4B26-B08C-1BF48EFFA23E}
+		{4B844ECB-E845-49A6-8B31-85E577933598} = {4B844ECB-E845-49A6-8B31-85E577933598}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleMan.Data", "Data\MiddleMan.Data\MiddleMan.Data.csproj", "{4B844ECB-E845-49A6-8B31-85E577933598}"
 EndProject

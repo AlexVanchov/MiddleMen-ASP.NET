@@ -17,5 +17,7 @@
         public string CreatorId { get; set; }
 
         public IFormFile Photo { get; set; }
+
+        public string BuyContent { get; set; }
     }
 }

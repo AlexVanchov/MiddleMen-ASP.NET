@@ -33,6 +33,14 @@
     </div>
     <div class="form-group required">
         <div class="controls col-md-8 ">
+            <h4>Key/Account/Password</h4>
+            <input type="text" class="input-md  textinput textInput form-control" required minlength="3" maxlength="500" asp-for="CreateOfferModel.BuyContent" placeholder="Offer Name" style="margin-bottom: 10px" />
+
+            <span asp-validation-for="CreateOfferModel.BuyContent" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group required">
+        <div class="controls col-md-8 ">
             <h4>Description</h4>
             <textarea rows="4" style="margin-bottom: 10px" class="input-md textinput textInput form-control" required minlength="20" maxlength="1000" asp-for="CreateOfferModel.Description" placeholder="Description" type="text"></textarea>
 
@@ -55,14 +63,14 @@
         <span asp-validation-for="CreateOfferModel.Photo" class="text-danger"></span>
 
         @*<div class="file-field">
-            <a class="btn-floating peach-gradient mt-0 float-left">
-                <i class="fas fa-paperclip" aria-hidden="true"></i>
-                <input type="file" asp-for="CreateOfferModel.Photo">
-            </a>
-            <div class="file-path-wrapper">
-                <input class="file-path validate disabled" type="text" placeholder="Upload your file">
-            </div>
-        </div>*@
+                <a class="btn-floating peach-gradient mt-0 float-left">
+                    <i class="fas fa-paperclip" aria-hidden="true"></i>
+                    <input type="file" asp-for="CreateOfferModel.Photo">
+                </a>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate disabled" type="text" placeholder="Upload your file">
+                </div>
+            </div>*@
     </div>
 
     <div class="form-group">

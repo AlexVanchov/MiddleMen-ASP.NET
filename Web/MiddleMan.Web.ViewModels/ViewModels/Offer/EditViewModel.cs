@@ -22,5 +22,7 @@ namespace MiddleMan.Web.ViewModels.ViewModels.Offer
 
         [TempData]
         public string StatusMessage { get; set; }
+
+        public string BuyContent { get; set; }
     }
 }

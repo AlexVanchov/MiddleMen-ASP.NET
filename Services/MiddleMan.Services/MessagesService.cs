@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-
+    using System.Web;
     using Microsoft.EntityFrameworkCore;
     using MiddleMan.Common;
     using MiddleMan.Data;
@@ -92,7 +92,7 @@
                     OfferTitle = offer.Name,
                     Sender = sender,
                     MessageForId = rlSenderId,
-                    LastMessage = lastMsg.Content, // todo cuting listing
+                    LastMessage = HttpUtility.HtmlDecode(lastMsg.Content), // todo cuting listing
                 });
             }
 
@@ -104,10 +104,15 @@
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == offerId);
             var offerOwnerId = offer.CreatorId;
 
-            return await this.context.Messages
+            var messages = await this.context.Messages
                 .Where(x => x.OfferId == offerId && (x.SenderId == senderId || x.SenderId == offerOwnerId || x.RecipientId == senderId) &&
                 (x.RecipientId == recipientId || x.RecipientId == offerOwnerId || x.SenderId == recipientId))
                 .ToListAsync();
+
+            messages
+                .ForEach(x => x.Content = HttpUtility.HtmlDecode(x.Content));
+
+            return messages;
         }
 
         public async Task<int> GetUnreadMessagesCountAsync(string userId)

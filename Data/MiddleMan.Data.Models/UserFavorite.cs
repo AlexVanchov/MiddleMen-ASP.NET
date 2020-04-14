@@ -12,7 +12,7 @@
             this.FavoritedOn = DateTime.UtcNow;
         }
 
-        [ForeignKey("AspNetUsers")]
+        [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }
 
         [ForeignKey("Offer")]

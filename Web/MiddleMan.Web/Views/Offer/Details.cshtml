@@ -61,12 +61,12 @@
                     </p>
                     @if (Model.IsOwner)
                     {
-                        <a href="/Offer/Buy?id=@Model.Offer.Id" class="btn btn-success disabled buy">Buy ($@Model.Offer.Price)</a>
+                        <a href="/Order/Buy?id=@Model.Offer.Id" class="btn btn-success disabled buy">Buy ($@Model.Offer.Price)</a>
                         <a href="/Offer/Edit?id=@Model.Offer.Id" class="btn btn-warning buy">Edit</a>
                     }
                     else
                     {
-                        <a href="/Offer/Buy?id=@Model.Offer.Id" class="btn btn-success buy">Buy ($@Model.Offer.Price)</a>
+                        <a href="/Order/Buy?id=@Model.Offer.Id" class="btn btn-success buy">Buy ($@Model.Offer.Price)</a>
                         <a href="/Messages/Details?offerId=@Model.Offer.Id&senderId=@User.FindFirstValue(ClaimTypes.NameIdentifier)&recipientId=@Model.Offer.CreatorId" class="btn btn-success">Send Message</a>
                     }
 

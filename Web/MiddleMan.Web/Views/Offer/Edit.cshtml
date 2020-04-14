@@ -68,6 +68,10 @@
                         </select>
                         <h4>Price ($): </h4>
                         <p><input type="number" required min="1" max="2000" asp-for="@Model.InputModel.Price" style="width:100%;" value="@Model.Offer.Price" /></p>
+                        
+                        <h4>Key/Account/Password</h4>
+                        <h3 class="card-title"><input type="text" required minlength="3" maxlength="500" asp-for="@Model.InputModel.BuyContent" style="width:100%;" value="@Model.Offer.BuyContent" /></h3>
+
                         <h4>Description: </h4>
                         <p class="card-text">
                             <textarea rows="6" required minlength="20" maxlength="1000" style="width:100%;" id="@Html.IdFor(m => m.InputModel.Description)" name="@Html.NameFor(m => m.InputModel.Description)">@Model.Offer.Description</textarea>

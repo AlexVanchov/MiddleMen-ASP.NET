@@ -43,6 +43,7 @@
                 PicUrl = inputModel.PicUrl,
                 CategoryId = inputModel.CategotyName,
                 CreatorId = inputModel.CreatorId,
+                BuyContent = inputModel.BuyContent,
             };
 
             await this.context.Offers.AddAsync(offer);
@@ -229,6 +230,7 @@
                 offer.Description = offerInput.Description;
                 offer.ModifiedOn = DateTime.UtcNow;
                 offer.CategoryId = offerInput.CategoryId;
+                offer.BuyContent = offerInput.BuyContent;
 
                 if (offerInput.Photo != null)
                 {

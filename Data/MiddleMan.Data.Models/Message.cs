@@ -17,7 +17,7 @@
 
         public virtual ApplicationUser Sender { get; set; }
 
-        [ForeignKey("AspNetUsers")]
+        [ForeignKey("ApplicationUser")]
         public string RecipientId { get; set; }
 
         public virtual ApplicationUser Recipient { get; set; }

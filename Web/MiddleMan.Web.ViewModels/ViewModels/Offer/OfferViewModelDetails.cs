@@ -43,6 +43,8 @@
 
         public bool IsFavoritedByUser { get; set; }
 
+        public string BuyContent { get; set; }
+
         public ICollection<CommentViewModel> Comments { get; set; }
     }
 }

@@ -31,7 +31,6 @@ namespace MiddleMan.Data.Models
 
         public DateTime? ModifiedOn { get; set; }
 
-
         // Deletable entity
         public bool IsDeleted { get; set; }
 

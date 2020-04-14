@@ -61,3 +61,7 @@
 
 };
 setup();
+
+function scrollToBottom() {
+    document.getElementById('body').scrollToBottom = messages.scrollHeight;
+}

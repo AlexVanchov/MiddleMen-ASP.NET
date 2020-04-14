@@ -16,5 +16,7 @@ namespace MiddleMan.Web.ViewModels.InputModels.Offer
         public string CategoryId { get; set; }
 
         public IFormFile Photo { get; set; }
+
+        public string BuyContent { get; set; }
     }
 }

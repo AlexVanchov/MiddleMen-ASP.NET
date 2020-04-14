@@ -28,6 +28,9 @@
         public virtual Offer Offer { get; set; }
 
         [Required]
+        [ForeignKey("ApplicationUser")]
         public string CreatorId { get; set; }
+
+        public virtual ApplicationUser Creator { get; set; }
     }
 }

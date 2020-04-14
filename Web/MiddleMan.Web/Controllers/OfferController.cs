@@ -214,6 +214,7 @@
                 Rated = rated,
                 OfferRating = offerRating,
                 StartsStringRating = startsStringRating,
+                BuyContent = offer.BuyContent,
             };
 
             foreach (var comment in comments)
@@ -233,6 +234,7 @@
                 Categories = categories,
                 Offer = offerView,
                 CategoryId = offer.CategoryId,
+                BuyContent = offer.BuyContent,
             };
 
             return this.View(detailsModel);

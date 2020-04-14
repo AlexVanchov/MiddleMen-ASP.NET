@@ -60,5 +60,8 @@
     <Content Update="wwwroot\EmailTemplates\EmailConfirm.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\EmailTemplates\OrderDetails.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

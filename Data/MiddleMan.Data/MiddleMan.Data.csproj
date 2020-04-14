@@ -25,6 +25,8 @@
     <Compile Remove="Migrations\20200408111208_Messages.Designer.cs" />
     <Compile Remove="Migrations\20200408111552_FavoriteForeignKeys.cs" />
     <Compile Remove="Migrations\20200408111552_FavoriteForeignKeys.Designer.cs" />
+    <Compile Remove="Migrations\20200414131832_Orders.cs" />
+    <Compile Remove="Migrations\20200414131832_Orders.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

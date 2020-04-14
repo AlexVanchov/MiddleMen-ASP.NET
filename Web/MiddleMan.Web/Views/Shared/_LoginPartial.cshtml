@@ -38,12 +38,13 @@
                     Messages
                     <strong id="messagesCount2"></strong>
                 </a>
+                <a class="dropdown-item" href="/Order/History" title="Manage">Orders History</a>
                 <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
                 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                 {
                     <a class="dropdown-item" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">
-                    Admin
-                    <strong class="text-warning" id="admin-link"></strong>
+                        Admin
+                        <strong class="text-warning" id="admin-link"></strong>
                     </a>
                 }
                 <a class="dropdown-item">
