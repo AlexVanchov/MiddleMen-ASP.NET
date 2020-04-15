@@ -41,15 +41,17 @@ namespace MiddleMan.Web.Hubs
                 throw new ArgumentException("Invalid Data");
             }
 
-            var message = await this.messagesService.CreateMessageAsync(senderId, recipientId, offerId, content);
+            if (!string.IsNullOrEmpty(content))
+            {
+                var message = await this.messagesService.CreateMessageAsync(senderId, recipientId, offerId, content);
+                var viewModel = await this.GetMessageViewModel(offerId, senderId, recipientId);
 
-            var viewModel = await this.GetMessageViewModel(offerId, senderId, recipientId);
+                viewModel.MessageContent = message.Content;
+                viewModel.SentOn = message.CreatedOn.ToString("MM/dd hh:mm tt");
 
-            viewModel.MessageContent = message.Content;
-            viewModel.SentOn = message.CreatedOn.ToString("MM/dd hh:mm tt");
-
-            await this.Clients.Users(recipientId, senderId)
-                .SendAsync("NewMessage", viewModel);
+                await this.Clients.Users(recipientId, senderId)
+                    .SendAsync("NewMessage", viewModel);
+            }
         }
 
         private async Task<MessageReciveViewModel> GetMessageViewModel(string offerId, string senderId, string recipientId)

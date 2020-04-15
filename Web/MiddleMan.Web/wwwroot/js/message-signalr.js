@@ -35,6 +35,7 @@
             chatInfo += `</p></div>`;
             var messagesList = document.getElementById("messages");
             messagesList.innerHTML += chatInfo;
+            document.getElementById("messageInput").value = "";
         });
 
     $("#sendButton").click(function (data) {

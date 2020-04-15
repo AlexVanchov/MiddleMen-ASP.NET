@@ -53,14 +53,16 @@ namespace MiddleMan.Web.Controllers
                 return this.View(sendMessageBindingModel);
             }
 
-            var messageViewModel = await this.messagesService.CreateMessageAsync(inputModel.SenderId, inputModel.RecipientId, inputModel.OfferId, inputModel.Content);
-
             var unreadMessagesCount = await this.messagesService.GetUnreadMessagesCountAsync(inputModel.RecipientId);
 
             await this.hubContext.Clients.User(inputModel.RecipientId).SendAsync("MessageCount", unreadMessagesCount);
 
-            await this.hubContext.Clients.User(inputModel.RecipientId)
-                .SendAsync("SendMessage", messageViewModel);
+            if (this.ModelState.IsValid)
+            {
+                var messageViewModel = await this.messagesService.CreateMessageAsync(inputModel.SenderId, inputModel.RecipientId, inputModel.OfferId, inputModel.Content);
+                await this.hubContext.Clients.User(inputModel.RecipientId)
+                    .SendAsync("SendMessage", messageViewModel);
+            }
 
             return this.RedirectToAction("Details", new { offerId = inputModel.OfferId, senderId = inputModel.RecipientId, recipientId = inputModel.SenderId });
         }
