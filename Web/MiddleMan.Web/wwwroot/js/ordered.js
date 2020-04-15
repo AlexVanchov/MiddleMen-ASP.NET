@@ -51,4 +51,26 @@ for (var editBtn of editBtns) {
 }
 
 
+document.getElementById("save-order-btn").addEventListener("click", () => {
+    var orders = [];
 
+    var categories = document.getElementById("sortable").getElementsByTagName("li");
+
+    for (var category of categories) {
+        var possition = category.value;
+        orders.push(possition);
+    }
+
+    event.stopImmediatePropagation();
+    $.ajax({
+        url: "/Api/ReorderCategories",
+        type: "GET",
+        data: "order="+ orders.toString(),
+        dataType: 'json',
+        success: function (response) {
+            if (response) {
+                alert("Success");
+            }
+        }
+    });
+});

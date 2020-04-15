@@ -30,9 +30,11 @@
 
         public async Task CreateCategoryAsync(CreateCategoryModel inputModel)
         {
+            var position = await this.context.Categories.CountAsync();
             Category category = new Category()
             {
                 Name = inputModel.Name,
+                Position = position + 1,
             };
 
             await this.context.Categories.AddAsync(category);
@@ -43,13 +45,14 @@
         {
             var categories = await this.context
                 .Categories
+                .OrderBy(x => x.Position)
                 .ToListAsync();
 
             var allCategories = new List<CategoryViewModel>();
             foreach (var category in categories)
             {
                 var categoryOffersCount = await this.GetOffersCountInCategoryByIdAsync(category.Id);
-                allCategories.Add(new CategoryViewModel() { Name = category.Name, Id = category.Id, OffersCount = categoryOffersCount });
+                allCategories.Add(new CategoryViewModel() { Name = category.Name, Id = category.Id, OffersCount = categoryOffersCount, Position = category.Position });
             }
 
             return allCategories;
@@ -119,6 +122,7 @@
         {
             var categoryOffersCount = await this.context.Categories
                     .Where(x => x.Id == categoryId)
+                    .OrderBy(x => x.Position)
                     .Select(x => x.Offers.Where(x => x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false).ToList().Count)
                     .FirstOrDefaultAsync();
 

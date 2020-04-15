@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiddleMan.Data;
+using MiddleMan.Data.Models;
 using MiddleMan.Services.Interfaces;
 
 namespace MiddleMan.Web.Controllers
@@ -93,6 +94,30 @@ namespace MiddleMan.Web.Controllers
 
             var categoryOfferCount = await this.categoryService.GetOffersCountInCategoryByIdAsync(categoryId);
             return this.Json(categoryOfferCount);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> ReorderCategories(string order)
+        {
+            var orderArray = order.Split(",").ToList();
+            var categories = await this.context.Categories.OrderBy(x => x.Position).ToListAsync();
+            var test = new List<Category>();
+
+            for (int i = 1; i <= categories.Count; i++)
+            {
+                var categoryToGetNewPosition = categories.FirstOrDefault(x => x.Position == int.Parse(orderArray[i - 1]));
+                test.Add(categoryToGetNewPosition);
+            }
+
+            var counter = 1;
+            foreach (var cat in test)
+            {
+                cat.Position = counter;
+                counter++;
+            }
+
+            await this.context.SaveChangesAsync();
+            return this.Json(true);
         }
     }
 }

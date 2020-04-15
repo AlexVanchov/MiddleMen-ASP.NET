@@ -11,5 +11,7 @@ namespace MiddleMan.Web.ViewModels.ViewModels
         public string Name { get; set; }
 
         public int OffersCount { get; set; }
+
+        public int Position { get; set; }
     }
 }

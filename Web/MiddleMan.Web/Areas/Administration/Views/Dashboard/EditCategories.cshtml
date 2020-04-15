@@ -21,7 +21,7 @@
     @*<li class="category">Monday</li>*@
     @foreach (var category in Model.Categories)
     {
-         <li class="list-group-item ui-state-default">
+        <li class="list-group-item ui-state-default" value="@category.Position">
             <form action="/">
                 <div id="@category.Id" class="edit-info d-inline-block">
                     <span id="nameOffer-@category.Id" value="@category.Id">@category.Name - Offers:</span>
@@ -32,12 +32,15 @@
                         <button id="edit-btn-@category.Id" class="btn btn-warning edit-btn" value="@category.Id">Edit</button>
                         <button id="save-btn-@category.Id" class="btn btn-success save-btn" style="display:none;">Save Changes</button>
                     </div>
-                    <button id="delete-btn-@category.Id" class="btn btn-danger delete-btn" value="@category.Id" >Delete</button>
+                    <button id="delete-btn-@category.Id" class="btn btn-danger delete-btn" value="@category.Id">Delete</button>
                 </div>
             </form>
-         </li>
+        </li>
     }
-    </ul>
+</ul>
+
+
+<button id="save-order-btn" class="btn btn-success">Save Order</button>
 
 @section Scripts{
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
