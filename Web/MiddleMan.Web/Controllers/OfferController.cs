@@ -62,32 +62,32 @@
 
         public async Task<IActionResult> CreateOffer(CreateOfferSharedModel inputModel) // index post requsest for create
         {
-            // IFormFile postedPic = this.Request.Form["Photo"];
+            if (!this.ModelState.IsValid)
+            {
+                return this.Redirect("/Offer");
+            }
 
-            var a = inputModel.CreateOfferModel;
-            var categoryId = await this.categoryService.GetIdByNameAsync(a.CategotyName);
-            a.CategotyName = categoryId;
-            a.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var imgSize = inputModel.CreateOfferModel.Photo.Length;
 
             if (imgSize >= 1048576)
+            {
                 return this.Redirect("/Offer");
-            else if (inputModel.CreateOfferModel.Name.Length < 3 || inputModel.CreateOfferModel.Name.Length > 50)
-                return this.Redirect("/Offer");
-            else if (inputModel.CreateOfferModel.Description.Length < 20 || inputModel.CreateOfferModel.Description.Length > 1000)
-                return this.Redirect("/Offer");
-            else if (inputModel.CreateOfferModel.Price < 0.01 || inputModel.CreateOfferModel.Price > 2000)
-                return this.Redirect("/Offer");
+            }
+
+            var offerInput = inputModel.CreateOfferModel;
+            var categoryId = await this.categoryService.GetIdByNameAsync(offerInput.CategotyName);
+            offerInput.CategotyName = categoryId;
+            offerInput.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var photoUrl = await this.cloudinaryService.UploadPhotoAsync(
-                a.Photo,
-                $"{userId}-{a.Name}",
+                offerInput.Photo,
+                $"{userId}-{offerInput.Name}",
                 GlobalConstants.CloudFolderForOfferPhotos);
-            a.PicUrl = photoUrl;
+            offerInput.PicUrl = photoUrl;
 
-            await this.offerService.CreateOfferAsync(a);
+            await this.offerService.CreateOfferAsync(offerInput);
 
             return this.Redirect("/");
         }
@@ -243,6 +243,19 @@
         [HttpPost]
         public async Task<IActionResult> Edit(string id, EditOfferModel inputModel) // index post requsest for create
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.Redirect($"/Offer/Edit?id={id}");
+            }
+
+            var offerInput = inputModel;
+            var imgSize = offerInput.Photo != null ? inputModel.Photo.Length : 1;
+
+            if (imgSize >= 1048576)
+            {
+                return this.Redirect($"/Offer/Edit?id={id}");
+            }
+
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (!await this.offerService.IsUserCreatorOfOfferAsync(userId, id))
@@ -250,9 +263,7 @@
                 return this.Redirect($"/Offer/Details?id={id}");
             }
 
-            var offerInput = inputModel;
             var categoryId = await this.categoryService.GetIdByNameAsync(offerInput.CategoryName);
-            var imgSize = offerInput.Photo != null ? inputModel.Photo.Length : 1;
             offerInput.CategoryId = categoryId;
 
             if (inputModel.Name.Length < 3 || inputModel.Name.Length > 50)
@@ -283,6 +294,11 @@
 
         public async Task<IActionResult> Search(SearchInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.Redirect("/Home/Search");
+            }
+
             var offers = await this.offerService.GetOffersBySearchAsync(input.SearchWord);
 
             var searchModel = new SearchViewModel();

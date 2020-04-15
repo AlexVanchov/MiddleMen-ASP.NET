@@ -9,30 +9,30 @@
 
         <div class="col-lg-3">
             @*<h1 class="my-4">MiddleMan</h1>
-            <div class="list-group">
-                @foreach (var category in Model.Categories)
-                {
-                    @if (category.Name == Model.CategoryName)
+                <div class="list-group">
+                    @foreach (var category in Model.Categories)
                     {
-                        <a href="/Home/Category?name=@category.Name" class="list-group-item bg-primary text-white">@category.Name</a>
+                        @if (category.Name == Model.CategoryName)
+                        {
+                            <a href="/Home/Category?name=@category.Name" class="list-group-item bg-primary text-white">@category.Name</a>
+                        }
+                        else
+                        {
+                            <a href="/Home/Category?name=@category.Name" class="list-group-item">@category.Name</a>
+                        }
                     }
-                    else
-                    {
-                        <a href="/Home/Category?name=@category.Name" class="list-group-item">@category.Name</a>
-                    }
-                }
-            </div>*@
+                </div>*@
         </div>
         <!-- /.col-lg-3 -->
         @*@await Html.PartialAsync("_StatusMessageCustom", Model.InputModel.StatusMessage)
-        @try
-        {
-            <partial name="_StatusMessage" model="Model.StatusMessage" />
-        }
-        catch (Exception)
-        {
-        }*@
-        <form asp-controller="Offer" asp-action="Edit" asp-route-id="@Model.Offer.Id" class="form-horizontal" method="post" enctype="multipart/form-data" style="width: 65%;">
+            @try
+            {
+                <partial name="_StatusMessage" model="Model.StatusMessage" />
+            }
+            catch (Exception)
+            {
+            }*@
+        <form id="create-form" asp-controller="Offer" asp-action="Edit" asp-route-id="@Model.Offer.Id" class="form-horizontal" method="post" enctype="multipart/form-data" style="width: 65%;">
             <div class="col-lg-9">
                 @*<a href="/Home/Category?name=@Model.CategoryName" style="height:30px; padding-top: 0px;" class="btn btn-primary hBack text-white"><img style="max-width:100%; max-height:80%; height:auto; width: auto;" src="https://pngimage.net/wp-content/uploads/2018/05/back-icon-png-white-6.png"/>Go back</a>*@
                 <div class="card mt-4">
@@ -42,7 +42,7 @@
 
                     <h5>Change Photo</h5>
                     <i class="fa fa-upload"></i> Upload
-                    <input asp-for="InputModel.Photo" type="file" class="form-control" accept="image/*" />
+                    <input asp-for="InputModel.Photo" type="file" class="form-control" accept="image/*" id="image-input" />
 
                     <span asp-validation-for="InputModel.Photo" class="text-danger"></span>
 
@@ -67,8 +67,8 @@
                             </vc:categories-dropdown>
                         </select>
                         <h4>Price ($): </h4>
-                        <p><input type="number" required min="1" max="2000" asp-for="@Model.InputModel.Price" style="width:100%;" value="@Model.Offer.Price" /></p>
-                        
+                        <p><input type="number" required min="0.01" max="2000" step="0.01" asp-for="@Model.InputModel.Price" style="width:100%;" value="@Model.Offer.Price" /></p>
+
                         <h4>Key/Account/Password</h4>
                         <h3 class="card-title"><input type="text" required minlength="3" maxlength="500" asp-for="@Model.InputModel.BuyContent" style="width:100%;" value="@Model.Offer.BuyContent" /></h3>
 
@@ -80,7 +80,7 @@
                         <span class="text-warning">@Model.Offer.StartsStringRating</span>
                         @Model.Offer.OfferRating stars (Average)
                     </div>
-                    <input type="submit" value="Save Changes" class="btn btn-success" />
+                    <input id="submit-btn" type="submit" value="Save Changes" class="btn btn-success" />
                 </div>
                 <!-- /.card -->
 
@@ -92,4 +92,6 @@
 </div>
 
 
-
+@section Scripts{
+    <script src="~/js/input-validations-offer-edit.js" asp-append-version="true"></script>
+}

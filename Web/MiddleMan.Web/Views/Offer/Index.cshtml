@@ -7,7 +7,7 @@
 <h1>@this.ViewData["Title"]</h1>
 
 
-<form class="form-horizontal" asp-controller="Offer" asp-action="CreateOffer" method="post" enctype="multipart/form-data">
+<form id="create-form" class="form-horizontal" asp-controller="Offer" asp-action="CreateOffer" method="post" enctype="multipart/form-data">
     <div class="form-group required">
         <div class="controls col-md-8 ">
             <h4>Name</h4>
@@ -50,7 +50,7 @@
     <div class="form-group required">
         <div class="controls col-md-8 ">
             <h4>Price($USD)</h4>
-            <input required min="1" max="2000" class="input-md textinput textInput form-control" asp-for="CreateOfferModel.Price" placeholder="Price(10$)" style="margin-bottom: 10px" type="number" />
+            <input required min="0.01" max="2000" step="0.01" class="input-md textinput textInput form-control" asp-for="CreateOfferModel.Price" placeholder="Price(10$)" style="margin-bottom: 10px" type="number" />
 
             <span asp-validation-for="CreateOfferModel.Price" class="text-danger"></span>
         </div>
@@ -58,7 +58,7 @@
     <div class="form-group required controls col-md-8">
         <h4>Upload Photo</h4>
         <i class="fa fa-upload"></i> Upload
-        <input required asp-for="CreateOfferModel.Photo" type="file" class="form-control" accept="image/*" />
+        <input required asp-for="CreateOfferModel.Photo" type="file" class="form-control" accept="image/*" id="image-input" />
 
         <span asp-validation-for="CreateOfferModel.Photo" class="text-danger"></span>
 
@@ -76,8 +76,12 @@
     <div class="form-group">
         <div class="aab controls col-md-4 "></div>
         <div class="controls col-md-8 ">
-            <input type="submit" value="Post Offer" class="btn btn-primary btn btn-info" />
+            <input id="submit-btn" type="submit" value="Post Offer" class="btn btn-primary btn btn-info" />
         </div>
     </div>
 
 </form>
+
+@section Scripts{
+    <script src="~/js/input-validations-offer-edit.js" asp-append-version="true"></script>
+}

@@ -1,153 +1,104 @@
-﻿*, :before, :after {
+﻿* {
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 body {
-    display: flex;
-    align-items: center;
-    background: #E3F2FD;
-    min-width: 275px;
-    height: 100vh;
-    margin: 0 10vw;
-    overflow: hidden;
-    color: #138FF2;
-    font-family: Roboto;
-}
-
-.wrapper {
-    flex-grow: 2;
-    width: 40vw;
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-h1 {
+    padding: 0;
     margin: 0;
-    font-size: 6em;
-    font-weight: 100;
 }
 
-p {
-    width: 95%;
-    font-size: 1.5em;
+#notfound {
+    position: relative;
+    height: 100vh;
+    background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+}
+
+    #notfound .notfound {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+.notfound {
+    max-width: 767px;
+    width: 100%;
     line-height: 1.4;
-}
-
-.buttons {
-    white-space: nowrap;
-    display: inline-block;
-}
-
-span {
-    display: block;
-    text-transform: uppercase;
-    color: #B9DDFB;
-    letter-spacing: 1.5px;
     text-align: center;
 }
 
-a {
-    display: inline-block;
-    padding: .8em 1em;
-    margin-right: 1em;
-    margin-bottom: 1em;
-    border: 3px solid #B9DDFB;
-    color: #138FF2;
-    font-weight: 500;
-    text-transform: uppercase;
-    text-decoration: none;
-    letter-spacing: .2em;
-    position: relative;
-    overflow: hidden;
-    transition: .3s;
-    &:hover
+    .notfound .notfound-404 {
+        position: relative;
+        height: 180px;
+        margin-bottom: 20px;
+        z-index: -1;
+    }
 
-{
-    color: #E3F2FD;
-    &:before
+        .notfound .notfound-404 h1 {
+            font-family: 'Montserrat', sans-serif;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            font-size: 224px;
+            font-weight: 900;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            margin-left: -12px;
+            color: #030005;
+            text-transform: uppercase;
+            text-shadow: -1px -1px 0px blue, 1px 1px 0px #ce00ff;
+            letter-spacing: -20px;
+        }
 
-{
-    top: 0;
-}
 
-}
+        .notfound .notfound-404 h2 {
+            font-family: 'Montserrat', sans-serif;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 110px;
+            font-size: 42px;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 0px 2px 0px #8400ff;
+            letter-spacing: 13px;
+            margin: 0;
+        }
 
-&:before {
-    content: '';
-    background: #138FF2;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: -100%;
-    left: 0;
-    transition: .3s;
-    z-index: -1;
-}
+    .notfound a {
+        font-family: 'Montserrat', sans-serif;
+        display: inline-block;
+        text-transform: uppercase;
+        color: #8400ff;
+        text-decoration: none;
+        border: 2px solid;
+        background: transparent;
+        padding: 10px 40px;
+        font-size: 14px;
+        font-weight: 700;
+        -webkit-transition: 0.2s all;
+        transition: 0.2s all;
+    }
 
-}
+        .notfound a:hover {
+            color: #8400ff;
+        }
 
-// BLACKHOLE
-
-$size: 75px;
-$border: $size/15;
-
-.space {
-    width: $size;
-    height: calc(50vh + #{$size/2});
-    border-top-left-radius: $size/2;
-    border-top-right-radius: $size/2;
-    overflow: hidden;
-    margin: calc(50vh - #{$size/2}) auto 0 auto;
-    position: relative;
-    pointer-events: none;
-    -webkit-transform: translateZ(0);
-}
-
-.blackhole {
-    border: $border solid #1674D1;
-    height: $size;
-    width: $size;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    &:after
-
-{
-    content: '';
-    height: calc(100% + #{$border*2});
-    width: calc(100% + #{$border*2});
-    border: $border solid #1674D1;
-    border-right-color: transparent;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    position: absolute;
-    top: -$border;
-    left: -$border;
-    z-index: 5;
-    transform: rotate(45deg);
-}
-
-}
-
-.ship {
-    height: $size*2;
-    width: $size - $border*4;
-    margin-left: $border*2;
-    background: url("https://cbwconline.com/IMG/Codepen/Space%20Ship.svg") center/contain no-repeat;
-    animation: blackhole 4s infinite linear;
-    position: absolute;
-    bottom: -$size*2;
-}
-
-@keyframes blackhole {
-    to {
-        transform: translateY(-100vh);
+@media only screen and (max-width: 767px) {
+    .notfound .notfound-404 h2 {
+        font-size: 24px;
     }
 }
 
-@media (max-width: 600px) {
-    body {
-        margin: 0 5vw
+@media only screen and (max-width: 480px) {
+    .notfound .notfound-404 h1 {
+        font-size: 182px;
     }
 }
