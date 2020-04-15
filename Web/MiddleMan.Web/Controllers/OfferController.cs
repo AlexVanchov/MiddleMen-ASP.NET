@@ -155,23 +155,21 @@
                 return this.View(detailsModel);
             }
 
-            throw new NullReferenceException();
+            return this.NotFound();
         }
 
         [HttpPost]
         public async Task<IActionResult> AddReview(CreateReviewModel commentInputModel, string id) // index post requsest for create
         {
-            try
+            if (!this.ModelState.IsValid)
             {
-                commentInputModel.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                commentInputModel.Id = id;
+                return this.Redirect($"/Offer/Edit?id={id}");
+            }
 
-                await this.commentService.AddReviewToOffer(commentInputModel);
-            }
-            catch (Exception)
-            {
-                return this.Redirect("/");
-            }
+            commentInputModel.CreatorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            commentInputModel.Id = id;
+
+            await this.commentService.AddReviewToOffer(commentInputModel);
 
             return this.Redirect($"/Offer/Details?id={commentInputModel.Id}");
         }

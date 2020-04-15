@@ -25,11 +25,12 @@ namespace MiddleMan.Services
         public async Task AddReviewToOffer(CreateReviewModel inputModel)
         {
             var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == inputModel.Id);
-            var userComments = this.GetOfferCommentsAsync(inputModel.Id).Result.Where(x => x.CreatorId == inputModel.CreatorId).ToList();
             if (offer == null)
-                throw new ArgumentNullException("Invalid Data");
-            else if (int.Parse(inputModel.Rating) < 1 || int.Parse(inputModel.Rating) > 5)
-                throw new ArgumentNullException("Invalid Data");
+            {
+                return;
+            }
+
+            var userComments = this.GetOfferCommentsAsync(inputModel.Id).Result.Where(x => x.CreatorId == inputModel.CreatorId).ToList();
 
             var comment = new Comment()
             {
@@ -61,12 +62,7 @@ namespace MiddleMan.Services
                     Rate = int.Parse(inputModel.Rating),
                 };
 
-                if (offer.Description == null)
-                {
-                    throw new ArgumentNullException("Invalid Data");
-                }
-
-                if (offerRatedByUser == null)
+                if (offerRatedByUser == 0)
                 {
                     this.context.OfferUserRates.Add(offerRate);
                 }
