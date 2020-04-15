@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MiddleMan.Data;
 using MiddleMan.Services.Interfaces;
 
@@ -17,6 +18,7 @@ namespace MiddleMan.Web.Controllers
         private readonly IFavoriteService favoriteService;
         private readonly IUserService userService;
         private readonly IMessagesService messagesService;
+        private readonly ICategoryService categoryService;
         private readonly ApplicationDbContext context;
 
         public ApiController(
@@ -24,12 +26,14 @@ namespace MiddleMan.Web.Controllers
             IFavoriteService favoriteService,
             IUserService userService,
             IMessagesService messagesService,
+            ICategoryService categoryService,
             ApplicationDbContext context)
         {
             this.offerService = offerService;
             this.favoriteService = favoriteService;
             this.userService = userService;
             this.messagesService = messagesService;
+            this.categoryService = categoryService;
             this.context = context;
         }
 
@@ -77,6 +81,18 @@ namespace MiddleMan.Web.Controllers
             var unreadMessages = await this.messagesService.GetUnreadMessagesCountAsync(userId);
 
             return this.Json(unreadMessages);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> EditCategory(string categoryId, string newName)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var category = await this.context.Categories.FirstOrDefaultAsync(x => x.Id == categoryId);
+            category.Name = newName;
+            await this.context.SaveChangesAsync();
+
+            var categoryOfferCount = await this.categoryService.GetOffersCountInCategoryByIdAsync(categoryId);
+            return this.Json(categoryOfferCount);
         }
     }
 }

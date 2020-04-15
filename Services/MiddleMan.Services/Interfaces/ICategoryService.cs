@@ -22,5 +22,7 @@
         Task<string> GetCategoryNameByIdAsync(string id);
 
         Task<string> GetCategoryIdByNameAsync(string id);
+
+        Task<int> GetOffersCountInCategoryByIdAsync(string categoryId);
     }
 }

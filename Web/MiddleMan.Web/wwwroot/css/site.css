@@ -229,7 +229,7 @@ b {
 .custom-edit-delete-btns {
 }
 .edit-info{
-    width: 84%;
+    width: 75%;
 }
 /*Validations for offer form*/
 input:required:invalid, input:focus:invalid {

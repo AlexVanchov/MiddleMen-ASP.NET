@@ -48,7 +48,8 @@
             var allCategories = new List<CategoryViewModel>();
             foreach (var category in categories)
             {
-                allCategories.Add(new CategoryViewModel() { Name = category.Name, Id = category.Id });
+                var categoryOffersCount = await this.GetOffersCountInCategoryByIdAsync(category.Id);
+                allCategories.Add(new CategoryViewModel() { Name = category.Name, Id = category.Id, OffersCount = categoryOffersCount });
             }
 
             return allCategories;
@@ -112,6 +113,16 @@
             }
 
             return category.Id;
+        }
+
+        public async Task<int> GetOffersCountInCategoryByIdAsync(string categoryId)
+        {
+            var categoryOffersCount = await this.context.Categories
+                    .Where(x => x.Id == categoryId)
+                    .Select(x => x.Offers.Where(x => x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false).ToList().Count)
+                    .FirstOrDefaultAsync();
+
+            return categoryOffersCount;
         }
 
         private async Task<double> GetOfferRatingAsync(string id)

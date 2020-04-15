@@ -17,24 +17,30 @@
     </ul>*@
 
 
-<form action="/">
-    <ul id="sortable">
-        @*<li class="category">Monday</li>*@
-        @foreach (var category in Model.Categories)
-        {
-            <li class="list-group-item">
-                <div class="edit-info d-inline-block">
-                    <span>@category.Name - Offers:</span>
-                    <span class="badge">15</span>
+<ul id="sortable">
+    @*<li class="category">Monday</li>*@
+    @foreach (var category in Model.Categories)
+    {
+         <li class="list-group-item ui-state-default">
+            <form action="/">
+                <div id="@category.Id" class="edit-info d-inline-block">
+                    <span id="nameOffer-@category.Id" value="@category.Id">@category.Name - Offers:</span>
+                    <span class="badge">@category.OffersCount</span>
                 </div>
                 <div class="d-inline-block text-right custom-edit-delete-btns">
-                    <a href="/Administration/Dashboard/Edit/id_here" class="btn btn-warning">Edit</a>
-                    <a href="/Administration/Dashboard/Delete/id_here" class="btn btn-danger">Delete</a>
+                    <div id="success-btn-@category.Id" class="d-inline-block">
+                        <button id="edit-btn-@category.Id" class="btn btn-warning edit-btn" value="@category.Id">Edit</button>
+                        <button id="save-btn-@category.Id" class="btn btn-success save-btn" style="display:none;">Save Changes</button>
+                    </div>
+                    <button id="delete-btn-@category.Id" class="btn btn-danger delete-btn" value="@category.Id" >Delete</button>
                 </div>
-            </li>
-        }
+            </form>
+         </li>
+    }
     </ul>
 
-    <input class="disabled btn alert-success" type="submit" value="Save Changes">
-</form>
-
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/js/ordered.js" asp-append-version="true"></script>
+}
