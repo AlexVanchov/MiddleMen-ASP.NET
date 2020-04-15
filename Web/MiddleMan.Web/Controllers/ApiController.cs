@@ -134,6 +134,14 @@ namespace MiddleMan.Web.Controllers
 
             category.IsDeleted = true;
             this.context.UserFavorites.RemoveRange(removeFavs);
+
+            var categories = await this.context.Categories.Where(x => x.IsDeleted == false).OrderBy(x => x.Position).ToListAsync();
+
+            for (int i = 0; i < categories.Count; i++)
+            {
+                categories[i].Position = i + 1;
+            }
+
             await this.context.SaveChangesAsync();
 
             var categoryOfferCount = await this.categoryService.GetOffersCountInCategoryByIdAsync(categoryId);
@@ -150,7 +158,7 @@ namespace MiddleMan.Web.Controllers
             }
 
             var orderArray = order.Split(",").ToList();
-            var categories = await this.context.Categories.OrderBy(x => x.Position).ToListAsync();
+            var categories = await this.context.Categories.Where(x=>x.IsDeleted==false).OrderBy(x => x.Position).ToListAsync();
             var categoriesNew = new List<Category>();
 
             for (int i = 1; i <= categories.Count; i++)
