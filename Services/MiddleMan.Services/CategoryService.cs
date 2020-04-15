@@ -45,6 +45,7 @@
         {
             var categories = await this.context
                 .Categories
+                .Where(x => x.IsDeleted == false)
                 .OrderBy(x => x.Position)
                 .ToListAsync();
 
@@ -62,7 +63,7 @@
         {
             var offersOutput = new List<OfferViewModel>();
             var offers = await this.context.Offers
-                .Where(x => x.CategoryId == id && x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false)
+                .Where(x => x.CategoryId == id && x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false && x.IsDeleted == false)
                 .ToListAsync();
 
             foreach (var offer in offers)
@@ -101,6 +102,11 @@
         {
             var category = await this.context.Categories.FirstOrDefaultAsync(x => x.Id == id);
 
+            if (category == null)
+            {
+                return null;
+            }
+
             return category.Name;
         }
 
@@ -121,7 +127,7 @@
         public async Task<int> GetOffersCountInCategoryByIdAsync(string categoryId)
         {
             var categoryOffersCount = await this.context.Categories
-                    .Where(x => x.Id == categoryId)
+                    .Where(x => x.Id == categoryId && x.IsDeleted == false)
                     .OrderBy(x => x.Position)
                     .Select(x => x.Offers.Where(x => x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false).ToList().Count)
                     .FirstOrDefaultAsync();

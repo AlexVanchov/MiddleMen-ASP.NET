@@ -29,7 +29,7 @@
         {
             var offers = await this.context.Offers.Where(x => x.IsApproved == false &&
             x.IsDeclined == false &&
-            x.IsRemovedByUser == false)
+            x.IsRemovedByUser == false && x.IsDeleted == false)
                 .ToListAsync();
 
             return offers.Count;

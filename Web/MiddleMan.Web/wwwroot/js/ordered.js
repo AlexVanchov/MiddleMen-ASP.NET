@@ -51,6 +51,29 @@ for (var editBtn of editBtns) {
 }
 
 
+var deleteBtns = document.getElementsByClassName("delete-btn");
+
+for (var deleteBtn of deleteBtns) {
+    deleteBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        var currentBtn = e.currentTarget;
+        var deleteBtn = currentBtn.id;
+        var id = deleteBtn.replace("delete-btn-", "");
+        var category = document.getElementById("remove-category-" + id).style.display = "none";
+
+        event.stopImmediatePropagation();
+        $.ajax({
+            url: "/Api/DeleteCategory",
+            type: "GET",
+            data: "categoryId=" + id,
+            dataType: 'json',
+            success: function (response) {
+
+            }
+        });
+    });
+}
+
 document.getElementById("save-order-btn").addEventListener("click", () => {
     var orders = [];
 

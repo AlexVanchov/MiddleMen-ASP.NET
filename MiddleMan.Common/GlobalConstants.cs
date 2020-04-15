@@ -23,5 +23,7 @@
         public const string DessertsCategoryTitle = "Desserts";
 
         public const string DefaultProfilePicUrl = "https://i.imgur.com/56lPbUe.png";
+
+        public const string NoApiAccess = "You dont have access to this api. Please contact our support team";
     }
 }

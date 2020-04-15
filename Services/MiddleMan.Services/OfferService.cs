@@ -55,7 +55,7 @@
         public async Task<List<Offer>> GetAllNotAprovedOffersAsync()
         {
             var offers = await this.context.Offers
-                .Where(x => x.IsApproved == false && x.IsDeclined == false && x.IsRemovedByUser == false)
+                .Where(x => x.IsApproved == false && x.IsDeclined == false && x.IsRemovedByUser == false && x.IsDeleted == false)
                 .OrderByDescending(x => x.CreatedOn)
                 .ToListAsync();
             return offers;
@@ -64,7 +64,7 @@
         public async Task<List<Offer>> GetAllAprovedOffersAsync()
         {
             var offers = await this.context.Offers
-                .Where(x => x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false)
+                .Where(x => x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false && x.IsDeleted == false)
                 .OrderByDescending(x => x.CreatedOn)
                 .ToListAsync();
             return offers;
@@ -73,7 +73,7 @@
         public async Task<Offer> GetOfferByIdAsync(string id)
         {
             var offer = await this.context.Offers
-                .FirstOrDefaultAsync(x => x.Id == id && x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false);
+                .FirstOrDefaultAsync(x => x.Id == id && x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false && x.IsDeleted == false);
             return offer;
         }
 
@@ -110,7 +110,7 @@
         public async Task<List<Offer>> GetAllDeletedOffersAsync()
         {
             var offers = await this.context.Offers
-                .Where(x => x.IsDeclined == true && x.IsRemovedByUser == false)
+                .Where(x => x.IsDeclined == true && x.IsRemovedByUser == false && x.IsDeleted == false)
                 .OrderByDescending(x => x.CreatedOn)
                 .ToListAsync();
             return offers;
@@ -119,7 +119,7 @@
         public async Task<List<Offer>> GetLatestOffers(int n)
         {
             var offers = await this.context.Offers
-                .Where(x => x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false)
+                .Where(x => x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false && x.IsDeleted == false)
                 .OrderByDescending(x => x.CreatedOn)
                 .Take(n)
                 .ToListAsync();
@@ -136,7 +136,7 @@
         public async Task<List<Offer>> GetFeaturedOffersAsync()
         {
             var offers = await this.context.Offers
-                .Where(x => x.IsApproved == true && x.IsDeclined == false && x.IsFeatured == true && x.IsRemovedByUser == false)
+                .Where(x => x.IsApproved == true && x.IsDeclined == false && x.IsFeatured == true && x.IsRemovedByUser == false && x.IsDeleted == false)
                 .OrderByDescending(x => x.CreatedOn)
                 .ToListAsync();
 
@@ -213,7 +213,9 @@
         {
             searchWord = searchWord.ToLower();
             var offers = await this.context.Offers
-                .Where(x => x.Name.ToLower().Contains(searchWord) || x.Description.ToLower().Contains(searchWord) || x.CategoryId.ToLower().Contains(searchWord))
+                .Where(x => x.IsDeleted == false && (x.Name.ToLower().Contains(searchWord) ||
+                x.Description.ToLower().Contains(searchWord) ||
+                x.CategoryId.ToLower().Contains(searchWord)))
                 .ToListAsync();
 
             return offers;
@@ -270,28 +272,28 @@
         public async Task<List<Offer>> GetAllUserOffersAsync(string userId)
         {
             return await this.context.Offers
-                .Where(x => x.CreatorId == userId && x.IsApproved == true && x.IsDeclined == false)
+                .Where(x => x.CreatorId == userId && x.IsApproved == true && x.IsDeclined == false && x.IsDeleted == false)
                 .ToListAsync();
         }
 
         public async Task<List<Offer>> GetAllActiveUserOffersAsync(string userId)
         {
             return await this.context.Offers
-                .Where(x => x.CreatorId == userId && x.IsRemovedByUser == false && x.IsApproved == true && x.IsDeclined == false)
+                .Where(x => x.CreatorId == userId && x.IsRemovedByUser == false && x.IsApproved == true && x.IsDeclined == false && x.IsDeleted == false)
                 .ToListAsync();
         }
 
         public async Task<List<Offer>> GetAllDeactivatedUserOffersAsync(string userId)
         {
             return await this.context.Offers
-                .Where(x => x.CreatorId == userId && x.IsRemovedByUser == true && x.IsApproved == true && x.IsDeclined == false)
+                .Where(x => x.CreatorId == userId && x.IsRemovedByUser == true && x.IsApproved == true && x.IsDeclined == false && x.IsDeleted == false)
                 .ToListAsync();
         }
 
         public async Task<List<Offer>> GetAllCategoryOffersAsync(string id)
         {
             return await this.context.Offers
-                .Where(x => x.CategoryId == id && x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false)
+                .Where(x => x.CategoryId == id && x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false && x.IsDeleted == false)
                 .ToListAsync();
         }
 
@@ -359,7 +361,7 @@
 
         public async Task<bool> IsOfferExisting(string offerId)
         {
-            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == offerId);
+            var offer = await this.context.Offers.FirstOrDefaultAsync(x => x.Id == offerId && x.IsDeleted == false);
             if (offer == null)
             {
                 return false;

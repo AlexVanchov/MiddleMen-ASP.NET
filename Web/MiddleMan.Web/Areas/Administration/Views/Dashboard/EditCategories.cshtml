@@ -21,7 +21,7 @@
     @*<li class="category">Monday</li>*@
     @foreach (var category in Model.Categories)
     {
-        <li class="list-group-item ui-state-default" value="@category.Position">
+        <li id="remove-category-@category.Id" class="list-group-item ui-state-default" value="@category.Position">
             <form action="/">
                 <div id="@category.Id" class="edit-info d-inline-block">
                     <span id="nameOffer-@category.Id" value="@category.Id">@category.Name - Offers:</span>

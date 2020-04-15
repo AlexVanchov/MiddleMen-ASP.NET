@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MiddleMan.Common;
 using MiddleMan.Data;
 using MiddleMan.Data.Models;
 using MiddleMan.Services.Interfaces;
@@ -71,6 +72,12 @@ namespace MiddleMan.Web.Controllers
         [Authorize]
         public async Task<int> GetAdminOffersForApprove()
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                return 0;
+            }
+
             return await this.userService.GetAdminOffersForApprove();
         }
 
@@ -88,6 +95,11 @@ namespace MiddleMan.Web.Controllers
         public async Task<IActionResult> EditCategory(string categoryId, string newName)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                return this.Json(GlobalConstants.NoApiAccess);
+            }
+
             var category = await this.context.Categories.FirstOrDefaultAsync(x => x.Id == categoryId);
             category.Name = newName;
             await this.context.SaveChangesAsync();
@@ -97,22 +109,60 @@ namespace MiddleMan.Web.Controllers
         }
 
         [Authorize]
+        public async Task<IActionResult> DeleteCategory(string categoryId)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                return this.Json(GlobalConstants.NoApiAccess);
+            }
+
+            var removeFavs = new List<UserFavorite>();
+
+            var category = await this.context.Categories.FirstOrDefaultAsync(x => x.Id == categoryId);
+            var categoryOffers = await this.context.Offers.Where(x => x.CategoryId == categoryId).ToListAsync();
+            foreach (var offer in categoryOffers)
+            {
+                var favorites = this.context.UserFavorites.Where(x => x.OfferId == offer.Id);
+                foreach (var fav in favorites)
+                {
+                    removeFavs.Add(fav);
+                }
+
+                offer.IsDeleted = true;
+            }
+
+            category.IsDeleted = true;
+            this.context.UserFavorites.RemoveRange(removeFavs);
+            await this.context.SaveChangesAsync();
+
+            var categoryOfferCount = await this.categoryService.GetOffersCountInCategoryByIdAsync(categoryId);
+            return this.Json(categoryOfferCount);
+        }
+
+        [Authorize]
         public async Task<IActionResult> ReorderCategories(string order)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                return this.Json(GlobalConstants.NoApiAccess);
+            }
+
             var orderArray = order.Split(",").ToList();
             var categories = await this.context.Categories.OrderBy(x => x.Position).ToListAsync();
-            var test = new List<Category>();
+            var categoriesNew = new List<Category>();
 
             for (int i = 1; i <= categories.Count; i++)
             {
                 var categoryToGetNewPosition = categories.FirstOrDefault(x => x.Position == int.Parse(orderArray[i - 1]));
-                test.Add(categoryToGetNewPosition);
+                categoriesNew.Add(categoryToGetNewPosition);
             }
 
             var counter = 1;
-            foreach (var cat in test)
+            foreach (var category in categoriesNew)
             {
-                cat.Position = counter;
+                category.Position = counter;
                 counter++;
             }
 

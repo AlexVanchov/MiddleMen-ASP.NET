@@ -19,7 +19,7 @@
         private readonly IUserService userService;
 
         public HomeController(
-            ICategoryService categoryService, 
+            ICategoryService categoryService,
             IOfferService offerService,
             IUserService userService)
         {
@@ -40,22 +40,25 @@
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var categoryName = await this.categoryService.GetCategoryNameByIdAsync(offer.CategoryId);
-                var offerRating = await this.offerService.GetOfferRatingAsync(offer.Id);
-
-                var isFavoritedByUser = await this.userService.IsOfferFavoritedByUserAsync(offer.Id, userId);
-                latestOffersViewModel.Add(new OfferViewModel()
+                if (categoryName != null)
                 {
-                    Id = offer.Id,
-                    Name = offer.Name,
-                    Description = offer.Description.Length >= 65 ? offer.Description.Substring(0, 65) : offer.Description,
-                    Price = offer.Price,
-                    PicUrl = offer.PicUrl,
-                    ClickUrl = $"/Offer/Details?id={offer.Id}",
-                    ReadMore = offer.Description.Length >= 65 ? true : false,
-                    CategoryName = categoryName,
-                    StartsStringRating = this.offerService.StartsStringRating(offerRating),
-                    IsFavoritedByUser = isFavoritedByUser,
-                });
+                    var offerRating = await this.offerService.GetOfferRatingAsync(offer.Id);
+
+                    var isFavoritedByUser = await this.userService.IsOfferFavoritedByUserAsync(offer.Id, userId);
+                    latestOffersViewModel.Add(new OfferViewModel()
+                    {
+                        Id = offer.Id,
+                        Name = offer.Name,
+                        Description = offer.Description.Length >= 65 ? offer.Description.Substring(0, 65) : offer.Description,
+                        Price = offer.Price,
+                        PicUrl = offer.PicUrl,
+                        ClickUrl = $"/Offer/Details?id={offer.Id}",
+                        ReadMore = offer.Description.Length >= 65 ? true : false,
+                        CategoryName = categoryName,
+                        StartsStringRating = this.offerService.StartsStringRating(offerRating),
+                        IsFavoritedByUser = isFavoritedByUser,
+                    });
+                }
             }
 
             foreach (var offer in featuredOffers)
