@@ -35,6 +35,11 @@
         {
             var offer = await this.offerService.GetOfferByIdAsync(id);
 
+            if (offer == null)
+            {
+                return;
+            }
+
             var order = new Order()
             {
                 OfferId = id,

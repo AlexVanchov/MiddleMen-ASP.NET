@@ -87,6 +87,57 @@
         }
 
         [Fact]
+        public async Task AddReviewToOffer_WithValidDataButNotDescriptionAndNoOtherRevies_ShouldNotAddReview()
+        {
+            var expected = 0;
+            var guid = Guid.NewGuid().ToString();
+
+            var moqHttpContextAccessor = new Mock<IHttpContextAccessor>();
+
+            var moqCategoriesService = new Mock<ICategoryService>();
+            var moqCloudinaryService = new Mock<ICloudinaryService>();
+
+            var context = InitializeContext.CreateContextForInMemory();
+            this.userService = new UserService(context, moqHttpContextAccessor.Object);
+
+            var user = new ApplicationUser()
+            {
+                Id = guid,
+                UserName = "TestUser",
+            };
+
+            var createOfferInputModel = new CreateOfferModel()
+            {
+                Name = "Wow Account",
+                CategotyName = "Wow",
+                CreatorId = guid,
+                Description = "Some Test Description",
+                Price = 10.00,
+                PicUrl = "link",
+            };
+
+            this.offerService = new OfferService(context, moqCategoriesService.Object, moqCloudinaryService.Object);
+            this.commentService = new CommentService(context, this.offerService);
+
+            var offer = await this.offerService.CreateOfferAsync(createOfferInputModel);
+            await this.offerService.ApproveOfferAsync(offer.Id);
+
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+
+            // Assert
+            await this.commentService.AddReviewToOffer(new CreateReviewModel()
+            {
+                CreatorId = guid,
+                Id = offer.Id,
+                Rating = "5",
+            });
+
+            var offerComments = await this.commentService.GetOfferCommentsAsync(offer.Id);
+            Assert.Equal(expected, offerComments.Count);
+        }
+
+        [Fact]
         public async Task AddReviewToOffer_WithInValidData_ShouldReturnEmptyList()
         {
             var expected = new List<Comment>();
