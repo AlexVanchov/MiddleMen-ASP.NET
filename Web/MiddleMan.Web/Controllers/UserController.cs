@@ -217,7 +217,7 @@
         [Authorize]
         public async Task<IActionResult> GetAdminOffersForApprove()
         {
-            return this.Json(await this.userService.GetAdminOffersForApprove());
+            return this.Json(await this.userService.GetAdminOffersForApproveCount());
         }
     }
 }

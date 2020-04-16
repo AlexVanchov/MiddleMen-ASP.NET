@@ -13,11 +13,13 @@
 
         Task<string> GetUserProfilePictureUrlAsync(string id);
 
-        Task UpdateProfilePictureUrl(string userId, string photoUrl);
+        Task<string> UpdateProfilePictureUrl(string userId, string photoUrl);
 
         Task<double> GetUserRatingAsync(string id);
 
-        Task UpdateUserFirstAndLastNameAsync(string id, string firstName, string lastName);
+        Task<bool> IsOfferFavoritedByUserAsync(string id, string userId);
+
+        Task<ApplicationUser> UpdateUserFirstAndLastNameAsync(string id, string firstName, string lastName);
 
         Task<string> GetUserFirstNameAsync(string id);
 
@@ -25,9 +27,7 @@
 
         Task<List<string>> GetUserRolesAsync(string id);
 
-        Task<bool> IsOfferFavoritedByUserAsync(string id, string userId);
-
-        Task<int> GetAdminOffersForApprove();
+        Task<int> GetAdminOffersForApproveCount();
 
         string GetCurrentUserId();
     }

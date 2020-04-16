@@ -25,7 +25,7 @@
             this.contextAccessor = contextAccessor;
         }
 
-        public async Task<int> GetAdminOffersForApprove()
+        public async Task<int> GetAdminOffersForApproveCount()
         {
             var offers = await this.context.Offers.Where(x => x.IsApproved == false &&
             x.IsDeclined == false &&
@@ -56,12 +56,22 @@
         {
             var user = await this.context.Users.FirstOrDefaultAsync(x => x.Id == id);
 
+            if (user == null)
+            {
+                return null;
+            }
+
             return user.FirstName;
         }
 
         public async Task<string> GetUserLastNameAsync(string id)
         {
             var user = await this.context.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (user == null)
+            {
+                return null;
+            }
 
             return user.LastName;
         }
@@ -70,12 +80,22 @@
         {
             var user = await this.context.Users.FirstOrDefaultAsync(x => x.Id == creatorId);
 
+            if (user == null)
+            {
+                return null;
+            }
+
             return user.UserName;
         }
 
         public async Task<string> GetUserProfilePictureUrlAsync(string id)
         {
             var user = await this.context.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (user == null)
+            {
+                return null;
+            }
 
             return user.ProfilePhotoUrl;
         }
@@ -94,6 +114,11 @@
 
         public async Task<List<string>> GetUserRolesAsync(string id)
         {
+            if (await this.GetUserByIdAsync(id) == null)
+            {
+                return null;
+            }
+
             var userRoles = await this.context.UserRoles.Where(x => x.UserId == id).ToListAsync();
 
             var roles = new List<string>();
@@ -111,23 +136,37 @@
             return await this.context.UserFavorites.AnyAsync(x => x.OfferId == id && x.UserId == userId);
         }
 
-        public async Task UpdateProfilePictureUrl(string userId, string photoUrl)
+        public async Task<string> UpdateProfilePictureUrl(string userId, string photoUrl)
         {
             var user = await this.context.Users.FirstOrDefaultAsync(x => x.Id == userId);
 
-            user.ProfilePhotoUrl = photoUrl;
+            if (user != null)
+            {
+                user.ProfilePhotoUrl = photoUrl;
 
-            await this.context.SaveChangesAsync();
+                await this.context.SaveChangesAsync();
+
+                return photoUrl;
+            }
+
+            return null;
         }
 
-        public async Task UpdateUserFirstAndLastNameAsync(string id, string firstName, string lastName)
+        public async Task<ApplicationUser> UpdateUserFirstAndLastNameAsync(string id, string firstName, string lastName)
         {
             var user = await this.context.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (user == null)
+            {
+                return null;
+            }
 
             user.FirstName = firstName;
             user.LastName = lastName;
 
             await this.context.SaveChangesAsync();
+
+            return user;
         }
 
         private async Task<string> GetUserRoleByIdAsync(string roleId)

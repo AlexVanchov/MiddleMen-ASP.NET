@@ -78,7 +78,7 @@ namespace MiddleMan.Web.Controllers
                 return 0;
             }
 
-            return await this.userService.GetAdminOffersForApprove();
+            return await this.userService.GetAdminOffersForApproveCount();
         }
 
         [Authorize]

@@ -33,7 +33,7 @@
         {
             var viewModel = new IndexViewModel()
             {
-                ApproveCount = await this.userService.GetAdminOffersForApprove(),
+                ApproveCount = await this.userService.GetAdminOffersForApproveCount(),
             };
             return this.View(viewModel);
         }
