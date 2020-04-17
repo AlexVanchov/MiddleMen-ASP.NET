@@ -28,7 +28,7 @@
             this.userService = userService;
         }
 
-        public async Task CreateCategoryAsync(CreateCategoryModel inputModel)
+        public async Task<Category> CreateCategoryAsync(CreateCategoryModel inputModel)
         {
             var position = await this.context.Categories.CountAsync();
             Category category = new Category()
@@ -39,6 +39,8 @@
 
             await this.context.Categories.AddAsync(category);
             await this.context.SaveChangesAsync();
+
+            return category;
         }
 
         public async Task<List<CategoryViewModel>> GetAllCategoryViewModelsAsync()
@@ -118,7 +120,7 @@
 
             if (category == null)
             {
-                throw new ArgumentNullException("category is null");
+                return null;
             }
 
             return category.Id;
@@ -135,7 +137,7 @@
             return categoryOffersCount;
         }
 
-        private async Task<double> GetOfferRatingAsync(string id)
+        public async Task<double> GetOfferRatingAsync(string id)
         {
             var offers = await this.context.OfferUserRates.Where(x => x.OfferId == id).ToListAsync();
             if (offers.Count == 0)
@@ -146,7 +148,7 @@
             return Math.Round(offers.Average(x => (double)x.Rate));
         }
 
-        private string StartsStringRating(double stars)
+        public string StartsStringRating(double stars)
         {
             string empty = "☆";
             string full = "★";

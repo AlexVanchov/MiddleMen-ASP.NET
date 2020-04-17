@@ -91,7 +91,7 @@
         public async Task<IActionResult> Category(string name)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var categoryId = await this.categoryService.GetCategoryIdByNameAsync(name);
+            var categoryId = await this.categoryService.GetIdByNameAsync(name);
             if (categoryId == null)
             {
                 return this.NotFound();

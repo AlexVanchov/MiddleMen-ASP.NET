@@ -264,23 +264,7 @@
             var categoryId = await this.categoryService.GetIdByNameAsync(offerInput.CategoryName);
             offerInput.CategoryId = categoryId;
 
-            if (inputModel.Name.Length < 3 || inputModel.Name.Length > 50)
-                return this.Redirect($"/Offer/Edit?id={id}");
-            else if (inputModel.Price < 0.01 || inputModel.Price > 2000)
-                return this.Redirect($"/Offer/Edit?id={id}");
-            else if (imgSize >= 1048576)
-            {
-                return this.Redirect($"/Offer/Edit?id={id}");
-            }
-
-            if (inputModel.Description != null)
-            {
-                if (inputModel.Description.Length < 20 || inputModel.Description.Length > 1000)
-                {
-                    return this.Redirect($"/Offer/Edit?id={id}");
-                }
-            }
-            else
+            if (imgSize >= 1048576)
             {
                 return this.Redirect($"/Offer/Edit?id={id}");
             }
