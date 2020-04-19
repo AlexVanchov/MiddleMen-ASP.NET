@@ -10,13 +10,13 @@
     {
 
         <li class="nav-item">
-            <a class="nav-link active" asp-controller="Messages" asp-action="Index">
+            <a class="nav-link active" asp-area="default" asp-controller="Messages" asp-action="Index">
                 <i class="fa fa-envelope"></i>
                 <strong id="messagesCount"></strong>
             </a>
         </li>
         <li class="nav-item">
-            <a asp-controller="Favorites" asp-action="Index" class="nav-link active" title="Favorites">
+            <a asp-area="default" asp-controller="Favorites" asp-action="Index" class="nav-link active" title="Favorites">
 
                 <span class="glyphicon glyphicon-star removeFavorites">★</span>
                 <strong id="favoritesCount"></strong>

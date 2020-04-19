@@ -1,8 +1,11 @@
 ﻿namespace MiddleMan.Web.Areas.Administration.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using MiddleMan.Data;
     using MiddleMan.Services;
     using MiddleMan.Services.Data;
     using MiddleMan.Services.Interfaces;
@@ -16,17 +19,20 @@
         private readonly ICategoryService categoryService;
         private readonly IOfferService offerService;
         private readonly IUserService userService;
+        private readonly ApplicationDbContext context;
 
         public DashboardController(
             ISettingsService settingsService,
-            ICategoryService categoryService, 
+            ICategoryService categoryService,
             IOfferService offerService,
-            IUserService userService)
+            IUserService userService,
+            ApplicationDbContext context)
         {
             this.settingsService = settingsService;
             this.categoryService = categoryService;
             this.offerService = offerService;
             this.userService = userService;
+            this.context = context;
         }
 
         public async Task<IActionResult> Index()
@@ -237,6 +243,90 @@
             await this.offerService.ActivateOfferAsync(id);
 
             return this.Redirect("/Administration/Dashboard/Deleted");
+        }
+
+        public async Task<IActionResult> Users()
+        {
+            var usersNotBanned = await this.context.Users.Where(x => x.IsDeleted == false).OrderByDescending(x => x.CreatedOn).ToListAsync();
+            var usersActive = await this.context.Users.Where(x => x.IsDeleted == true).OrderByDescending(x => x.CreatedOn).ToListAsync();
+
+            var usersViewModel = new UsersViewModel();
+
+            foreach (var user in usersNotBanned)
+            {
+                usersViewModel.Users.Add(new UserViewModel()
+                {
+                    UserId = user.Id,
+                    Username = user.UserName,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PicUrl = user.ProfilePhotoUrl,
+                    RegisteredOn = user.CreatedOn.ToString("dd/MM/yyyy"),
+                    IsDeleted = user.IsDeleted,
+                });
+            }
+
+            foreach (var user in usersActive)
+            {
+                usersViewModel.Users.Add(new UserViewModel()
+                {
+                    UserId = user.Id,
+                    Username = user.UserName,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PicUrl = user.ProfilePhotoUrl,
+                    RegisteredOn = user.CreatedOn.ToString("dd/MM/yyyy"),
+                    IsDeleted = user.IsDeleted,
+                });
+            }
+
+            return this.View(usersViewModel);
+        }
+
+        public async Task<IActionResult> Ban(string id)
+        {
+            var user = await this.context.Users.FirstOrDefaultAsync(x => x.Id == id && x.IsDeleted == false);
+            if (user == null)
+            {
+                return this.NotFound();
+            }
+
+            var userOffers = await this.context.Offers.Where(x => x.CreatorId == id).ToListAsync();
+
+            foreach (var offer in userOffers)
+            {
+                offer.IsDeleted = true;
+            }
+
+            user.IsDeleted = true;
+
+            this.context.SaveChanges();
+
+            return this.Redirect("Users");
+        }
+
+        public async Task<IActionResult> Unban(string id)
+        {
+            var user = await this.context.Users.FirstOrDefaultAsync(x => x.Id == id && x.IsDeleted == true);
+            if (user == null)
+            {
+                return this.NotFound();
+            }
+
+            var userOffers = await this.context.Offers.Where(x => x.CreatorId == id && x.IsDeleted == true).ToListAsync();
+
+            foreach (var offer in userOffers)
+            {
+                offer.IsDeleted = false;
+            }
+
+            user.IsDeleted = false;
+
+            this.context.SaveChanges();
+
+            return this.Redirect("Users");
         }
     }
 }

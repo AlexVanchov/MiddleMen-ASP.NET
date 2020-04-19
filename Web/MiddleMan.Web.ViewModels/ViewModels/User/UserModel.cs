@@ -39,6 +39,8 @@
 
         public string ProfilePictureUrl { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public ICollection<string> Roles { get; set; }
     }
 }

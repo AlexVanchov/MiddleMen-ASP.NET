@@ -183,6 +183,7 @@
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Roles = roles,
+                IsDeleted = user.IsDeleted,
             };
 
             var offers = await this.offerService.GetAllActiveUserOffersAsync(id);
