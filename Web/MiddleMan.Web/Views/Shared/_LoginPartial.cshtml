@@ -4,6 +4,7 @@
 @using MiddleMan.Services
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject IUserService UserService
 
 <ul class="navbar-nav ml-auto">
     @if (this.SignInManager.IsSignedIn(this.User))
@@ -24,8 +25,11 @@
         </li>
 
         <li class="nav-item active dropdown">
+            @{ 
+                var imgUrl = await UserService.GetUserProfilePictureUrlAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            }
             <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-user"></i> Hello @(this.User.Identity.Name)
+                <img src="@imgUrl" style="width: 30px; height: 30px; object-fit: cover;  border-radius: 60%;" /> Hello @(this.User.Identity.Name)
                 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                 {
                     <span class="text-warning" id="notifications-count-navbar-admin"></span>
