@@ -177,5 +177,47 @@ namespace MiddleMan.Web.Controllers
             await this.context.SaveChangesAsync();
             return this.Json(true);
         }
+
+        [Authorize]
+        public async Task<IActionResult> NumbersOfCreatedOffersForeachDaysLastWeek()
+        {
+            var days = 7;
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                return this.Json(GlobalConstants.NoApiAccess);
+            }
+
+            var statsForeachDay = new List<int>();
+
+            var lastDate = DateTime.UtcNow;
+
+            var firstDate = DateTime.UtcNow.AddDays(-6);
+
+            var offers = await this.context.Offers.Where(x => x.CreatedOn >= firstDate).ToListAsync();
+
+            var day = 1;
+            for (int i = 0; i < days; i++)
+            {
+                var countForDay = 0;
+                if (i != 0)
+                {
+                    firstDate = firstDate.AddDays(day);
+                }
+
+                foreach (var offer in offers.Where(x =>
+                x.CreatedOn.Year == firstDate.Year &&
+                x.CreatedOn.Month == firstDate.Month &&
+                x.CreatedOn.Day == firstDate.Day))
+                {
+                    countForDay++;
+                }
+
+                statsForeachDay.Add(countForDay);
+            }
+
+            return this.Json(statsForeachDay);
+        }
     }
 }
