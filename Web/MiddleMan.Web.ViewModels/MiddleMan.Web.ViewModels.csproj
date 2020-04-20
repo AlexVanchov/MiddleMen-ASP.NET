@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\MiddleMan.Data.Models\MiddleMan.Data.Models.csproj" />
-    <ProjectReference Include="..\..\Services\MiddleMan.Services.Mapping\MiddleMan.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>

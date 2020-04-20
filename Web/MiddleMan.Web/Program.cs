@@ -14,7 +14,7 @@
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                     {
-                        webBuilder.UseStartup<Startup>();
+                        webBuilder.UseUrls().UseStartup<Startup>();
                     });
     }
 }

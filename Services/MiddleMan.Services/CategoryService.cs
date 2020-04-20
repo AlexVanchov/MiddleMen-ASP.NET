@@ -9,7 +9,6 @@
     using MiddleMan.Data;
     using MiddleMan.Data.Models;
     using MiddleMan.Services.Interfaces;
-    using MiddleMan.Services.Mapping;
     using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
     using MiddleMan.Web.ViewModels.ViewModels;
     using MiddleMan.Web.ViewModels.ViewModels.Offer;

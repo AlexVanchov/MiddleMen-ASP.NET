@@ -6,7 +6,6 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    using AutoMapper;
     using MiddleMan.Services.Data;
     using MiddleMan.Services.Interfaces;
     using Moq;

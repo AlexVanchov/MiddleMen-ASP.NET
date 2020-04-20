@@ -1,10 +1,13 @@
 ﻿namespace MiddleMan.Web
 {
+    using System;
+    using System.IO;
     using System.Reflection;
 
     using AutoMapper;
     using CloudinaryDotNet;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.DataProtection;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
@@ -22,13 +25,11 @@
     using MiddleMan.Services;
     using MiddleMan.Services.Data;
     using MiddleMan.Services.Interfaces;
-    using MiddleMan.Services.Mapping;
     using MiddleMan.Services.Messaging;
     using MiddleMan.Services.Services;
     using MiddleMan.Web.Controllers;
     using MiddleMan.Web.Hubs;
     using MiddleMan.Web.ViewModels;
-    using SellMe.Services.Utilities;
 
     public class Startup
     {
@@ -42,6 +43,9 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDataProtection()
+            .PersistKeysToFileSystem(new DirectoryInfo(@"D:\HostingSpaces\alexgta1500\alexvanchov.uk\wwwroot\"));
+
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
@@ -101,8 +105,6 @@
 
             services.AddSingleton(this.configuration);
 
-            services.AddAutoMapper(typeof(MiddleManProfile));
-
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -126,7 +128,6 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())
@@ -135,7 +136,7 @@
 
                 if (env.IsDevelopment())
                 {
-                    dbContext.Database.Migrate();
+                    //dbContext.Database.Migrate();
                 }
 
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();

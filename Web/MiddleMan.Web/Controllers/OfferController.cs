@@ -18,7 +18,6 @@
     using MiddleMan.Web.ViewModels.InputModels;
     using MiddleMan.Web.ViewModels.InputModels.Offer;
     using MiddleMan.Web.ViewModels.Search;
-    using MiddleMan.Web.ViewModels.Sell;
     using MiddleMan.Web.ViewModels.ViewModels;
     using MiddleMan.Web.ViewModels.ViewModels.Comment;
     using MiddleMan.Web.ViewModels.ViewModels.Offer;

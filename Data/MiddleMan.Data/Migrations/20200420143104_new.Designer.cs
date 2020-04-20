@@ -10,8 +10,8 @@ using MiddleMan.Data;
 namespace MiddleMan.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200414181811_OffersPrivateData")]
-    partial class OffersPrivateData
+    [Migration("20200420143104_new")]
+    partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -273,6 +273,9 @@ namespace MiddleMan.Data.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -642,7 +645,7 @@ namespace MiddleMan.Data.Migrations
             modelBuilder.Entity("MiddleMan.Data.Models.Offer", b =>
                 {
                     b.HasOne("MiddleMan.Data.Models.Category", "Category")
-                        .WithMany()
+                        .WithMany("Offers")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

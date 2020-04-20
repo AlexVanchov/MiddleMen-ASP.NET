@@ -11,25 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200209165342_Update1.cs" />
-    <Compile Remove="Migrations\20200209165342_Update1.Designer.cs" />
-    <Compile Remove="Migrations\20200211140853_Initial.cs" />
-    <Compile Remove="Migrations\20200211140853_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200212221854_Update2.cs" />
-    <Compile Remove="Migrations\20200212221854_Update2.Designer.cs" />
-    <Compile Remove="Migrations\20200215132332_OfferValidationsAndIsApDecFeatured.cs" />
-    <Compile Remove="Migrations\20200215132332_OfferValidationsAndIsApDecFeatured.Designer.cs" />
-    <Compile Remove="Migrations\20200218145420_CommentsAdd.cs" />
-    <Compile Remove="Migrations\20200218145420_CommentsAdd.Designer.cs" />
-    <Compile Remove="Migrations\20200408111208_Messages.cs" />
-    <Compile Remove="Migrations\20200408111208_Messages.Designer.cs" />
-    <Compile Remove="Migrations\20200408111552_FavoriteForeignKeys.cs" />
-    <Compile Remove="Migrations\20200408111552_FavoriteForeignKeys.Designer.cs" />
-    <Compile Remove="Migrations\20200414131832_Orders.cs" />
-    <Compile Remove="Migrations\20200414131832_Orders.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
 

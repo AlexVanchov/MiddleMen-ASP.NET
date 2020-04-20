@@ -80,13 +80,13 @@ namespace MiddleMan.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = this.Input.UserName, Email = this.Input.Email };
-
-                if (this._userManager.FindByEmailAsync(this.Input.Email) != null)
+                if (await this._userManager.FindByEmailAsync(this.Input.Email) != null)
                 {
                     this._logger.LogError("Email already registered");
                     return this.Page();
                 }
+
+                var user = new ApplicationUser { UserName = this.Input.UserName, Email = this.Input.Email };
 
                 var result = await this._userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
@@ -114,6 +114,7 @@ namespace MiddleMan.Web.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);

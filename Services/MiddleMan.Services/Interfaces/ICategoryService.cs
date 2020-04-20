@@ -26,5 +26,7 @@
         Task<double> GetOfferRatingAsync(string id);
 
         string StartsStringRating(double stars);
+
+        Task<string> GetCategoryIdByNameAsync(string name);
     }
 }

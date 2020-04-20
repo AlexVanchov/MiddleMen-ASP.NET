@@ -6,7 +6,6 @@
     using MiddleMan.Data.Common.Repositories;
     using MiddleMan.Data.Models;
     using MiddleMan.Services.Data;
-    using MiddleMan.Web.ViewModels.Sell;
 
     using Microsoft.AspNetCore.Mvc;
     using MiddleMan.Services.Interfaces;

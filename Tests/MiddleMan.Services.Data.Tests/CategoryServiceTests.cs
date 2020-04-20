@@ -9,7 +9,6 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    using AutoMapper;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -214,6 +213,60 @@
             Assert.Equal(expected[0].ReadMore, offers[0].ReadMore);
             Assert.Equal(expected[0].ClickUrl, offers[0].ClickUrl);
             Assert.Equal(expected[0].StartsStringRating, offers[0].StartsStringRating);
+        }
+
+        [Fact]
+        public async Task GetAllOffersFromCategoryViewModelsAsync_WithInValidData_ShouldReturnEmptyList()
+        {
+            var guid = Guid.NewGuid().ToString();
+
+            var moqHttpContextAccessor = new Mock<IHttpContextAccessor>();
+
+            var moqCategoriesService = new Mock<ICategoryService>();
+            var moqCloudinaryService = new Mock<ICloudinaryService>();
+
+            var context = InitializeContext.CreateContextForInMemory();
+            this.userService = new UserService(context, moqHttpContextAccessor.Object);
+            this.categoryService = new CategoryService(context, this.userService);
+
+            var user = new ApplicationUser()
+            {
+                Id = guid,
+                UserName = "TestUser",
+            };
+
+            var category = await this.categoryService.CreateCategoryAsync(new CreateCategoryModel()
+            {
+                Name = "Wow",
+            });
+
+            var createOfferInputModel = new CreateOfferModel()
+            {
+                Name = "Wow Account",
+                CategotyName = category.Id,
+                CreatorId = guid,
+                Description = "Some Test Description",
+                Price = 10.00,
+                PicUrl = "link",
+            };
+
+            this.offerService = new OfferService(context, moqCategoriesService.Object, moqCloudinaryService.Object);
+
+            var offer = await this.offerService.CreateOfferAsync(createOfferInputModel);
+            await this.offerService.ApproveOfferAsync(offer.Id);
+            await context.Offers.FirstOrDefaultAsync(x => x.CategoryId == category.Id);
+
+            var offerRating = await this.categoryService.GetOfferRatingAsync(offer.Id);
+            var isFavoritedByUser = await this.userService.IsOfferFavoritedByUserAsync(offer.Id, guid);
+
+            var expected = new List<OfferViewModel>();
+
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+
+            // Assert
+            var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync("InvalidID", guid);
+            Assert.Equal(expected, offers);
         }
 
         [Fact]
@@ -466,6 +519,57 @@
 
             // Assert
             var categories = await this.categoryService.GetOffersCountInCategoryByIdAsync(category.Id);
+            Assert.Equal(expected, categories);
+        }
+
+        [Fact]
+        public async Task GetCategoryIdByNameAsync_WithValidData_ShouldReturnId()
+        {
+            string expected;
+            var guid = Guid.NewGuid().ToString();
+
+            var moqHttpContextAccessor = new Mock<IHttpContextAccessor>();
+
+            var moqCategoriesService = new Mock<ICategoryService>();
+            var moqCloudinaryService = new Mock<ICloudinaryService>();
+
+            var context = InitializeContext.CreateContextForInMemory();
+            this.userService = new UserService(context, moqHttpContextAccessor.Object);
+            this.categoryService = new CategoryService(context, this.userService);
+
+            var user = new ApplicationUser()
+            {
+                Id = guid,
+                UserName = "TestUser",
+            };
+
+            var category = await this.categoryService.CreateCategoryAsync(new CreateCategoryModel()
+            {
+                Name = "Wow",
+            });
+
+            expected = category.Id;
+
+            var createOfferInputModel = new CreateOfferModel()
+            {
+                Name = "Wow Account",
+                CategotyName = category.Id,
+                CreatorId = guid,
+                Description = "Some Test Description",
+                Price = 10.00,
+                PicUrl = "link",
+            };
+
+            this.offerService = new OfferService(context, moqCategoriesService.Object, moqCloudinaryService.Object);
+
+            var offer = await this.offerService.CreateOfferAsync(createOfferInputModel);
+            await this.offerService.ApproveOfferAsync(offer.Id);
+
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+
+            // Assert
+            var categories = await this.categoryService.GetCategoryIdByNameAsync(category.Name);
             Assert.Equal(expected, categories);
         }
     }

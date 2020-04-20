@@ -9,7 +9,6 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    using AutoMapper;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;

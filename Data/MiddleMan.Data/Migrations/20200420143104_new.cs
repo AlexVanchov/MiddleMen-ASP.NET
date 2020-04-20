@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MiddleMan.Data.Migrations
 {
-    public partial class newstart : Migration
+    public partial class @new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,9 @@ namespace MiddleMan.Data.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
+                    ProfilePhotoUrl = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -63,7 +66,8 @@ namespace MiddleMan.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Position = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,6 +90,19 @@ namespace MiddleMan.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Settings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserFavorites",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    OfferId = table.Column<string>(nullable: false),
+                    FavoritedOn = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserFavorites", x => new { x.OfferId, x.UserId });
                 });
 
             migrationBuilder.CreateTable(
@@ -211,7 +228,9 @@ namespace MiddleMan.Data.Migrations
                     CreatorId = table.Column<string>(nullable: false),
                     IsFeatured = table.Column<bool>(nullable: false),
                     IsApproved = table.Column<bool>(nullable: false),
-                    IsDeclined = table.Column<bool>(nullable: false)
+                    IsDeclined = table.Column<bool>(nullable: false),
+                    IsRemovedByUser = table.Column<bool>(nullable: false),
+                    BuyContent = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -241,9 +260,122 @@ namespace MiddleMan.Data.Migrations
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Comments_Offers_OfferId",
                         column: x => x.OfferId,
                         principalTable: "Offers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Content = table.Column<string>(nullable: true),
+                    IsRead = table.Column<bool>(nullable: false),
+                    SenderId = table.Column<string>(nullable: true),
+                    RecipientId = table.Column<string>(nullable: true),
+                    OfferId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Messages_Offers_OfferId",
+                        column: x => x.OfferId,
+                        principalTable: "Offers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Messages_AspNetUsers_RecipientId",
+                        column: x => x.RecipientId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Messages_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OfferUserRates",
+                columns: table => new
+                {
+                    OfferId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: false),
+                    Rate = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OfferUserRates", x => new { x.OfferId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_OfferUserRates_Offers_OfferId",
+                        column: x => x.OfferId,
+                        principalTable: "Offers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OfferUserRates_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
+                    UserFirstName = table.Column<string>(nullable: true),
+                    UserLastName = table.Column<string>(nullable: true),
+                    SellerId = table.Column<string>(nullable: true),
+                    OfferId = table.Column<string>(nullable: true),
+                    OfferName = table.Column<string>(nullable: true),
+                    OfferPrice = table.Column<double>(nullable: false),
+                    OfferPicUrl = table.Column<string>(nullable: true),
+                    DeliveryEmail = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Offers_OfferId",
+                        column: x => x.OfferId,
+                        principalTable: "Offers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_SellerId",
+                        column: x => x.SellerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -303,6 +435,11 @@ namespace MiddleMan.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_CreatorId",
+                table: "Comments",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Comments_IsDeleted",
                 table: "Comments",
                 column: "IsDeleted");
@@ -313,6 +450,26 @@ namespace MiddleMan.Data.Migrations
                 column: "OfferId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Messages_IsDeleted",
+                table: "Messages",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_OfferId",
+                table: "Messages",
+                column: "OfferId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_RecipientId",
+                table: "Messages",
+                column: "RecipientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_SenderId",
+                table: "Messages",
+                column: "SenderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Offers_CategoryId",
                 table: "Offers",
                 column: "CategoryId");
@@ -321,6 +478,31 @@ namespace MiddleMan.Data.Migrations
                 name: "IX_Offers_IsDeleted",
                 table: "Offers",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OfferUserRates_UserId",
+                table: "OfferUserRates",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_IsDeleted",
+                table: "Orders",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_OfferId",
+                table: "Orders",
+                column: "OfferId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_SellerId",
+                table: "Orders",
+                column: "SellerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_UserId",
+                table: "Orders",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Settings_IsDeleted",
@@ -349,16 +531,28 @@ namespace MiddleMan.Data.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
+                name: "Messages");
+
+            migrationBuilder.DropTable(
+                name: "OfferUserRates");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
+
+            migrationBuilder.DropTable(
                 name: "Settings");
+
+            migrationBuilder.DropTable(
+                name: "UserFavorites");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Offers");
 
             migrationBuilder.DropTable(
-                name: "Offers");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Categories");
