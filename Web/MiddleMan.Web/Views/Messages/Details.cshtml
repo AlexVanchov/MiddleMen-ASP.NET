@@ -7,7 +7,7 @@
 }
 
 <h3 class="text-center mb-4"><a asp-controller="Offer" asp-action="Details" asp-route-id="@Model.OfferId">@Model.OfferTitle</a></h3>
-<div id="messages">
+<div id="messages" style="height: 500px; overflow-y: auto;">
     @foreach (var message in Model.Messages)
     {
         <div class="card-body msg_card_body">
@@ -49,4 +49,15 @@
 
 @section Scripts{
     <script src="~/js/message-signalr.js" asp-append-version="true"></script>
+    <script>
+        var heigh = document.documentElement.clientHeight - 300;
+        var messages = document.getElementById("messages");
+        messages.style.height = heigh.toString() + "px";
+
+        function scrollToBottom() {
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        scrollToBottom();
+    </script>
 }
