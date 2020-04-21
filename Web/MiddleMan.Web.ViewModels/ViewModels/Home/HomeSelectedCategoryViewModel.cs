@@ -17,5 +17,11 @@ namespace MiddleMan.Web.ViewModels.ViewModels
         public string CategoryName { get; set; }
 
         public ICollection<OfferViewModel> Offers { get; set; }
+
+        public int Page { get; set; }
+
+        public bool HaveNext { get; set; }
+
+        public bool HavePrevious { get; set; }
     }
 }

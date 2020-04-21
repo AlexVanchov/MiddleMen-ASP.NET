@@ -15,6 +15,7 @@
 
     public class CategoryService : ICategoryService
     {
+        private const int offersOnPage = 9; // 15
 
         private readonly ApplicationDbContext context;
         private readonly IUserService userService;
@@ -60,14 +61,17 @@
             return allCategories;
         }
 
-        public async Task<List<OfferViewModel>> GetAllOffersFromCategoryViewModelsAsync(string id, string userId)
+        public async Task<List<OfferViewModel>> GetAllOffersFromCategoryViewModelsAsync(string id, string userId, int page)
         {
+            var toSkip = page * offersOnPage;
+
             var offersOutput = new List<OfferViewModel>();
             var offers = await this.context.Offers
                 .Where(x => x.CategoryId == id && x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false && x.IsDeleted == false)
+                .Skip(toSkip)
                 .ToListAsync();
 
-            foreach (var offer in offers)
+            foreach (var offer in offers.Take(offersOnPage))
             {
                 var offerRating = await this.GetOfferRatingAsync(offer.Id);
                 var isFavoritedByUser = await this.userService.IsOfferFavoritedByUserAsync(offer.Id, userId);
@@ -168,6 +172,19 @@
             }
 
             return sb.ToString().TrimEnd();
+        }
+
+        public async Task<bool> HasNextPage(string categoryId, int page)
+        {
+            var toSkip = page * offersOnPage;
+
+            var offersOutput = new List<OfferViewModel>();
+            var offers = await this.context.Offers
+                .Where(x => x.CategoryId == categoryId && x.IsApproved == true && x.IsDeclined == false && x.IsRemovedByUser == false && x.IsDeleted == false)
+                .Skip(toSkip)
+                .ToListAsync();
+
+            return offers.Take(offersOnPage).Count() == 0 ? false : true;
         }
     }
 }

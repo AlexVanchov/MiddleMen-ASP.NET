@@ -24,7 +24,6 @@
     using MiddleMan.Data.Repositories;
     using MiddleMan.Data.Seeding;
     using MiddleMan.Services;
-    using MiddleMan.Services.Data;
     using MiddleMan.Services.Interfaces;
     using MiddleMan.Services.Messaging;
     using MiddleMan.Services.Services;
@@ -114,7 +113,6 @@
 
             // Application services
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<ISettingsService, SettingsService>();
 
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<ICloudinaryService, CloudinaryService>();

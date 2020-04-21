@@ -15,7 +15,7 @@
 
         Task<List<CategoryViewModel>> GetAllCategoryViewModelsAsync();
 
-        Task<List<OfferViewModel>> GetAllOffersFromCategoryViewModelsAsync(string categoryId, string userId);
+        Task<List<OfferViewModel>> GetAllOffersFromCategoryViewModelsAsync(string categoryId, string userId, int page);
 
         Task<string> GetIdByNameAsync(string categoryTitle);
 
@@ -28,5 +28,7 @@
         string StartsStringRating(double stars);
 
         Task<string> GetCategoryIdByNameAsync(string name);
+
+        Task<bool> HasNextPage(string categoryId, int page);
     }
 }

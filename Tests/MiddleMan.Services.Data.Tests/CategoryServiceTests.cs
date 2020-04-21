@@ -207,7 +207,7 @@
             await context.SaveChangesAsync();
 
             // Assert
-            var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync(category.Id, guid);
+            var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync(category.Id, guid, 0);
             Assert.Equal(expected[0].Id, offers[0].Id);
             Assert.Equal(expected[0].IsFavoritedByUser, offers[0].IsFavoritedByUser);
             Assert.Equal(expected[0].ReadMore, offers[0].ReadMore);
@@ -265,7 +265,7 @@
             await context.SaveChangesAsync();
 
             // Assert
-            var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync("InvalidID", guid);
+            var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync("InvalidID", guid, 1);
             Assert.Equal(expected, offers);
         }
 
@@ -367,6 +367,55 @@
             // Assert
             var categories = await this.categoryService.GetIdByNameAsync("InvalidName");
             Assert.Null(categories);
+        }
+
+        [Fact]
+        public async Task HasNextPage_WithValidData_ShouldReturnFalse()
+        {
+            string expected;
+            var guid = Guid.NewGuid().ToString();
+
+            var moqHttpContextAccessor = new Mock<IHttpContextAccessor>();
+
+            var moqCategoriesService = new Mock<ICategoryService>();
+            var moqCloudinaryService = new Mock<ICloudinaryService>();
+
+            var context = InitializeContext.CreateContextForInMemory();
+            this.userService = new UserService(context, moqHttpContextAccessor.Object);
+            this.categoryService = new CategoryService(context, this.userService);
+
+            var user = new ApplicationUser()
+            {
+                Id = guid,
+                UserName = "TestUser",
+            };
+
+            var category = await this.categoryService.CreateCategoryAsync(new CreateCategoryModel()
+            {
+                Name = "Wow",
+            });
+
+            var createOfferInputModel = new CreateOfferModel()
+            {
+                Name = "Wow Account",
+                CategotyName = category.Id,
+                CreatorId = guid,
+                Description = "Some Test Description",
+                Price = 10.00,
+                PicUrl = "link",
+            };
+
+            this.offerService = new OfferService(context, moqCategoriesService.Object, moqCloudinaryService.Object);
+
+            var offer = await this.offerService.CreateOfferAsync(createOfferInputModel);
+            await this.offerService.ApproveOfferAsync(offer.Id);
+
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+
+            // Assert
+            var categories = await this.categoryService.HasNextPage(category.Id, 1);
+            Assert.False(categories);
         }
 
         [Fact]
@@ -570,6 +619,57 @@
 
             // Assert
             var categories = await this.categoryService.GetCategoryIdByNameAsync(category.Name);
+            Assert.Equal(expected, categories);
+        }
+
+        [Fact]
+        public async Task GetCategoryIdByNameAsync_WithInValidData_ShouldReturnNull()
+        {
+            string expected;
+            var guid = Guid.NewGuid().ToString();
+
+            var moqHttpContextAccessor = new Mock<IHttpContextAccessor>();
+
+            var moqCategoriesService = new Mock<ICategoryService>();
+            var moqCloudinaryService = new Mock<ICloudinaryService>();
+
+            var context = InitializeContext.CreateContextForInMemory();
+            this.userService = new UserService(context, moqHttpContextAccessor.Object);
+            this.categoryService = new CategoryService(context, this.userService);
+
+            var user = new ApplicationUser()
+            {
+                Id = guid,
+                UserName = "TestUser",
+            };
+
+            var category = await this.categoryService.CreateCategoryAsync(new CreateCategoryModel()
+            {
+                Name = "Wow",
+            });
+
+            expected = category.Id;
+
+            var createOfferInputModel = new CreateOfferModel()
+            {
+                Name = "Wow Account",
+                CategotyName = category.Id,
+                CreatorId = guid,
+                Description = "Some Test Description",
+                Price = 10.00,
+                PicUrl = "link",
+            };
+
+            this.offerService = new OfferService(context, moqCategoriesService.Object, moqCloudinaryService.Object);
+
+            var offer = await this.offerService.CreateOfferAsync(createOfferInputModel);
+            await this.offerService.ApproveOfferAsync(offer.Id);
+
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+
+            // Assert
+            var categories = await this.categoryService.GetCategoryIdByNameAsync("InvalidNAME");
             Assert.Equal(expected, categories);
         }
     }

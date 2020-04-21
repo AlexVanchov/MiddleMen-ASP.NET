@@ -13,6 +13,8 @@
 
     public class HomeController : BaseController
     {
+        //private const int offersOnPage = 9; // 15
+
         private readonly ICategoryService categoryService;
 
         private readonly IOfferService offerService;
@@ -88,7 +90,7 @@
             return this.View();
         }
 
-        public async Task<IActionResult> Category(string name)
+        public async Task<IActionResult> Category(string name, int page = 1)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var categoryId = await this.categoryService.GetIdByNameAsync(name);
@@ -98,7 +100,7 @@
             }
 
             var categories = await this.categoryService.GetAllCategoryViewModelsAsync();
-            var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync(categoryId, userId);
+            var offers = await this.categoryService.GetAllOffersFromCategoryViewModelsAsync(categoryId, userId, page - 1);
             // var category = await this.categoryService.GetCategoryNameByIdAsync(id);
 
             var homeModel = new HomeSelectedCategoryViewModel()
@@ -107,6 +109,10 @@
                 CategoryName = name,
                 Offers = offers,
             };
+
+            homeModel.Page = page;
+            homeModel.HaveNext = await this.categoryService.HasNextPage(categoryId, page);
+            homeModel.HavePrevious = page <= 1 ? false : true;
 
             return this.View(homeModel);
         }

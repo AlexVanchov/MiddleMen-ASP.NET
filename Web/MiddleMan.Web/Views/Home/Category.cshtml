@@ -59,14 +59,33 @@
             </a>
         </div>*@
 
-        <div class="row">
+            <div class="row">
 
-            @foreach (var offer in Model.Offers)
-            {
-                <vc:index-offer view-model="@offer"></vc:index-offer>
-            }
+                @foreach (var offer in Model.Offers)
+                {
+                    <vc:index-offer view-model="@offer"></vc:index-offer>
+                }
 
-        </div>
+            </div>
+            <div class="buttons" style="text-align:center;">
+                @if (Model.HavePrevious)
+                {
+                    <a href="/Home/Category?name=@Model.CategoryName&page=@(Model.Page-1)" class="btn btn-primary" style="margin-right:10px;">&#8249;</a>
+                }
+                else
+                {
+                    <a href="/Home/Category?name=@Model.CategoryName&page=@Model.Page" class="btn btn-primary disabled" style="margin-right:10px;">&#8249;</a>
+                }
+
+                @if (Model.HaveNext)
+                {
+                    <a href="/Home/Category?name=@Model.CategoryName&page=@(Model.Page+1)" class="btn btn-primary">&#8250;</a>
+                }
+                else
+                {
+                    <a href="/Home/Category?name=@Model.CategoryName&page=@Model.Page" class="btn btn-primary disabled">&#8250;</a>
+                }
+            </div>
             <!-- /.row -->
 
         </div>
