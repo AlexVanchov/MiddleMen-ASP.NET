@@ -53,10 +53,45 @@
                             <div class="col-md-12 text-center mb-3">
                                 <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Register</button>
                             </div>
+
+                            <div class="col-md-12 ">
+                                <div class="login-or">
+                                    <hr class="hr-or">
+                                    <span class="span-or">or</span>
+                                </div>
+                            </div>
+
                             <div class="col-md-12 ">
                                 <div class="form-group">
-                                    <p class="text-center"><a asp-page="./Login" id="signin">Already have an account?</a></p>
-                                </div>
+                                    <p class="text-center">
+
+                                        @{
+                                            if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                                            {
+                                                <div>
+                                            <p>
+                                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                                for details on setting up this ASP.NET application to support logging in via external services.
+                                            </p>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                            <div>
+                                                <p>
+                                                    @foreach (var provider in Model.ExternalLogins)
+                                                    {
+                                                        <button style="margin-bottom: 15px;" type="submit" class="google btn mybtn" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                                    }
+                                                    <br />
+                                                </p>
+                                            </div>
+                                        </form>
+                                    }
+                                        }
+                                        <p class="text-center"><a asp-page="./Login" id="signin">Already have an account?</a></p>
+                                    </div>
                             </div>
                         </form>
                     </div>

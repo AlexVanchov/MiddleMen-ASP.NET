@@ -12,6 +12,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Rewrite;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -152,6 +153,11 @@
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            var options = new RewriteOptions()
+            .AddRedirectToHttpsPermanent();
+
+            app.UseRewriter(options);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
