@@ -16,6 +16,26 @@ html {
     html {
         font-size: 16px;
     }
+    
+}
+
+.carousel-item {
+    height: 350px;
+}
+
+.details-size {
+    height:400px; 
+    margin:auto;
+}
+
+@media only screen and (max-width: 600px) {
+    .carousel-item {
+        height: 180px;
+    }
+
+    .details-size {
+        height: 200px;
+    }
 }
 
 .border-top {
