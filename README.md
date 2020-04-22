@@ -3,82 +3,49 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-MiddleMan is web service for trading accounts, selling game items and buying items
+# Site - alexvanchov.uk
+
+![MiddleMan](https://i.imgur.com/0YnGKgr.png)
+### Test Users:
+ * Admin - admin@gmail.com:123456
+ * User - user@gmail.com:123456
+
+MiddleMan is web app for selling accounts, game items, codes
 # Features:
-  - Accounts with full access (e-mail change and password)
-  - Game items (CS:GO, Dota 2 , etc)
+## Users
+  - Accounts with full access (e-mail and password change)
+  - Emails for verifications and more
+  - Offer create, editing, removing and promoting at home page
+  - Uploading images to Clouldinary
+  - Comments with rate for offer (to rate you need to add comment, then you can change your rate for offer)
+  - Live Messages for offer (using SignalR and vanilla js to append them live)
+  - Notification number on icon if any news
+  - Search by offer title and description
+  - Live chat to staff and admins using hubspot (3rd party)
+  - Favorite any offer
+  - Buy offer sends email to buyer with account/code and adds info to order history view (leave card info empty to buy)
+  - User profile picture, username, emails, firstname, lastname and phone number
+  - View user profile by clicking user in offer details redirects to user profile with user info and active offers
+  - Category displaying offers with next, previous page
+## Admins
+  - View all active, declined offers
+  - Approve, decline offers after someone create one
+  - Last week created offers statistic
+  - Menage users (Ban, unban - when someone is banned all offers are deleted and when unbanned they will be visible again)
+  - Create, remove category (When category is removed all offer are also deleted)
+  - Reorder Categories positions (Using vanilla js and jquery for ajax. To reorder them just drag one where you want)
 
 
-
-### Tech
+# Tech:
 
 * [ASP.NET] - MVC
 * [node.js] - evented I/O for the backend
 * [Cloudinary] - Web cloud for the website
 * [SendGrid] - Email Sender API
-* [Chaport] - Live Chat Support
-
-### TODO:
-
- * Admin edit reordering
-    * Make hidden form with name="categoryId" and name="orderNumber" with Submint btn which is on the page where the JavaSctipt will fill with the orderNumber
- * Validations
- * Authorizations for admin pages
- * Object relations to update
- * Apply for seller
- * Alerts(Bootstrap)
- * Error pages and Alert Redirects
- * Email login and username display after
- * Error view (Bootstrap)
- * Possible to add yt embed to offer(Not sure???)
- * Favorites
- * Many pictures with displayng on crate offer
- * Canvas stats
- * Basket with admin live baskets check
- * Fix idea with comments and reviews (maybe should be separated)
- * Admin on post active functions
- * Offer creator options to edit directly from details page (Edit redirect btn only for him)
- * Messages with live updates
- 
- ### Done:
- * onclick item displaying
- * Home page listingitems in category
- * Cloudinary(Cloud)
- * Username on regis
- * Email send (verification/welcome) only
- * Cloud out of limit error
- * Ratings
- * Comments halfly done
- * My Offers active
- * User rating
- * My Offers unactive
- * Serach menu
- * Email send (recover password)
- * Buy button
- * Profile view
- * Profiles
- * Delete/Edit for creator of the offer
- * User profiles with pictures and recent offers
- * Identity pages customise
- 
- ## Objects relations:
-* BaseOnDeleteModel addon
-    * IsDeleted(bool)
-    * DeletedOn(nullable DateTime)
-* BaseOnCreateModel addon
-    * CreatedOn(DateTime)
-    * ModifiedOn(nullable DateTime)
-* Categoty : BaseOnDeleteModel, BaseOnCreateModel
-    * Id(hash-string)
-    * Name(string)
-* Offer : BaseOnDeleteModel, BaseOnCreateModel
-    * Id(hash-string)
-    * CategoryId(foreign key(Category))
-    * Name(string)
-    * Price(decimal)
-    * Description(string)
-    * picUrl(nullable string)
-* Comment (IMPLEMENTATION NEEDED here + : BaseModel)
+* [hubspot] - Live Chat Support
+* [jquery]  - Ajax requests to the server
+* [charts.js] - Graphs for admins
+* [SignalR] - Realtime updates (chats)
 
 License
 ----
@@ -91,5 +58,8 @@ MIT
    [node.js]: <http://nodejs.org>
    [ASP.NET]: <https://dotnet.microsoft.com/apps/aspnet>
    [Cloudinary]: <https://cloudinary.com/documentation/dotnet_integration>
-   [Chaport]: <https://www.chaport.com/>
+   [Hubspot]: <https://app.hubspot.com/>
    [SendGrid]: <https://sendgrid.com/>
+   [jquery]: <https://jquery.com>
+   [charts.js]: <https://www.chartjs.org>
+   [SignalR]: <https://dotnet.microsoft.com/apps/aspnet/signalr>
