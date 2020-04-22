@@ -7,7 +7,6 @@
     using Microsoft.EntityFrameworkCore;
     using MiddleMan.Data;
     using MiddleMan.Services;
-    using MiddleMan.Services.Data;
     using MiddleMan.Services.Interfaces;
     using MiddleMan.Web.ViewModels.Administration.Dashboard;
     using MiddleMan.Web.ViewModels.Administration.Dashboard.InputModels;
@@ -15,20 +14,17 @@
 
     public class DashboardController : AdministrationController
     {
-        private readonly ISettingsService settingsService;
         private readonly ICategoryService categoryService;
         private readonly IOfferService offerService;
         private readonly IUserService userService;
         private readonly ApplicationDbContext context;
 
         public DashboardController(
-            ISettingsService settingsService,
             ICategoryService categoryService,
             IOfferService offerService,
             IUserService userService,
             ApplicationDbContext context)
         {
-            this.settingsService = settingsService;
             this.categoryService = categoryService;
             this.offerService = offerService;
             this.userService = userService;

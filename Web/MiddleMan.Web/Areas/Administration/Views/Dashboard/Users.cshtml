@@ -29,7 +29,7 @@
                                     <tr>
                                         <td>
                                             <img src="@user.PicUrl" alt="">
-                                            <a href="/User/Profile?id=@user.UserId" class="user-link">@user.Username</a>
+                                            <a class="a-user-admin" href="/User/Profile?id=@user.UserId" class="user-link">@user.Username</a>
                                             <span class="user-subhead">Member</span>
                                         </td>
                                         <td>@user.RegisteredOn</td>
@@ -44,7 +44,7 @@
                                             }
                                         </td>
                                         <td>
-                                            <a href="/User/Profile?id=@user.UserId">@user.Email</a>
+                                            <a class="a-user-admin" href="/User/Profile?id=@user.UserId">@user.Email</a>
                                         </td>
                                         @if(!user.IsDeleted)
                                         { 
